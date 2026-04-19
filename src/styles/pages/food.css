@@ -26,22 +26,6 @@
   width: 100%;
 }
 
-.search-input {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1px solid var(--brand-surface);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-family: inherit;
-  transition: all 0.3s ease;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--brand-accent-orange);
-  box-shadow: 0 0 0 3px rgba(242, 106, 0, 0.1);
-}
-
 .filters-wrapper {
   display: flex;
   flex-direction: column;
