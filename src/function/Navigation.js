@@ -87,3 +87,12 @@ export const checkLoginState = (isLoggedin, user) => {
 
   renderLoggedOutState(loginRegister);
 };
+
+export const topBarLabel = (label) => {
+  const labelElement = document.getElementById("top-bar-label");
+  if (!labelElement) {
+    console.warn("Top bar label element not found");
+    return;
+  }
+  labelElement.textContent = label;
+};
