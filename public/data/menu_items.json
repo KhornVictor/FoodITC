@@ -388,5 +388,18 @@
     "discount": 0.1,
     "order_count": 250,
     "rating": 4.4
+  },
+  {
+    "item_id": 31,
+    "restaurant_id": 5,
+    "category_id": 6,
+    "name": "Hotpot",
+    "description": "ហឹរហោះលើវេហា​ ❤.",
+    "price": 2.5,
+    "image_url": "https://scontent.fpnh10-1.fna.fbcdn.net/v/t39.30808-6/668722711_1300238318901053_1410027930796091638_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHDy7Hpv1rYJDxDAZlu249lIPE1-jAYT8cg8TX6MBhPx390sUveMAoz2xY3CoESc2g3Yvv51yqTnE5a_U3aT76P&_nc_ohc=tGCbqO4Og_UQ7kNvwFdKUWI&_nc_oc=AdrzLkkFocKrGlSV8d8kEgREmc__LvkdMYFe1h9DRjvsf900Q9kdovVywYFsGgbECXY&_nc_zt=23&_nc_ht=scontent.fpnh10-1.fna&_nc_gid=CIxcl9pHOftZhcJdXpcUaA&_nc_ss=7a3a8&oh=00_Af3TppEGKe-ZdIfigq1LzeLmd0dLJ8IcGJrG9tkJAAaTWw&oe=69EBA1C2",
+    "is_available": true,
+    "discount": 0.1,
+    "order_count": 250,
+    "rating": 4.4
   }
 ]

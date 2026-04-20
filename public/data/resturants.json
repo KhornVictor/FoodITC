@@ -14,7 +14,7 @@
     "description": "Authentic Italian cuisine featuring fresh pasta and wood-fired pizzas.",
     "address": "45 Roma Street, New York, NY",
     "phone": "+1-212-555-0102",
-    "image_url": "https://images.deliveryhero.io/image/fd-kh/kh-logos/ci4sr-logo.jpg",  
+    "image_url": "https://images.deliveryhero.io/image/fd-kh/kh-logos/ci4sr-logo.jpg",
     "created_at": "2026-03-02T10:15:00"
   },
   {
@@ -87,6 +87,15 @@
     "address": "88 Lotus Street, Las Vegas, NV",
     "phone": "+1-702-555-0110",
     "image_url": "https://1000logos.net/wp-content/uploads/2017/03/McDonalds-logo.png",
+    "created_at": "2026-03-10T19:25:00"
+  },
+  {
+    "restaurant_id": 11,
+    "name": "Hotpot & BBQ ពូឆាវមិងឆយ",
+    "description": "Fast food restaurant.",
+    "address": "បឹងត្របែក ផ្លូវ 432 កែង​ ផ្លូវ 101 ផ្ទះលេខ 14BC E0, Phnom Penh, Cambodia,",
+    "phone": "+885-11-53-5001",
+    "image_url": "https://tse2.mm.bing.net/th/id/OIP.CVzRxwRQ78cW7Ao0lsz_YgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
     "created_at": "2026-03-10T19:25:00"
   }
 ]
