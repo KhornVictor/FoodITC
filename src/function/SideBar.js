@@ -2,6 +2,8 @@ import { rendering } from "./Rendering.js";
 import { initFoodPage, get10FoodCards } from "./foodCard.js";
 import { initResturantBox } from "./resturantBox.js";
 import { initCategoryCards } from "./categoryCard.js";
+import { topBarLabel } from "./Navigation.js";
+
 /**
  * Initialize sidebar navigation with click handlers.
  * Manages active states and hash-based routing.
@@ -36,7 +38,21 @@ export const initSidebarNavigation = (root = document) => {
     });
   };
 
+  const getLabelByRoute = (route) => {
+    const matchedItem = Array.from(menuItems).find(
+      (button) => button.dataset.route === route,
+    );
+
+    if (!matchedItem) {
+      return "Dashboard";
+    }
+
+    return matchedItem.querySelector("p")?.textContent?.trim() || "Dashboard";
+  };
+
   const renderRoute = async (route) => {
+    topBarLabel(getLabelByRoute(route));
+
     const pagePath = routeMap[route];
 
     if (!pagePath) {
@@ -64,6 +80,8 @@ export const initSidebarNavigation = (root = document) => {
 
     setActiveByRoute(route);
   };
+
+  
 
   menuItems.forEach((item) => {
     if (item.dataset.bound === "true") {
