@@ -3,6 +3,66 @@ import { fetchResturants } from "../services/Resturant.js";
 const FALLBACK_IMAGE =
   "https://img.freepik.com/free-photo/close-up-delicious-pizza-with-tomatoes-cheese_23-2148888637.jpg?semt=ais_hybrid&w=740&q=80";
 
+// --- FIX 1: ASYNC FETCH AND FILTER LOGIC ---
+const createDetailedCard = async (resturant) => {
+  const container = document.createElement("div");
+  container.className = "detail-view";
+
+  const heroImage = document.createElement("img");
+  heroImage.className = "detail-hero-img";
+  heroImage.src = resturant.image_url || FALLBACK_IMAGE;
+  
+  const title = document.createElement("h1");
+  title.className = "detail-title";
+  title.textContent = resturant.name || "Restaurant Name";
+
+  const itemsContainer = document.createElement("div");
+  itemsContainer.className = "blank-items-list";
+
+  try {
+    /* FIX: Adjusted path. If your file structure is:
+      /src/js/resturantBox.js
+      /src/data/menu_items.json
+      The path should be '../data/menu_items.json'
+    */
+    const response = await fetch("../../public/data/menu_items.json"); 
+    
+    if (!response.ok) throw new Error("File not found");
+    const menuData = await response.json();
+
+    // COMPARE: Only show items for this restaurant ID
+    const restaurantMenu = menuData.filter(
+      (item) => item.restaurant_id === resturant.restaurant_id
+    );
+
+    if (restaurantMenu.length === 0) {
+      itemsContainer.innerHTML = "<p>No menu items available for this restaurant.</p>";
+    } else {
+      restaurantMenu.forEach((menuItem) => {
+        const itemRow = document.createElement("div");
+        itemRow.className = "menu-item-row";
+        itemRow.innerHTML = `
+          <div class="menu-item-img-box">
+            <img src="${menuItem.image_url || FALLBACK_IMAGE}" alt="${menuItem.name}">
+          </div>
+          <div class="menu-item-info-box">
+            <div class="menu-item-name"><strong>${menuItem.name}</strong></div>
+            <div class="menu-item-description">${menuItem.description}</div>
+            <div class="menu-item-price">$${menuItem.price.toFixed(2)}</div>
+          </div>
+        `;
+        itemsContainer.appendChild(itemRow);
+      });
+    }
+  } catch (error) {
+    console.error("Menu fetch error:", error);
+    itemsContainer.innerHTML = `<p>Error loading menu: ${error.message}. Check file path.</p>`;
+  }
+
+  container.append(heroImage, title, itemsContainer);
+  return container;
+};
+
 const createResturantCard = (resturant, variant = "compact") => {
   const item = document.createElement("div");
   item.className = "shop-item";
@@ -18,103 +78,40 @@ const createResturantCard = (resturant, variant = "compact") => {
 
   const title = document.createElement("h2");
   title.textContent = resturant.name || "Unknown Restaurant";
-
   item.append(image, title);
 
   if (variant === "detailed") {
-    
     const description = document.createElement("p");
     description.className = "restaurant-description";
-    description.textContent =
-      resturant.description ||
-      "Fresh ingredients, quick service, and crowd-favorite dishes.";
+    description.textContent = resturant.description || "Fresh ingredients and crowd-favorite dishes.";
 
     const meta = document.createElement("div");
     meta.className = "restaurant-meta";
-
-    const address = document.createElement("p");
-    address.innerHTML = `<i class="fa-solid fa-location-dot" aria-hidden="true"></i>${resturant.address || "Address not available"}`;
-
-    const phone = document.createElement("p");
-    phone.innerHTML = `<i class="fa-solid fa-phone" aria-hidden="true"></i>${resturant.phone || "Phone not available"}`;
-
-    meta.append(address, phone);
-    item.append(description, meta);
-
-    const content=document.getElementById("content-area");
-
-    //ceatedestail
-  const createDetailedCard = (resturant) => {
-  const container = document.createElement("div");
-  container.className = "detail-view";
-
-  // 1. Large Hero Image on Top
-  const heroImage = document.createElement("img");
-  heroImage.className = "detail-hero-img";
-  heroImage.src = resturant.image_url || FALLBACK_IMAGE;
-  
-  // 2. Header Text
-  const title = document.createElement("h1");
-  title.className = "detail-title";
-  title.textContent = resturant.name || "Restaurant Name";
-
-  // 3. Container for the Side-by-Side Menu Items
-  const itemsContainer = document.createElement("div");
-  itemsContainer.className = "blank-items-list";
-
-  // Create 4 items with side-by-side layout
-  for (let i = 0; i < 4; i++) {
-    const itemRow = document.createElement("div");
-    itemRow.className = "menu-item-row"; // Side-by-side container
-
-    // Left Side: Image
-    const imgDiv = document.createElement("div");
-    imgDiv.className = "menu-item-img-box";
-    const hImage = document.createElement("img");
-    hImage.src = FALLBACK_IMAGE; // Placeholder or menu_item.image_url
-    imgDiv.append(hImage);
-
-    // Right Side: Details Placeholder
-    const infoDiv = document.createElement("div");
-    infoDiv.className = "menu-item-info-box";
-    infoDiv.innerHTML = `
-      <div class="skeleton-line"></div>
-      <div class="skeleton-line short"></div>
+    meta.innerHTML = `
+      <p><i class="fa-solid fa-location-dot"></i> ${resturant.address || "No address"}</p>
+      <p><i class="fa-solid fa-phone"></i> ${resturant.phone || "No phone"}</p>
     `;
 
-    itemRow.append(imgDiv, infoDiv);
-    itemsContainer.appendChild(itemRow);
-  }
+    item.append(description, meta);
 
-  container.append(heroImage, title, itemsContainer);
-  return container;
-};
+    // --- FIX 2: ASYNC CLICK HANDLER ---
+    item.addEventListener("click", async () => {
+      const contentArea = document.getElementById("content-area");
+      if (!contentArea) return;
 
-    //Click
-    item.addEventListener("click", () => {
-    // 1. Find the main content area where you want to show the detail
-    const contentArea = document.getElementById("content-area");
-    if (!contentArea) return;
+      contentArea.innerHTML = "<p>Loading detailed menu...</p>";
 
-    // 2. Clear current view (e.g., the home page grid)
-    contentArea.innerHTML = "";
-
-    // 3. Create a container for the single detailed restaurant
-    const detailPage = document.createElement("div");
-    detailPage.id = "restaurant-page";
-    detailPage.className = "restaurant-page"; // This class ensures the next render knows it's detailed
-
-    // 4. Create a "Back" button for UX
-    const backBtn = document.createElement("button");
-    backBtn.textContent = "← Back to List";
-    backBtn.onclick = () => location.reload(); // Simple way to reset, or call renderResturantBox again
-    
-    // 5. Generate the detailed card
-    contentArea.append(createDetailedCard(resturant))
-
-    // Optional: Scroll to top
-    window.scrollTo(0, 0);
-});
+      const backBtn = document.createElement("button");
+      backBtn.textContent = "← Back to List";
+      backBtn.onclick = () => location.reload();
+      
+      // We must AWAIT the async function result
+      const detailedCard = await createDetailedCard(resturant);
+      
+      contentArea.innerHTML = ""; 
+      contentArea.append(backBtn, detailedCard);
+      window.scrollTo(0, 0);
+    });
   }
 
   return item;
@@ -122,32 +119,22 @@ const createResturantCard = (resturant, variant = "compact") => {
 
 export const renderResturantBox = async (root = document) => {
   const shopItems = root.querySelector(".shop-items");
-
-  if (!shopItems) {
-    return;
-  }
+  if (!shopItems) return;
 
   const resturants = await fetchResturants();
   shopItems.innerHTML = "";
 
   if (!resturants.length) {
-    shopItems.innerHTML =
-      '<p class="restaurant-empty-state">No restaurants available right now.</p>';
+    shopItems.innerHTML = '<p class="restaurant-empty-state">No restaurants available.</p>';
     return;
   }
 
   const isDetailedView = Boolean(shopItems.closest(".restaurant-page"));
   const itemsToRender = isDetailedView ? resturants : resturants.slice(0, 10);
 
-  const fragment = document.createDocumentFragment();
-
   itemsToRender.forEach((resturant) => {
-    fragment.appendChild(
-      createResturantCard(resturant, isDetailedView ? "detailed" : "compact"),
-    );
+    shopItems.appendChild(createResturantCard(resturant, isDetailedView ? "detailed" : "compact"));
   });
-
-  shopItems.appendChild(fragment);
 };
 
 export const initResturantBox = async (root = document) => {
