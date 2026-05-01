@@ -81,8 +81,6 @@ export const initSidebarNavigation = (root = document) => {
     setActiveByRoute(route);
   };
 
-  
-
   menuItems.forEach((item) => {
     if (item.dataset.bound === "true") {
       return;
@@ -94,25 +92,36 @@ export const initSidebarNavigation = (root = document) => {
       const route = item.dataset.route;
 
       if (route) {
+        history.pushState(
+          { page: route },
+          "",
+          "?page=" + encodeURIComponent(route),
+        );
         void renderRoute(route);
-        window.location.hash = route;
       }
     });
   });
 
-  if (root.dataset.hashListenerBound !== "true") {
-    root.dataset.hashListenerBound = "true";
+  if (root.dataset.queryListenerBound !== "true") {
+    root.dataset.queryListenerBound = "true";
 
-    window.addEventListener("hashchange", () => {
-      const route = window.location.hash.replace(/^#/, "");
+    window.addEventListener("popstate", () => {
+      const params = new URLSearchParams(window.location.search);
+      const route = params.get("page") || "";
       if (route) {
         void renderRoute(route);
+      } else {
+        const fallback =
+          root.querySelector(".left-sidebar .menu-item.active")?.dataset
+            .route || "home";
+        void renderRoute(fallback);
       }
     });
   }
 
+  const urlParams = new URLSearchParams(window.location.search);
   const initialRoute =
-    window.location.hash.replace(/^#/, "") ||
+    urlParams.get("page") ||
     root.querySelector(".left-sidebar .menu-item.active")?.dataset.route ||
     "home";
 

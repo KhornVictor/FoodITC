@@ -13,3 +13,5 @@ const initApp = async () => {
 if (document.readyState === "loading")
   document.addEventListener("DOMContentLoaded", initApp);
 else initApp();
+
+console.log("User" + (localStorage.getItem("isLoggedIn") === "true" ? " is logged in." : " is not logged in."));

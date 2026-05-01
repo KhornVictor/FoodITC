@@ -3,9 +3,7 @@ const USERS_DATA_URL = "/public/data/users.json";
 export const fetchUsers = async () => {
   return fetch(USERS_DATA_URL)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Failed to load users: ${response.statusText}`);
-      }
+      if (!response.ok) throw new Error(`Failed to load users: ${response.statusText}`);
       return response.json();
     })
     .then((data) => {

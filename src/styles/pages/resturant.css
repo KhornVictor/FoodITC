@@ -4,46 +4,13 @@
   flex-direction: column;
   gap: 1.75rem;
   min-height: 100%;
-  padding: 1.2rem;
   border-radius: 20px;
-  background:
-    radial-gradient(
-      circle at 90% 0%,
-      rgba(47, 159, 154, 0.16),
-      transparent 42%
-    ),
-    radial-gradient(circle at 0% 90%, rgba(242, 106, 0, 0.16), transparent 36%),
-    #fff;
-  border: 1px solid #ebe4da;
-  box-shadow: 0 18px 38px rgba(25, 28, 34, 0.09);
   overflow: hidden;
+  padding: 8px 14px;
   animation: restaurant-page-in 420ms ease-out;
 }
 
-.restaurant-page::before,
-.restaurant-page::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-  border-radius: 999px;
-  z-index: 0;
-}
 
-.restaurant-page::before {
-  width: 220px;
-  height: 220px;
-  background: rgba(255, 138, 0, 0.12);
-  top: -120px;
-  right: -80px;
-}
-
-.restaurant-page::after {
-  width: 190px;
-  height: 190px;
-  background: rgba(47, 159, 154, 0.12);
-  bottom: -100px;
-  left: -80px;
-}
 
 .restaurant-page > * {
   position: relative;
@@ -59,20 +26,17 @@
 .restaurant-kicker {
   margin: 0;
   width: fit-content;
-  padding: 0.3rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.76rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 700;
   color: #155e63;
-  background: rgba(47, 159, 154, 0.18);
 }
 
 .restaurant-hero h1 {
   margin: 0;
-  font-size: clamp(1.5rem, 1.2rem + 1.6vw, 2.3rem);
-  line-height: 1.2;
+  font-size: clamp(1.2rem, 1.4vw, 1.6rem);
+  font-weight: 700;
   color: #1f2937;
 }
 
@@ -247,6 +211,84 @@
   color: #637082;
   text-align: center;
 }
+
+
+
+
+/* Container for the whole detail page */
+.detail-view {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  
+}
+
+.detail-hero-img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-bottom:  1px solid #333 ;
+}
+
+.detail-title {
+  padding: 15px;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* The List Container */
+.blank-items-list {
+  display: flex;
+  flex-direction: column; /* Items go down */
+  gap: 15px;
+  padding: 15px;
+  border-top:  1px solid #333 ;
+  border-bottom:  1px solid #333 ;
+
+}
+
+/* The Row: Side-by-Side */
+.menu-item-row {
+  display: flex; /* Image and text side-by-side */
+  flex-direction: row;
+  gap: 15px;
+  border: 1px solid #333;
+  padding: 10px;
+  background: #e4ad69;
+}
+
+/* Left: Square Image Box */
+.menu-item-img-box {
+  flex: 0 0 80px; /* Fixed width */
+  height: 80px;
+}
+
+.menu-item-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: 1px solid #444;
+}
+
+/* Right: Detail Lines */
+.menu-item-info-box {
+  flex: 1; /* Take remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Placeholder Lines */
+.skeleton-line {
+  height: 12px;
+  background: #333;
+  width: 90%;
+}
+.skeleton-line.short {
+  width: 50%;
+}
+
+
 
 @keyframes restaurant-page-in {
   from {
