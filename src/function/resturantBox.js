@@ -4,20 +4,50 @@ const FALLBACK_IMAGE =
   "https://img.freepik.com/free-photo/close-up-delicious-pizza-with-tomatoes-cheese_23-2148888637.jpg?semt=ais_hybrid&w=740&q=80";
 
 // --- FIX 1: ASYNC FETCH AND FILTER LOGIC ---
-const createDetailedCard = async (resturant) => {
+export const createDetailedCard = async (resturant) => {
   const container = document.createElement("div");
   container.className = "detail-view";
+
+  const hero = document.createElement("div");
+  hero.className = "detail-hero";
 
   const heroImage = document.createElement("img");
   heroImage.className = "detail-hero-img";
   heroImage.src = resturant.image_url || FALLBACK_IMAGE;
-  
+  heroImage.alt = resturant.name || "Restaurant";
+
+  const heroOverlay = document.createElement("div");
+  heroOverlay.className = "detail-hero-overlay";
+
+  const heroContent = document.createElement("div");
+  heroContent.className = "detail-hero-content";
+
   const title = document.createElement("h1");
   title.className = "detail-title";
   title.textContent = resturant.name || "Restaurant Name";
 
+  const summary = document.createElement("p");
+  summary.className = "detail-summary";
+  summary.textContent =
+    resturant.description ||
+    "A curated menu of favorites, prepared fresh and delivered fast.";
+
+  const meta = document.createElement("div");
+  meta.className = "detail-meta";
+  meta.innerHTML = `
+    <span><i class="fa-solid fa-location-dot"></i>${
+      resturant.address || "No address"
+    }</span>
+    <span><i class="fa-solid fa-phone"></i>${
+      resturant.phone || "No phone"
+    }</span>
+  `;
+
+  heroContent.append(title, summary, meta);
+  hero.append(heroImage, heroOverlay, heroContent);
+
   const itemsContainer = document.createElement("div");
-  itemsContainer.className = "blank-items-list";
+  itemsContainer.className = "food-grid detail-food-grid";
 
   try {
     /* FIX: Adjusted path. If your file structure is:
@@ -39,19 +69,43 @@ const createDetailedCard = async (resturant) => {
       itemsContainer.innerHTML = "<p>No menu items available for this restaurant.</p>";
     } else {
       restaurantMenu.forEach((menuItem) => {
-        const itemRow = document.createElement("div");
-        itemRow.className = "menu-item-row";
-        itemRow.innerHTML = `
-          <div class="menu-item-img-box">
-            <img src="${menuItem.image_url || FALLBACK_IMAGE}" alt="${menuItem.name}">
-          </div>
-          <div class="menu-item-info-box">
-            <div class="menu-item-name"><strong>${menuItem.name}</strong></div>
-            <div class="menu-item-description">${menuItem.description}</div>
-            <div class="menu-item-price">$${menuItem.price.toFixed(2)}</div>
-          </div>
-        `;
-        itemsContainer.appendChild(itemRow);
+        const card = document.createElement("div");
+        card.className = "food-card";
+
+        const image = document.createElement("img");
+        image.className = "food-image";
+        image.src = menuItem.image_url || FALLBACK_IMAGE;
+        image.alt = menuItem.name || "Menu item";
+
+        const name = document.createElement("p");
+        name.className = "food-name";
+        name.textContent = menuItem.name || "Menu item";
+
+        const description = document.createElement("p");
+        description.className = "food-description";
+        description.textContent =
+          menuItem.description || "Freshly prepared with quality ingredients.";
+
+        const meta = document.createElement("div");
+        meta.className = "food-meta";
+
+        const price = document.createElement("span");
+        price.className = "food-price";
+        price.textContent = `$${Number(menuItem.price || 0).toFixed(2)}`;
+
+        const addButton = document.createElement("button");
+        addButton.className = "add-btn";
+        addButton.type = "button";
+        addButton.textContent = "+";
+        addButton.disabled = menuItem.is_available === false;
+
+        if (addButton.disabled) {
+          addButton.title = "This item is currently unavailable";
+        }
+
+        meta.append(price, addButton);
+        card.append(image, name, description, meta);
+        itemsContainer.appendChild(card);
       });
     }
   } catch (error) {
@@ -59,7 +113,11 @@ const createDetailedCard = async (resturant) => {
     itemsContainer.innerHTML = `<p>Error loading menu: ${error.message}. Check file path.</p>`;
   }
 
-  container.append(heroImage, title, itemsContainer);
+  const menuTitle = document.createElement("h2");
+  menuTitle.className = "detail-menu-title";
+  menuTitle.textContent = "Menu highlights";
+
+  container.append(hero, menuTitle, itemsContainer);
   return container;
 };
 
@@ -94,23 +152,21 @@ const createResturantCard = (resturant, variant = "compact") => {
 
     item.append(description, meta);
 
-    // --- FIX 2: ASYNC CLICK HANDLER ---
-    item.addEventListener("click", async () => {
-      const contentArea = document.getElementById("content-area");
-      if (!contentArea) return;
+    item.addEventListener("click", () => {
+      const route = "restaurant";
+      const resturantId = resturant.restaurant_id;
 
-      contentArea.innerHTML = "<p>Loading detailed menu...</p>";
+      history.pushState(
+        { page: route, resturantId },
+        "",
+        `?page=${encodeURIComponent(route)}&resturantId=${encodeURIComponent(
+          resturantId,
+        )}`,
+      );
 
-      const backBtn = document.createElement("button");
-      backBtn.textContent = "← Back to List";
-      backBtn.onclick = () => location.reload();
-      
-      // We must AWAIT the async function result
-      const detailedCard = await createDetailedCard(resturant);
-      
-      contentArea.innerHTML = ""; 
-      contentArea.append(backBtn, detailedCard);
-      window.scrollTo(0, 0);
+      if (typeof window.renderSidebarRoute === "function") {
+        void window.renderSidebarRoute(route);
+      }
     });
   }
 
@@ -138,5 +194,50 @@ export const renderResturantBox = async (root = document) => {
 };
 
 export const initResturantBox = async (root = document) => {
+  const resturantDetailRoot = root.querySelector(".restaurant-detail-body");
+  if (resturantDetailRoot) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const resturantId = Number(urlParams.get("resturantId"));
+
+    if (!resturantId) {
+      resturantDetailRoot.innerHTML =
+        '<p class="component-error">Restaurant not found.</p>';
+      return;
+    }
+
+    const resturants = await fetchResturants();
+    const resturant = resturants.find(
+      (item) => Number(item.restaurant_id) === resturantId,
+    );
+
+    if (!resturant) {
+      resturantDetailRoot.innerHTML =
+        '<p class="component-error">Restaurant not found.</p>';
+      return;
+    }
+
+    resturantDetailRoot.innerHTML = "";
+
+    const backBtn = document.createElement("button");
+    backBtn.className = "restaurant-detail-back";
+    backBtn.textContent = "← Back to List";
+    backBtn.addEventListener("click", () => {
+      const route = "restaurant";
+      history.pushState(
+        { page: route },
+        "",
+        `?page=${encodeURIComponent(route)}`,
+      );
+      if (typeof window.renderSidebarRoute === "function") {
+        void window.renderSidebarRoute(route);
+      }
+    });
+
+    const detailedCard = await createDetailedCard(resturant);
+    resturantDetailRoot.append(backBtn, detailedCard);
+    window.scrollTo(0, 0);
+    return;
+  }
+
   await renderResturantBox(root);
 };

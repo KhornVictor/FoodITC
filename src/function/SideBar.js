@@ -64,6 +64,18 @@ export const initSidebarNavigation = (root = document) => {
 
     await rendering(pagePath, contentArea);
 
+    if (route === "restaurant") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const resturantId = urlParams.get("resturantId");
+
+      if (resturantId) {
+        await rendering("./src/pages/home/resturant.detail.html", contentArea);
+        await initResturantBox(contentArea);
+        setActiveByRoute(route);
+        return;
+      }
+    }
+
     if (route === "home") {
       await initResturantBox(contentArea);
       await initCategoryCards(contentArea);
@@ -80,6 +92,8 @@ export const initSidebarNavigation = (root = document) => {
 
     setActiveByRoute(route);
   };
+
+  window.renderSidebarRoute = renderRoute;
 
   menuItems.forEach((item) => {
     if (item.dataset.bound === "true") {
