@@ -54,18 +54,33 @@ const createCartItemElement = (cartItem, onUpdate) => {
       loading="lazy"
     />
     <div class="cart-item-body">
-      <h4>${cartItem.name}</h4>
+      <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+        <h4 style="margin: 0;">${cartItem.name}</h4>
+        <button type="button" class="customize-cart-btn" title="Customize or add remark" style="border: none; background: none; padding: 0; margin: 0; cursor: pointer; font-size: 17px; color: #444;">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+      </div>
       <p class="cart-item-note">${cartItem.description || "No notes"}</p>
-      <div class="cart-item-footer">
-        <div class="qty-chip">
-          <button type="button" class="qty-decrease" aria-label="Decrease ${cartItem.name} quantity">-</button>
+      <div class="cart-item-footer" style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+        <div class="qty-chip" style="display: flex; align-items: center; gap: 8px; border-radius: 20px; background: #f5f5f5; padding: 2px 10px;">
+          <button type="button" class="qty-decrease" aria-label="Decrease ${cartItem.name} quantity" style="border: none; background: none; font-size: 16px;">-</button>
           <span class="qty-value">${cartItem.quantity}</span>
-          <button type="button" class="qty-increase" aria-label="Increase ${cartItem.name} quantity">+</button>
+          <button type="button" class="qty-increase" aria-label="Increase ${cartItem.name} quantity" style="border: none; background: none; font-size: 16px;">+</button>
         </div>
-        <strong>$${itemPrice}</strong>
+        <strong style="font-size: 15px;">$${itemPrice}</strong>
       </div>
     </div>
   `;
+  // Add event handler for customize button
+  const customizeBtn = article.querySelector(".customize-cart-btn");
+  if (customizeBtn) {
+    customizeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      // Placeholder: navigate to customization page (to be implemented)
+      alert("Customization page coming soon!");
+    });
+  }
 
   // Handle quantity decrease
   const decreaseBtn = article.querySelector(".qty-decrease");
@@ -220,6 +235,11 @@ export const renderCartPage = async (root = document) => {
     } else {
       const totals = await calculateCartTotal(currentPromoDiscount);
 
+      // Simple, compact radio button payment options UI
+      // Payment options as bill rows
+      let paymentHTML = '';
+      // (No pill selection logic needed for radio buttons)
+
       let billHTML = `
         <p class="bill-row"><span>Subtotal</span><span>$${totals.subtotal.toFixed(2)}</span></p>
       `;
@@ -236,11 +256,68 @@ export const renderCartPage = async (root = document) => {
         <button class="place-order-btn" type="button">Place Order</button>
       `;
 
-      billSection.innerHTML = billHTML;
+      // Insert payment options as rows in the bill section
+      let paymentRows = `
+        <style>
+          .bill-radio-row label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #222;
+          }
+          .bill-radio-row input[type='radio'] {
+            accent-color: #222;
+            width: 16px;
+            height: 16px;
+            margin: 0 2px 0 0;
+            vertical-align: middle;
+          }
+        </style>
+        <p class="bill-row bill-radio-row" style="display: flex; align-items: center; justify-content: space-between; font-size: 14px;">
+          <span style="color: #444;">Method</span>
+          <span style="display: flex; gap: 22px; align-items: center;">
+            <label><input type="radio" name="payment-method" value="cash" checked>Cash</label>
+            <label><input type="radio" name="payment-method" value="qr">QR Code</label>
+          </span>
+        </p>
+        <p class="bill-row bill-radio-row" style="display: flex; align-items: center; justify-content: space-between; font-size: 14px;">
+          <span style="color: #444;">Pay</span>
+          <span style="display: flex; gap: 22px; align-items: center;">
+            <label><input type="radio" name="payment-timing" value="now" checked>Now</label>
+            <label><input type="radio" name="payment-timing" value="arrival">On Arrival</label>
+          </span>
+        </p>
+      `;
+      billSection.innerHTML = paymentRows + billHTML;
+
+      // Add warning message container
+      let warningMsg = billSection.querySelector('.payment-warning');
+      if (!warningMsg) {
+        warningMsg = document.createElement('div');
+        warningMsg.className = 'payment-warning';
+        warningMsg.style.cssText = 'color: #d32f2f; font-size: 13px; margin: 6px 0 0 0; min-height: 18px;';
+        billSection.insertBefore(warningMsg, billSection.querySelector('.bill-row'));
+      } else {
+        warningMsg.textContent = '';
+      }
 
       const placeOrderBtn = billSection.querySelector(".place-order-btn");
       if (placeOrderBtn) {
         placeOrderBtn.addEventListener("click", async () => {
+          // Read selected payment method and timing
+          const method = billSection.querySelector('input[name="payment-method"]:checked').value;
+          const timing = billSection.querySelector('input[name="payment-timing"]:checked').value;
+
+          // Block if Cash + Now
+          if (method === 'cash' && timing === 'now') {
+            warningMsg.textContent = 'Online payment with cash is not supported. Please select QR Code for Pay Now, or use Cash for Pay on Arrival.';
+            return;
+          } else {
+            warningMsg.textContent = '';
+          }
+
           try {
             placeOrderBtn.disabled = true;
             placeOrderBtn.textContent = "Processing...";

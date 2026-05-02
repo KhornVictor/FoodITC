@@ -89,6 +89,7 @@ export const createDetailedCard = async (resturant) => {
         const meta = document.createElement("div");
         meta.className = "food-meta";
 
+        // Price left, add button right
         const price = document.createElement("span");
         price.className = "food-price";
         price.textContent = `$${Number(menuItem.price || 0).toFixed(2)}`;
@@ -98,11 +99,32 @@ export const createDetailedCard = async (resturant) => {
         addButton.type = "button";
         addButton.textContent = "+";
         addButton.disabled = menuItem.is_available === false;
-
         if (addButton.disabled) {
           addButton.title = "This item is currently unavailable";
         }
+        addButton.addEventListener("click", async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          try {
+            const cartModule = await import("../services/Cart.js");
+            await cartModule.addToCart(menuItem.item_id, 1);
+            const originalText = addButton.textContent;
+            addButton.disabled = true;
+            addButton.textContent = "✓";
+            setTimeout(() => {
+              addButton.textContent = originalText;
+              addButton.disabled = false;
+            }, 1000);
+            const cartRefreshEvent = new CustomEvent("cartUpdated");
+            document.dispatchEvent(cartRefreshEvent);
+          } catch (error) {
+            console.error("Error adding to cart:", error);
+          }
+        });
 
+        meta.style.display = "flex";
+        meta.style.justifyContent = "space-between";
+        meta.style.alignItems = "center";
         meta.append(price, addButton);
         card.append(image, name, description, meta);
         itemsContainer.appendChild(card);
