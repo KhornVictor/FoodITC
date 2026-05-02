@@ -3,6 +3,7 @@ import { initFoodPage, get10FoodCards } from "./foodCard.js";
 import { initResturantBox } from "./resturantBox.js";
 import { initCategoryCards } from "./categoryCard.js";
 import { topBarLabel } from "./Navigation.js";
+import { initOrderHistory } from "../pages/home/OrderHistory.js";
 
 /**
  * Initialize sidebar navigation with click handlers.
@@ -72,6 +73,10 @@ export const initSidebarNavigation = (root = document) => {
 
     if (route === "food") {
       await initFoodPage(contentArea);
+    }
+
+    if (route === "history") {
+      await initOrderHistory(contentArea);
     }
 
     if (route === "restaurant") {
