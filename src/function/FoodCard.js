@@ -1,3 +1,5 @@
+import { addToCart } from "../services/Cart.js";
+
 const createFoodCard = (food) => {
   const card = document.createElement("div");
   card.className = "food-card";
@@ -31,6 +33,34 @@ const createFoodCard = (food) => {
   if (!food.is_available) {
     addButton.title = "This item is currently unavailable";
   }
+
+  // Add click handler for add to cart
+  addButton.addEventListener("click", async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      await addToCart(food.item_id, 1);
+
+      // Simple feedback - just disable button briefly
+      const originalText = addButton.textContent;
+      addButton.disabled = true;
+      addButton.textContent = "✓";
+
+      setTimeout(() => {
+        addButton.textContent = originalText;
+        addButton.disabled = false;
+      }, 1000);
+
+      console.log(`Added ${food.name} to cart`);
+      
+      // Refresh cart display
+      const cartRefreshEvent = new CustomEvent("cartUpdated");
+      document.dispatchEvent(cartRefreshEvent);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  });
 
   meta.append(price, addButton);
   card.append(image, name, description, meta);
