@@ -10,6 +10,75 @@ import {
 
 const AUTH_STORAGE_KEY = "currentUser";
 
+const getStoredUser = () => {
+  const storedUser =
+    sessionStorage.getItem(AUTH_STORAGE_KEY) ||
+    localStorage.getItem(AUTH_STORAGE_KEY);
+
+  if (!storedUser) {
+    return null;
+  }
+
+  try {
+    const parsedUser = JSON.parse(storedUser);
+    if (parsedUser && Number.isFinite(Number(parsedUser.user_id))) {
+      return parsedUser;
+    }
+  } catch (error) {
+    console.warn("Unable to parse stored user", error);
+  }
+
+  return null;
+};
+
+const ensureLoginModal = () => {
+  let modal = document.querySelector("#login-required-modal");
+  if (modal) {
+    return modal;
+  }
+
+  modal = document.createElement("div");
+  modal.id = "login-required-modal";
+  modal.className = "login-modal";
+
+  modal.innerHTML = `
+    <div class="login-modal__panel">
+      <div class="login-modal__badge" aria-hidden="true">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <p class="login-modal__title">Login required</p>
+      <p class="login-modal__desc">Please log in to place your order.</p>
+      <div class="login-modal__actions">
+        <button type="button" class="login-modal__button login-modal__button--primary login-required-btn">Login</button>
+        <button type="button" class="login-modal__button login-modal__button--ghost login-cancel-btn">Cancel</button>
+      </div>
+    </div>
+  `;
+
+  const loginBtn = modal.querySelector(".login-required-btn");
+  if (loginBtn) {
+    loginBtn.addEventListener("click", () => {
+      window.location.href = "src/pages/auth/login.html";
+    });
+  }
+
+  const cancelBtn = modal.querySelector(".login-cancel-btn");
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  }
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.body.appendChild(modal);
+  return modal;
+};
+
 // Store current promo discount (0-1)
 let currentPromoDiscount = 0;
 
@@ -121,6 +190,7 @@ export const renderCartPage = async (root = document) => {
   try {
     const orderList = root.querySelector(".order-list");
     const billSection = root.querySelector(".bill-section");
+    const rightSidebar = document.querySelector("#right-side-bar");
 
     if (!orderList || !billSection) {
       console.warn("Cart container elements not found - selectors may be incorrect");
@@ -157,11 +227,17 @@ export const renderCartPage = async (root = document) => {
 
     // Add cart items or empty message
     if (cartItems.length === 0) {
+      if (rightSidebar) {
+        rightSidebar.classList.add("is-hidden");
+      }
       const emptyMessage = document.createElement("p");
       emptyMessage.className = "component-error";
       emptyMessage.textContent = "Your cart is empty. Add items from the menu!";
       fragment.appendChild(emptyMessage);
     } else {
+      if (rightSidebar) {
+        rightSidebar.classList.remove("is-hidden");
+      }
       cartItems.forEach((item) => {
         fragment.appendChild(createCartItemElement(item, updateCart));
       });
@@ -238,10 +314,18 @@ export const renderCartPage = async (root = document) => {
 
       billSection.innerHTML = billHTML;
 
+      const loginModal = ensureLoginModal();
+
       const placeOrderBtn = billSection.querySelector(".place-order-btn");
       if (placeOrderBtn) {
         placeOrderBtn.addEventListener("click", async () => {
           try {
+            const storedUser = getStoredUser();
+            if (!storedUser) {
+              loginModal.style.display = "flex";
+              return;
+            }
+
             placeOrderBtn.disabled = true;
             placeOrderBtn.textContent = "Processing...";
 

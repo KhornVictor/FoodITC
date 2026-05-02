@@ -11,6 +11,10 @@ import { initOrderHistory } from "../pages/home/OrderHistory.js";
  * @param {HTMLElement} root - Root element to search for sidebar (defaults to document)
  */
 export const initSidebarNavigation = (root = document) => {
+  const logoutBtn = root.querySelector("#logout-btn");
+  const logoutIconBtn = root.querySelector(".sidebar-logout-icon");
+  const sidebar = root.querySelector(".left-sidebar");
+  const sidebarToggle = root.querySelector(".sidebar-toggle");
   const menuItems = root.querySelectorAll(
     ".left-sidebar .menu-item[data-route]",
   );
@@ -26,6 +30,38 @@ export const initSidebarNavigation = (root = document) => {
   if (menuItems.length === 0) {
     console.warn("No sidebar menu items found with data-route attribute");
     return;
+  }
+
+  if (sidebarToggle && sidebar && sidebarToggle.dataset.bound !== "true") {
+    sidebarToggle.dataset.bound = "true";
+
+    const collapsedState = localStorage.getItem("sidebarCollapsed") === "true";
+    if (collapsedState) {
+      sidebar.classList.add("is-collapsed");
+    }
+
+    sidebarToggle.addEventListener("click", () => {
+      const isCollapsed = sidebar.classList.toggle("is-collapsed");
+      localStorage.setItem("sidebarCollapsed", String(isCollapsed));
+    });
+  }
+
+  if (logoutBtn && logoutBtn.dataset.bound !== "true") {
+    logoutBtn.dataset.bound = "true";
+    logoutBtn.addEventListener("click", () => {
+      sessionStorage.removeItem("currentUser");
+      localStorage.removeItem("currentUser");
+      window.location.href = "src/pages/auth/login.html";
+    });
+  }
+
+  if (logoutIconBtn && logoutIconBtn.dataset.bound !== "true") {
+    logoutIconBtn.dataset.bound = "true";
+    logoutIconBtn.addEventListener("click", () => {
+      sessionStorage.removeItem("currentUser");
+      localStorage.removeItem("currentUser");
+      window.location.href = "src/pages/auth/login.html";
+    });
   }
 
   if (!contentArea) {

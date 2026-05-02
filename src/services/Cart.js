@@ -16,20 +16,21 @@ const getCurrentUser = () => {
 
   if (storedUser) {
     try {
-      return JSON.parse(storedUser);
+      const parsedUser = JSON.parse(storedUser);
+      if (parsedUser && Number.isFinite(Number(parsedUser.user_id))) {
+        return parsedUser;
+      }
     } catch (error) {
       console.error("Unable to parse stored user:", error);
-    } 
+    }
   }
 
   // Create guest user for testing (will be replaced with real user on login)
-  const guestUser = {
+  return {
     user_id: 999,
     name: "Guest",
     email: "guest@nomnom.local",
   };
-  
-  return guestUser;
 };
 
 /**

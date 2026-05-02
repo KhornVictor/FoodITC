@@ -1,4 +1,5 @@
 import { fetchResturants } from "../services/Resturant.js";
+import { createFoodCard } from "./foodCard.js";
 
 const FALLBACK_IMAGE =
   "https://img.freepik.com/free-photo/close-up-delicious-pizza-with-tomatoes-cheese_23-2148888637.jpg?semt=ais_hybrid&w=740&q=80";
@@ -11,16 +12,19 @@ export const createDetailedCard = async (resturant) => {
   const hero = document.createElement("div");
   hero.className = "detail-hero";
 
+  const heroCopy = document.createElement("div");
+  heroCopy.className = "detail-hero-copy";
+
   const heroImage = document.createElement("img");
   heroImage.className = "detail-hero-img";
   heroImage.src = resturant.image_url || FALLBACK_IMAGE;
   heroImage.alt = resturant.name || "Restaurant";
 
+  const heroMedia = document.createElement("div");
+  heroMedia.className = "detail-hero-media";
+
   const heroOverlay = document.createElement("div");
   heroOverlay.className = "detail-hero-overlay";
-
-  const heroContent = document.createElement("div");
-  heroContent.className = "detail-hero-content";
 
   const title = document.createElement("h1");
   title.className = "detail-title";
@@ -43,8 +47,9 @@ export const createDetailedCard = async (resturant) => {
     }</span>
   `;
 
-  heroContent.append(title, summary, meta);
-  hero.append(heroImage, heroOverlay, heroContent);
+  heroCopy.append(title, summary, meta);
+  heroMedia.append(heroImage, heroOverlay);
+  hero.append(heroCopy, heroMedia);
 
   const itemsContainer = document.createElement("div");
   itemsContainer.className = "food-grid detail-food-grid";
@@ -55,7 +60,7 @@ export const createDetailedCard = async (resturant) => {
       /src/data/menu_items.json
       The path should be '../data/menu_items.json'
     */
-    const response = await fetch("../../public/data/menu_items.json"); 
+    const response = await fetch("./public/data/menu_items.json");
     
     if (!response.ok) throw new Error("File not found");
     const menuData = await response.json();
@@ -66,46 +71,11 @@ export const createDetailedCard = async (resturant) => {
     );
 
     if (restaurantMenu.length === 0) {
-      itemsContainer.innerHTML = "<p>No menu items available for this restaurant.</p>";
+      itemsContainer.innerHTML =
+        "<p>No menu items available for this restaurant.</p>";
     } else {
       restaurantMenu.forEach((menuItem) => {
-        const card = document.createElement("div");
-        card.className = "food-card";
-
-        const image = document.createElement("img");
-        image.className = "food-image";
-        image.src = menuItem.image_url || FALLBACK_IMAGE;
-        image.alt = menuItem.name || "Menu item";
-
-        const name = document.createElement("p");
-        name.className = "food-name";
-        name.textContent = menuItem.name || "Menu item";
-
-        const description = document.createElement("p");
-        description.className = "food-description";
-        description.textContent =
-          menuItem.description || "Freshly prepared with quality ingredients.";
-
-        const meta = document.createElement("div");
-        meta.className = "food-meta";
-
-        const price = document.createElement("span");
-        price.className = "food-price";
-        price.textContent = `$${Number(menuItem.price || 0).toFixed(2)}`;
-
-        const addButton = document.createElement("button");
-        addButton.className = "add-btn";
-        addButton.type = "button";
-        addButton.textContent = "+";
-        addButton.disabled = menuItem.is_available === false;
-
-        if (addButton.disabled) {
-          addButton.title = "This item is currently unavailable";
-        }
-
-        meta.append(price, addButton);
-        card.append(image, name, description, meta);
-        itemsContainer.appendChild(card);
+        itemsContainer.appendChild(createFoodCard(menuItem));
       });
     }
   } catch (error) {
