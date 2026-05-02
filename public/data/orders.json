@@ -1,4 +1,52 @@
-[]
+[
+  {
+    "order_id": 1,
+    "user_id": 1,
+    "total_price": 41.98,
+    "status": "confirmed",
+    "address": "123 Maple Street, New York, NY",
+    "created_at": "2026-03-10T16:10:00"
+  },
+  {
+    "order_id": 2,
+    "user_id": 2,
+    "total_price": 39.47,
+    "status": "pending",
+    "address": "456 Oak Avenue, Los Angeles, CA",
+    "created_at": "2026-03-10T16:25:00"
+  },
+  {
+    "order_id": 3,
+    "user_id": 3,
+    "total_price": 19.50,
+    "status": "delivered",
+    "address": "789 Pine Road, Chicago, IL",
+    "created_at": "2026-03-10T16:40:00"
+  },
+  {
+    "order_id": 4,
+    "user_id": 4,
+    "total_price": 34.00,
+    "status": "cancelled",
+    "address": "321 Cedar Lane, Houston, TX",
+    "created_at": "2026-03-10T17:05:00"
+  },
+  {
+    "order_id": 5,
+    "user_id": 5,
+    "total_price": 21.50,
+    "status": "confirmed",
+    "address": "654 Birch Blvd, Phoenix, AZ",
+    "created_at": "2026-03-10T17:20:00"
+  },
+  {
+    "order_id": 6,
+    "user_id": 6,
+    "total_price": 26.75,
+    "status": "delivered",
+    "address": "987 Spruce Street, Philadelphia, PA",
+    "created_at": "2026-03-10T17:35:00"
+  },
   {
     "order_id": 7,
     "user_id": 7,
