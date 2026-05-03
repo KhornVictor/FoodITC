@@ -6,6 +6,7 @@ import { topBarLabel } from "./Navigation.js";
 import { initOrderHistory } from "../pages/history.js";
 import { initCartPage } from "../../pages/order/CartPage.js";
 import { initConfirmPage } from "../../pages/order/ConfirmPage.js";
+import { initSettingsPage } from "../pages/setting.js";
 
 export const initSidebarNavigation = (root = document) => {
   const logoutBtn = root.querySelector("#logout-btn");
@@ -146,6 +147,10 @@ export const initSidebarNavigation = (root = document) => {
 
     if (route === "confirm") {
       await initConfirmPage(contentArea);
+    }
+
+    if (route === "settings") {
+      await initSettingsPage(contentArea);
     }
 
     setActiveByRoute(route);
