@@ -1,10 +1,8 @@
-import { fetchResturants } from "../services/Resturant.js";
-import { createFoodCard } from "./foodCard.js";
+import { fetchResturants } from "../../services/Resturant.js";
+import { createFoodCard } from "./food.js";
 
-const FALLBACK_IMAGE =
-  "https://img.freepik.com/free-photo/close-up-delicious-pizza-with-tomatoes-cheese_23-2148888637.jpg?semt=ais_hybrid&w=740&q=80";
+const FALLBACK_IMAGE = "https://img.freepik.com/free-photo/close-up-delicious-pizza-with-tomatoes-cheese_23-2148888637.jpg?semt=ais_hybrid&w=740&q=80";
 
-// --- FIX 1: ASYNC FETCH AND FILTER LOGIC ---
 export const createDetailedCard = async (resturant) => {
   const container = document.createElement("div");
   container.className = "detail-view";
@@ -55,19 +53,13 @@ export const createDetailedCard = async (resturant) => {
   itemsContainer.className = "food-grid detail-food-grid";
 
   try {
-    /* FIX: Adjusted path. If your file structure is:
-      /src/js/resturantBox.js
-      /src/data/menu_items.json
-      The path should be '../data/menu_items.json'
-    */
     const response = await fetch("./public/data/menu_items.json");
-    
+
     if (!response.ok) throw new Error("File not found");
     const menuData = await response.json();
 
-    // COMPARE: Only show items for this restaurant ID
     const restaurantMenu = menuData.filter(
-      (item) => item.restaurant_id === resturant.restaurant_id
+      (item) => item.restaurant_id === resturant.restaurant_id,
     );
 
     if (restaurantMenu.length === 0) {
@@ -111,7 +103,8 @@ const createResturantCard = (resturant, variant = "compact") => {
   if (variant === "detailed") {
     const description = document.createElement("p");
     description.className = "restaurant-description";
-    description.textContent = resturant.description || "Fresh ingredients and crowd-favorite dishes.";
+    description.textContent =
+      resturant.description || "Fresh ingredients and crowd-favorite dishes.";
 
     const meta = document.createElement("div");
     meta.className = "restaurant-meta";
@@ -151,7 +144,8 @@ export const renderResturantBox = async (root = document) => {
   shopItems.innerHTML = "";
 
   if (!resturants.length) {
-    shopItems.innerHTML = '<p class="restaurant-empty-state">No restaurants available.</p>';
+    shopItems.innerHTML =
+      '<p class="restaurant-empty-state">No restaurants available.</p>';
     return;
   }
 
@@ -159,7 +153,9 @@ export const renderResturantBox = async (root = document) => {
   const itemsToRender = isDetailedView ? resturants : resturants.slice(0, 10);
 
   itemsToRender.forEach((resturant) => {
-    shopItems.appendChild(createResturantCard(resturant, isDetailedView ? "detailed" : "compact"));
+    shopItems.appendChild(
+      createResturantCard(resturant, isDetailedView ? "detailed" : "compact"),
+    );
   });
 };
 

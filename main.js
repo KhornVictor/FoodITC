@@ -1,6 +1,6 @@
-import { rendering } from "./src/function/Rendering.js";
-import { initSidebarNavigation } from "./src/function/SideBar.js";
-import { checkLoginState } from "./src/function/Navigation.js";
+import { rendering } from "./src/function/core/Rendering.js";
+import { initSidebarNavigation } from "./src/function/navigations/SideBar.js";
+import { checkLoginState } from "./src/function/navigations/Navigation.js";
 import { initCartPage } from "./src/pages/order/CartPage.js";
 
 const main = document.getElementById("main");
