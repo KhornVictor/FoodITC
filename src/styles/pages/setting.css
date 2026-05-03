@@ -1,0 +1,115 @@
+.setting-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 2rem;
+  animation: page-fade-in 420ms ease-out;
+}
+
+.setting-content h1 {
+  font-size: 2rem;
+  color: var(--brand-gray-900);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.setting-content p {
+  font-size: 1rem;
+  color: var(--brand-gray-600);
+  margin-bottom: 2rem;
+  text-align: center;
+  max-width: 400px;
+}
+
+.setting-content > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.setting-content label {
+  font-size: 1rem;
+  color: var(--brand-gray-700);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.setting-content select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--brand-line);
+  border-radius: 8px;
+  background-color: var(--brand-surface);
+  color: var(--brand-text-dark);
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.setting-content select:focus {
+  outline: none;
+  border-color: var(--brand-accent-orange);
+  box-shadow: 0 0 0 3px var(--brand-accent-orange-soft);
+}
+
+.setting-content select:hover {
+  border-color: var(--brand-accent-orange);
+}
+
+.setting-content button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--brand-accent-orange);
+  color: white;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin: 0.5rem 0;
+  width: 100%;
+  max-width: 300px;
+}
+
+.setting-content button:hover {
+  background-color: var(--brand-accent-orange-deep);
+  transform: translateY(-1px);
+}
+
+.setting-content button:active {
+  transform: translateY(0);
+}
+
+.setting-content button#notification-button {
+  background-color: var(--brand-accent-teal);
+}
+
+.setting-content button#notification-button:hover {
+  background-color: var(--brand-accent-teal-deep);
+}
+
+.setting-content button#save-changes {
+  background-color: var(--brand-gray-600);
+}
+
+.setting-content button#save-changes:hover {
+  background-color: var(--brand-gray-900);
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
