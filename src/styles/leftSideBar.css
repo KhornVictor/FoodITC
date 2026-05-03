@@ -14,7 +14,11 @@
   );
   box-shadow: 0 25px 60px rgba(238, 174, 114, 0.25);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  transition:
+    width 260ms ease,
+    padding 260ms ease,
+    box-shadow 260ms ease;
 }
 
 .left-sidebar::before,
@@ -64,20 +68,64 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: relative;
+}
+
+.sidebar-toggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid rgba(242, 106, 0, 0.18);
+  color: var(--brand-accent-orange-deep);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  /* box-shadow:
+    0 12px 22px rgba(244, 130, 53, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7); */
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.sidebar-toggle:hover {
+  transform: translateY(calc(-50% - 2px));
+  /* box-shadow:
+    0 16px 28px rgba(244, 130, 53, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8); */
+  border-color: rgba(242, 106, 0, 0.28);
+}
+
+.sidebar-toggle:active {
+  transform: translateY(-50%) scale(0.98);
+}
+
 .logo {
   width: 100px;
   height: 100px;
   object-fit: contain;
   scale: 1.1;
+  transition: transform 260ms ease, width 260ms ease, height 260ms ease;
 }
 
 .menu-item {
   position: relative;
-  padding: 16px 18px;
+  padding: 12px 14px;
   border-radius: 16px;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   cursor: pointer;
   /* background: rgba(255, 255, 255, 0.85); */
   border: 1px solid transparent;
@@ -88,17 +136,32 @@
     border-color 0.25s ease,
     background-color 0.25s ease;
   backdrop-filter: blur(12px);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    padding 0.25s ease;
 }
 
 .menu-item i {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--brand-accent-orange-deep);
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 6px 14px rgba(244, 130, 53, 0.14);
 }
 
 .menu-item p {
   margin: 0;
   font-size: 1rem;
   font-weight: 500;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .menu-item:hover {
@@ -118,6 +181,8 @@
 
 .menu-item.active i {
   color: var(--brand-surface);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: none;
 }
 
 /* .menu-item::after {
@@ -151,6 +216,83 @@
   /* border-radius: 20px; */
   border: 1px solid rgba(255, 163, 84, 0.25);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: padding 260ms ease, opacity 200ms ease;
+}
+
+.sidebar-logout-icon {
+  display: none;
+  border: 0;
+  border-radius: 12px;
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--brand-accent-orange-deep);
+  box-shadow: 0 6px 14px rgba(244, 130, 53, 0.14);
+  place-items: center;
+  cursor: pointer;
+}
+
+.left-sidebar.is-collapsed {
+  width: 96px;
+}
+
+.left-sidebar.is-collapsed .menu-list {
+  padding: 16px 12px;
+}
+
+.left-sidebar.is-collapsed .sidebar-header {
+  justify-content: center;
+}
+
+.left-sidebar.is-collapsed .logo {
+  width: 52px;
+  height: 52px;
+  scale: 1;
+}
+
+.left-sidebar.is-collapsed .sidebar-toggle i {
+  transform: rotate(180deg);
+}
+
+.left-sidebar.is-collapsed .sidebar-toggle {
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+  padding: 0px;
+  right: -30px;
+}
+
+.left-sidebar.is-collapsed .menu-item {
+  justify-content: center;
+  padding: 10px;
+}
+
+.left-sidebar.is-collapsed .menu-item p {
+  opacity: 0;
+  transform: translateX(-6px);
+  pointer-events: none;
+  width: 0;
+}
+
+.left-sidebar.is-collapsed .sidebar-footer {
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-sidebar.is-collapsed .sidebar-footer div {
+  display: none;
+}
+
+.left-sidebar.is-collapsed .sidebar-help {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--brand-gray-500);
+}
+
+
+.left-sidebar.is-collapsed .sidebar-logout-icon {
+  display: inline-grid;
 }
 
 @media (max-width: 1024px) {
@@ -159,5 +301,9 @@
     padding: 20px;
     border-radius: 20px;
     border-bottom: 1px solid var(--brand-line);
+  }
+
+  .left-sidebar.is-collapsed {
+    width: 100%;
   }
 }

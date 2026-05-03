@@ -1,6 +1,6 @@
 import { addToCart } from "../services/Cart.js";
 
-const createFoodCard = (food) => {
+export const createFoodCard = (food) => {
   const card = document.createElement("div");
   card.className = "food-card";
 

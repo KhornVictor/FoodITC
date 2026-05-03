@@ -7,11 +7,81 @@ import {
   validatePromoCode,
   checkoutCart,
 } from "../../services/Cart.js";
+import { renderConfirmPage } from "./ConfirmPage.js";
 
 const AUTH_STORAGE_KEY = "currentUser";
 
-// Store current promo discount (0-1)
-let currentPromoDiscount = 0;
+const getStoredUser = () => {
+  const storedUser =
+    sessionStorage.getItem(AUTH_STORAGE_KEY) ||
+    localStorage.getItem(AUTH_STORAGE_KEY);
+
+  if (!storedUser) {
+    return null;
+  }
+
+  try {
+    const parsedUser = JSON.parse(storedUser);
+    if (parsedUser && Number.isFinite(Number(parsedUser.user_id))) {
+      return parsedUser;
+    }
+  } catch (error) {
+    console.warn("Unable to parse stored user", error);
+  }
+
+  return null;
+};
+
+const ensureLoginModal = () => {
+  let modal = document.querySelector("#login-required-modal");
+  if (modal) {
+    return modal;
+  }
+
+  modal = document.createElement("div");
+  modal.id = "login-required-modal";
+  modal.className = "login-modal";
+
+  modal.innerHTML = `
+    <div class="login-modal__panel">
+      <div class="login-modal__badge" aria-hidden="true">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <p class="login-modal__title">Login required</p>
+      <p class="login-modal__desc">Please log in to place your order.</p>
+      <div class="login-modal__actions">
+        <button type="button" class="login-modal__button login-modal__button--primary login-required-btn">Login</button>
+        <button type="button" class="login-modal__button login-modal__button--ghost login-cancel-btn">Cancel</button>
+      </div>
+    </div>
+  `;
+
+  const loginBtn = modal.querySelector(".login-required-btn");
+  if (loginBtn) {
+    loginBtn.addEventListener("click", () => {
+      window.location.href = "src/pages/auth/login.html";
+    });
+  }
+
+  const cancelBtn = modal.querySelector(".login-cancel-btn");
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  }
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.body.appendChild(modal);
+  return modal;
+};
+
+// Store current promo discount (0-1) - exported for use in ConfirmPage
+export let currentPromoDiscount = 0;
 
 /**
  * Get the currently logged-in user or create a guest user
@@ -130,21 +200,42 @@ const createCartItemElement = (cartItem, onUpdate) => {
 };
 
 /**
+ * Build the cart HTML structure if it doesn't exist
+ */
+const buildCartHTML = (root) => {
+  if (!root.querySelector(".order-list") || !root.querySelector(".bill-section")) {
+    root.innerHTML = `
+      <div class="order-list" style="padding: 16px 12px; max-height: calc(100% - 140px); overflow-y: auto;"></div>
+      <div class="bill-section" style="padding: 12px 12px; border-top: 1px solid #e0e0e0;"></div>
+    `;
+  }
+};
+
+/**
  * Render cart items and update totals
  */
 export const renderCartPage = async (root = document) => {
   try {
-    const orderList = root.querySelector(".order-list");
-    const billSection = root.querySelector(".bill-section");
+    // Always use the right sidebar for cart display
+    const rightSidebar = document.querySelector("#right-side-bar");
+    if (!rightSidebar) {
+      console.warn("Right sidebar not found");
+      return false;
+    }
+
+    // First ensure the cart HTML structure exists
+    buildCartHTML(rightSidebar);
+
+    const orderList = rightSidebar.querySelector(".order-list");
+    const billSection = rightSidebar.querySelector(".bill-section");
 
     if (!orderList || !billSection) {
-      console.warn("Cart container elements not found - selectors may be incorrect");
-      console.log("orderList found:", !!orderList, "billSection found:", !!billSection);
+      console.warn("Cart container elements not found after building");
       return false;
     }
 
     const updateCart = async () => {
-      await renderCartPage(root);
+      await renderCartPage();
     };
 
     const user = getCurrentUser();
@@ -172,11 +263,17 @@ export const renderCartPage = async (root = document) => {
 
     // Add cart items or empty message
     if (cartItems.length === 0) {
+      if (rightSidebar) {
+        rightSidebar.classList.add("is-hidden");
+      }
       const emptyMessage = document.createElement("p");
       emptyMessage.className = "component-error";
       emptyMessage.textContent = "Your cart is empty. Add items from the menu!";
       fragment.appendChild(emptyMessage);
     } else {
+      if (rightSidebar) {
+        rightSidebar.classList.remove("is-hidden");
+      }
       cartItems.forEach((item) => {
         fragment.appendChild(createCartItemElement(item, updateCart));
       });
@@ -235,11 +332,6 @@ export const renderCartPage = async (root = document) => {
     } else {
       const totals = await calculateCartTotal(currentPromoDiscount);
 
-      // Simple, compact radio button payment options UI
-      // Payment options as bill rows
-      let paymentHTML = '';
-      // (No pill selection logic needed for radio buttons)
-
       let billHTML = `
         <p class="bill-row"><span>Subtotal</span><span>$${totals.subtotal.toFixed(2)}</span></p>
       `;
@@ -253,107 +345,27 @@ export const renderCartPage = async (root = document) => {
         <p class="bill-row"><span>Delivery</span><span>$${totals.delivery.toFixed(2)}</span></p>
         <p class="bill-row"><span>Tax</span><span>$${totals.tax.toFixed(2)}</span></p>
         <p class="bill-row total"><span>Total</span><span>$${totals.total.toFixed(2)}</span></p>
-        <button class="place-order-btn" type="button">Place Order</button>
+        <button class="place-order-btn" type="button">Proceed to Checkout</button>
       `;
 
-      // Insert payment options as rows in the bill section
-      let paymentRows = `
-        <style>
-          .bill-radio-row label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            color: #222;
-          }
-          .bill-radio-row input[type='radio'] {
-            accent-color: #222;
-            width: 16px;
-            height: 16px;
-            margin: 0 2px 0 0;
-            vertical-align: middle;
-          }
-        </style>
-        <p class="bill-row bill-radio-row" style="display: flex; align-items: center; justify-content: space-between; font-size: 14px;">
-          <span style="color: #444;">Method</span>
-          <span style="display: flex; gap: 22px; align-items: center;">
-            <label><input type="radio" name="payment-method" value="cash" checked>Cash</label>
-            <label><input type="radio" name="payment-method" value="qr">QR Code</label>
-          </span>
-        </p>
-        <p class="bill-row bill-radio-row" style="display: flex; align-items: center; justify-content: space-between; font-size: 14px;">
-          <span style="color: #444;">Pay</span>
-          <span style="display: flex; gap: 22px; align-items: center;">
-            <label><input type="radio" name="payment-timing" value="now" checked>Now</label>
-            <label><input type="radio" name="payment-timing" value="arrival">On Arrival</label>
-          </span>
-        </p>
-      `;
-      billSection.innerHTML = paymentRows + billHTML;
+      billSection.innerHTML = billHTML;
 
-      // Add warning message container
-      let warningMsg = billSection.querySelector('.payment-warning');
-      if (!warningMsg) {
-        warningMsg = document.createElement('div');
-        warningMsg.className = 'payment-warning';
-        warningMsg.style.cssText = 'color: #d32f2f; font-size: 13px; margin: 6px 0 0 0; min-height: 18px;';
-        billSection.insertBefore(warningMsg, billSection.querySelector('.bill-row'));
-      } else {
-        warningMsg.textContent = '';
-      }
+      const loginModal = ensureLoginModal();
 
       const placeOrderBtn = billSection.querySelector(".place-order-btn");
       if (placeOrderBtn) {
         placeOrderBtn.addEventListener("click", async () => {
-          // Read selected payment method and timing
-          const method = billSection.querySelector('input[name="payment-method"]:checked').value;
-          const timing = billSection.querySelector('input[name="payment-timing"]:checked').value;
-
-          // Block if Cash + Now
-          if (method === 'cash' && timing === 'now') {
-            warningMsg.textContent = 'Online payment with cash is not supported. Please select QR Code for Pay Now, or use Cash for Pay on Arrival.';
+          // Check if user is authenticated
+          const storedUser = getStoredUser();
+          if (!storedUser) {
+            loginModal.style.display = "flex";
             return;
-          } else {
-            warningMsg.textContent = '';
           }
 
-          try {
-            placeOrderBtn.disabled = true;
-            placeOrderBtn.textContent = "Processing...";
-
-            const order = await checkoutCart(currentPromoDiscount);
-            
-            placeOrderBtn.textContent = "✓ Order Placed";
-            placeOrderBtn.style.backgroundColor = "#4CAF50";
-
-            // Reset promo after checkout
-            currentPromoDiscount = 0;
-            const promoInput = orderList.querySelector(".promo-row input");
-            if (promoInput) {
-              promoInput.value = "";
-              promoInput.style.borderColor = "";
-            }
-
-            console.log(`Order ${order.order_id} placed successfully for $${order.total_price}`);
-            
-            // Refresh cart after 2 seconds
-            setTimeout(async () => {
-              await renderCartPage();
-              placeOrderBtn.textContent = "Place Order";
-              placeOrderBtn.style.backgroundColor = "";
-              placeOrderBtn.disabled = false;
-            }, 2000);
-          } catch (error) {
-            console.error("Checkout error:", error);
-            placeOrderBtn.textContent = "✗ Failed";
-            placeOrderBtn.style.backgroundColor = "#ff6b6b";
-            
-            setTimeout(() => {
-              placeOrderBtn.textContent = "Place Order";
-              placeOrderBtn.style.backgroundColor = "";
-              placeOrderBtn.disabled = false;
-            }, 2000);
+          // Render confirmation page in right sidebar
+          const rightSidebar = document.querySelector("#right-side-bar");
+          if (rightSidebar) {
+            await renderConfirmPage(rightSidebar);
           }
         });
       }
@@ -404,7 +416,14 @@ export const initCartPage = async (root = document) => {
           const handleCartUpdate = async () => {
             console.log("Cart update event received");
             try {
-              await renderCartPage(root);
+              // Make sure sidebar structure exists and is visible
+              const rightSidebar = document.querySelector("#right-side-bar");
+              if (rightSidebar) {
+                buildCartHTML(rightSidebar);  // Ensure structure exists
+                rightSidebar.classList.remove("is-hidden");
+              }
+              
+              await renderCartPage();
             } catch (error) {
               console.error("Error updating cart on event:", error);
             }

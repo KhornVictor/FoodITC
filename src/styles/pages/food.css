@@ -282,7 +282,7 @@
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 14px;
   padding-right: 6px;
   animation: gridFadeIn 0.35s ease-out;
@@ -489,7 +489,7 @@
   }
 
   .food-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 
   .search-filter-section {
@@ -534,7 +534,7 @@
   }
 
   .food-grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 12px;
   }
 
@@ -549,5 +549,11 @@
   .category-checkbox {
     width: 100%;
     justify-content: space-between;
+  }
+}
+
+@media (max-width: 540px) {
+  .food-grid {
+    grid-template-columns: 1fr;
   }
 }

@@ -4,6 +4,8 @@ import { initResturantBox } from "./resturantBox.js";
 import { initCategoryCards } from "./categoryCard.js";
 import { topBarLabel } from "./Navigation.js";
 import { initOrderHistory } from "../pages/home/OrderHistory.js";
+import { initCartPage } from "../pages/order/CartPage.js";
+import { initConfirmPage } from "../pages/order/ConfirmPage.js";
 
 /**
  * Initialize sidebar navigation with click handlers.
@@ -11,6 +13,10 @@ import { initOrderHistory } from "../pages/home/OrderHistory.js";
  * @param {HTMLElement} root - Root element to search for sidebar (defaults to document)
  */
 export const initSidebarNavigation = (root = document) => {
+  const logoutBtn = root.querySelector("#logout-btn");
+  const logoutIconBtn = root.querySelector(".sidebar-logout-icon");
+  const sidebar = root.querySelector(".left-sidebar");
+  const sidebarToggle = root.querySelector(".sidebar-toggle");
   const menuItems = root.querySelectorAll(
     ".left-sidebar .menu-item[data-route]",
   );
@@ -21,11 +27,45 @@ export const initSidebarNavigation = (root = document) => {
     history: "./src/pages/home/history.html",
     restaurant: "./src/pages/home/restaurant.html",
     settings: "./src/pages/home/setting.html",
+    order: "./src/pages/order/cart.html",
+    confirm: "./src/pages/order/confirm.html",
   };
 
   if (menuItems.length === 0) {
     console.warn("No sidebar menu items found with data-route attribute");
     return;
+  }
+
+  if (sidebarToggle && sidebar && sidebarToggle.dataset.bound !== "true") {
+    sidebarToggle.dataset.bound = "true";
+
+    const collapsedState = localStorage.getItem("sidebarCollapsed") === "true";
+    if (collapsedState) {
+      sidebar.classList.add("is-collapsed");
+    }
+
+    sidebarToggle.addEventListener("click", () => {
+      const isCollapsed = sidebar.classList.toggle("is-collapsed");
+      localStorage.setItem("sidebarCollapsed", String(isCollapsed));
+    });
+  }
+
+  if (logoutBtn && logoutBtn.dataset.bound !== "true") {
+    logoutBtn.dataset.bound = "true";
+    logoutBtn.addEventListener("click", () => {
+      sessionStorage.removeItem("currentUser");
+      localStorage.removeItem("currentUser");
+      window.location.href = "src/pages/auth/login.html";
+    });
+  }
+
+  if (logoutIconBtn && logoutIconBtn.dataset.bound !== "true") {
+    logoutIconBtn.dataset.bound = "true";
+    logoutIconBtn.addEventListener("click", () => {
+      sessionStorage.removeItem("currentUser");
+      localStorage.removeItem("currentUser");
+      window.location.href = "src/pages/auth/login.html";
+    });
   }
 
   if (!contentArea) {
@@ -93,6 +133,14 @@ export const initSidebarNavigation = (root = document) => {
 
     if (route === "restaurant") {
       await initResturantBox(contentArea);
+    }
+
+    if (route === "order") {
+      await initCartPage(contentArea);
+    }
+
+    if (route === "confirm") {
+      await initConfirmPage(contentArea);
     }
 
     setActiveByRoute(route);
