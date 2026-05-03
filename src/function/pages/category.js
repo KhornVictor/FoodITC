@@ -1,4 +1,4 @@
-import { fetchCategories } from "../services/Category.js";
+import { fetchCategories } from "../../services/Category.js";
 
 const FALLBACK_IMAGE =
   "https://1000logos.net/wp-content/uploads/2017/03/McDonalds-logo.png";

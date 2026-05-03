@@ -1,4 +1,4 @@
-import { initFoodPage } from "./foodCard.js";
+import { initFoodPage } from "../pages/food.js";
 
 /**
  * Recursively loads and mounts components with data-component attributes.

@@ -1,17 +1,12 @@
-import { rendering } from "./Rendering.js";
-import { initFoodPage, get10FoodCards } from "./foodCard.js";
-import { initResturantBox } from "./resturantBox.js";
-import { initCategoryCards } from "./categoryCard.js";
+import { rendering } from "../core/Rendering.js";
+import { initFoodPage, get10FoodCards } from "../pages/food.js";
+import { initResturantBox } from "../pages/resturant.js";
+import { initCategoryCards } from "../pages/category.js";
 import { topBarLabel } from "./Navigation.js";
 import { initOrderHistory } from "../pages/home/OrderHistory.js";
 import { initCartPage } from "../pages/order/CartPage.js";
 import { initConfirmPage } from "../pages/order/ConfirmPage.js";
 
-/**
- * Initialize sidebar navigation with click handlers.
- * Manages active states and hash-based routing.
- * @param {HTMLElement} root - Root element to search for sidebar (defaults to document)
- */
 export const initSidebarNavigation = (root = document) => {
   const logoutBtn = root.querySelector("#logout-btn");
   const logoutIconBtn = root.querySelector(".sidebar-logout-icon");
@@ -26,6 +21,7 @@ export const initSidebarNavigation = (root = document) => {
     food: "./src/pages/home/food.html",
     history: "./src/pages/home/history.html",
     restaurant: "./src/pages/home/restaurant.html",
+    restaurant_detail: "./src/pages/home/resturant.detail.html",
     settings: "./src/pages/home/setting.html",
     order: "./src/pages/order/cart.html",
     confirm: "./src/pages/order/confirm.html",
@@ -129,6 +125,15 @@ export const initSidebarNavigation = (root = document) => {
 
     if (route === "history") {
       await initOrderHistory(contentArea);
+      const urlParams = new URLSearchParams(window.location.search);
+      const orderId = urlParams.get("orderId");
+
+      if (orderId) {
+        await rendering("./src/pages/home/history.detail.html", contentArea);
+        await initOrderHistory(contentArea);
+        setActiveByRoute(route);
+        return;
+      }
     }
 
     if (route === "restaurant") {

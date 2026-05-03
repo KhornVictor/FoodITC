@@ -1,4 +1,4 @@
-import { addToCart } from "../services/Cart.js";
+import { addToCart } from "../../services/Cart.js";
 
 export const createFoodCard = (food) => {
   const card = document.createElement("div");
@@ -53,7 +53,7 @@ export const createFoodCard = (food) => {
       }, 1000);
 
       console.log(`Added ${food.name} to cart`);
-      
+
       // Refresh cart display
       const cartRefreshEvent = new CustomEvent("cartUpdated");
       document.dispatchEvent(cartRefreshEvent);
