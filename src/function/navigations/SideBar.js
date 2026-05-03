@@ -3,7 +3,9 @@ import { initFoodPage, get10FoodCards } from "../pages/food.js";
 import { initResturantBox } from "../pages/resturant.js";
 import { initCategoryCards } from "../pages/category.js";
 import { topBarLabel } from "./Navigation.js";
-import { initOrderHistory } from "../pages/history.js";
+import { initOrderHistory } from "../pages/home/OrderHistory.js";
+import { initCartPage } from "../pages/order/CartPage.js";
+import { initConfirmPage } from "../pages/order/ConfirmPage.js";
 
 export const initSidebarNavigation = (root = document) => {
   const logoutBtn = root.querySelector("#logout-btn");
@@ -21,6 +23,8 @@ export const initSidebarNavigation = (root = document) => {
     restaurant: "./src/pages/home/restaurant.html",
     restaurant_detail: "./src/pages/home/resturant.detail.html",
     settings: "./src/pages/home/setting.html",
+    order: "./src/pages/order/cart.html",
+    confirm: "./src/pages/order/confirm.html",
   };
 
   if (menuItems.length === 0) {
@@ -134,6 +138,14 @@ export const initSidebarNavigation = (root = document) => {
 
     if (route === "restaurant") {
       await initResturantBox(contentArea);
+    }
+
+    if (route === "order") {
+      await initCartPage(contentArea);
+    }
+
+    if (route === "confirm") {
+      await initConfirmPage(contentArea);
     }
 
     setActiveByRoute(route);

@@ -63,8 +63,7 @@ export const createDetailedCard = async (resturant) => {
     );
 
     if (restaurantMenu.length === 0) {
-      itemsContainer.innerHTML =
-        "<p>No menu items available for this restaurant.</p>";
+      itemsContainer.innerHTML = "<p>No menu items available for this restaurant.</p>";
     } else {
       restaurantMenu.forEach((menuItem) => {
         itemsContainer.appendChild(createFoodCard(menuItem));

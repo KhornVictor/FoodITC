@@ -1,0 +1,288 @@
+<section class="confirm-page">
+  <div class="confirm-container">
+    <!-- Header -->
+    <div class="confirm-header">
+      <h2>Order Confirmation</h2>
+      <p class="confirm-subtitle">Review and confirm your order</p>
+    </div>
+
+    <!-- Order Summary Section -->
+    <div class="confirm-section">
+      <h3 class="section-title">Order Summary</h3>
+      <div class="order-summary-list"></div>
+    </div>
+
+    <!-- Delivery Address Section -->
+    <div class="confirm-section">
+      <h3 class="section-title">Delivery Address</h3>
+      <div class="address-form">
+        <!-- Map placeholder -->
+        <div class="map-container" id="map-placeholder" style="background: #f0f0f0; border-radius: 8px; height: 200px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 14px;">
+          📍 Map will be here
+        </div>
+
+        <!-- Address inputs -->
+        <div class="form-group">
+          <label for="street">Street Address</label>
+          <input type="text" id="street" placeholder="E.g., 500 Sengsok Street" />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="E.g., +855 12 345 678" />
+        </div>
+
+        <div class="form-group">
+          <label for="house-number">House Number</label>
+          <input type="text" id="house-number" placeholder="E.g., 4K" />
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Notes to Driver</label>
+          <textarea id="notes" placeholder="E.g., Please ring the bell twice" rows="2"></textarea>
+        </div>
+
+        <label class="checkbox-label" style="margin-top: 10px;">
+          <input type="checkbox" id="use-current-address" />
+          <span>Use current address</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Payment Method Section -->
+    <div class="confirm-section">
+      <h3 class="section-title">Payment Options</h3>
+      <style>
+        .confirm-bill-radio-row label {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          cursor: pointer;
+          font-size: 14px;
+          color: #222;
+        }
+        .confirm-bill-radio-row input[type='radio'] {
+          accent-color: #222;
+          width: 16px;
+          height: 16px;
+          margin: 0 2px 0 0;
+          vertical-align: middle;
+        }
+      </style>
+      <p class="confirm-bill-row confirm-bill-radio-row" style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; margin-bottom: 8px;">
+        <span style="color: #444;">Method</span>
+        <span style="display: flex; gap: 22px; align-items: center;">
+          <label><input type="radio" name="payment-method" value="cash" checked />Cash</label>
+          <label><input type="radio" name="payment-method" value="qr" />QR Code</label>
+        </span>
+      </p>
+      <p class="confirm-bill-row confirm-bill-radio-row" style="display: flex; align-items: center; justify-content: space-between; font-size: 14px;">
+        <span style="color: #444;">Pay</span>
+        <span style="display: flex; gap: 22px; align-items: center;">
+          <label><input type="radio" name="payment-timing" value="now" checked />Now</label>
+          <label><input type="radio" name="payment-timing" value="arrival" />On Arrival</label>
+        </span>
+      </p>
+    </div>
+
+    <!-- Price Breakdown Section -->
+    <div class="confirm-section">
+      <h3 class="section-title">Price Breakdown</h3>
+      <div class="price-breakdown"></div>
+    </div>
+
+    <!-- Warning Message -->
+    <div class="payment-warning" style="color: #d32f2f; font-size: 13px; margin: 8px 0; min-height: 18px; text-align: center;"></div>
+
+    <!-- Action Buttons -->
+    <div class="confirm-actions">
+      <button class="btn btn-secondary" id="back-to-cart">← Back to Cart</button>
+      <button class="btn btn-primary" id="place-order-btn">Place My Order</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .confirm-page {
+    padding: 20px;
+    background: #fff;
+  }
+
+  .confirm-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .confirm-header {
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .confirm-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    color: #222;
+  }
+
+  .confirm-subtitle {
+    font-size: 13px;
+    color: #999;
+    margin: 0;
+  }
+
+  .confirm-section {
+    margin-bottom: 20px;
+    padding: 16px;
+    background: #f8fafb;
+    border-radius: 10px;
+  }
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    color: #333;
+  }
+
+  .order-summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 13px;
+  }
+
+  .order-summary-item:last-child {
+    border-bottom: none;
+  }
+
+  .item-details {
+    flex: 1;
+  }
+
+  .item-details .item-name {
+    font-weight: 500;
+    color: #222;
+    margin: 0 0 2px 0;
+  }
+
+  .item-details .item-qty {
+    font-size: 12px;
+    color: #999;
+    margin: 0;
+  }
+
+  .item-price {
+    font-weight: 600;
+    color: #222;
+    min-width: 50px;
+    text-align: right;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 4px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #222;
+    box-shadow: 0 0 0 2px rgba(34, 34, 34, 0.1);
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #222;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #222;
+  }
+
+  .price-breakdown {
+    font-size: 13px;
+  }
+
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    color: #666;
+  }
+
+  .price-row.total {
+    border-top: 2px solid #ddd;
+    padding-top: 8px;
+    margin-top: 8px;
+    font-weight: 600;
+    color: #222;
+    font-size: 14px;
+  }
+
+  .confirm-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-primary {
+    background: #222;
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: #111;
+  }
+
+  .btn-primary:disabled {
+    background: #999;
+    cursor: not-allowed;
+  }
+
+  .btn-secondary {
+    background: #f0f0f0;
+    color: #222;
+  }
+
+  .btn-secondary:hover {
+    background: #e0e0e0;
+  }
+</style>

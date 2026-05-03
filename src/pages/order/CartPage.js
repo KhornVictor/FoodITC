@@ -7,6 +7,7 @@ import {
   validatePromoCode,
   checkoutCart,
 } from "../../services/Cart.js";
+import { renderConfirmPage } from "./ConfirmPage.js";
 
 const AUTH_STORAGE_KEY = "currentUser";
 
@@ -79,8 +80,8 @@ const ensureLoginModal = () => {
   return modal;
 };
 
-// Store current promo discount (0-1)
-let currentPromoDiscount = 0;
+// Store current promo discount (0-1) - exported for use in ConfirmPage
+export let currentPromoDiscount = 0;
 
 /**
  * Get the currently logged-in user or create a guest user
@@ -123,18 +124,33 @@ const createCartItemElement = (cartItem, onUpdate) => {
       loading="lazy"
     />
     <div class="cart-item-body">
-      <h4>${cartItem.name}</h4>
+      <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+        <h4 style="margin: 0;">${cartItem.name}</h4>
+        <button type="button" class="customize-cart-btn" title="Customize or add remark" style="border: none; background: none; padding: 0; margin: 0; cursor: pointer; font-size: 17px; color: #444;">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+      </div>
       <p class="cart-item-note">${cartItem.description || "No notes"}</p>
-      <div class="cart-item-footer">
-        <div class="qty-chip">
-          <button type="button" class="qty-decrease" aria-label="Decrease ${cartItem.name} quantity">-</button>
+      <div class="cart-item-footer" style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+        <div class="qty-chip" style="display: flex; align-items: center; gap: 8px; border-radius: 20px; background: #f5f5f5; padding: 2px 10px;">
+          <button type="button" class="qty-decrease" aria-label="Decrease ${cartItem.name} quantity" style="border: none; background: none; font-size: 16px;">-</button>
           <span class="qty-value">${cartItem.quantity}</span>
-          <button type="button" class="qty-increase" aria-label="Increase ${cartItem.name} quantity">+</button>
+          <button type="button" class="qty-increase" aria-label="Increase ${cartItem.name} quantity" style="border: none; background: none; font-size: 16px;">+</button>
         </div>
-        <strong>$${itemPrice}</strong>
+        <strong style="font-size: 15px;">$${itemPrice}</strong>
       </div>
     </div>
   `;
+  // Add event handler for customize button
+  const customizeBtn = article.querySelector(".customize-cart-btn");
+  if (customizeBtn) {
+    customizeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      // Placeholder: navigate to customization page (to be implemented)
+      alert("Customization page coming soon!");
+    });
+  }
 
   // Handle quantity decrease
   const decreaseBtn = article.querySelector(".qty-decrease");
@@ -184,22 +200,42 @@ const createCartItemElement = (cartItem, onUpdate) => {
 };
 
 /**
+ * Build the cart HTML structure if it doesn't exist
+ */
+const buildCartHTML = (root) => {
+  if (!root.querySelector(".order-list") || !root.querySelector(".bill-section")) {
+    root.innerHTML = `
+      <div class="order-list" style="padding: 16px 12px; max-height: calc(100% - 140px); overflow-y: auto;"></div>
+      <div class="bill-section" style="padding: 12px 12px; border-top: 1px solid #e0e0e0;"></div>
+    `;
+  }
+};
+
+/**
  * Render cart items and update totals
  */
 export const renderCartPage = async (root = document) => {
   try {
-    const orderList = root.querySelector(".order-list");
-    const billSection = root.querySelector(".bill-section");
+    // Always use the right sidebar for cart display
     const rightSidebar = document.querySelector("#right-side-bar");
+    if (!rightSidebar) {
+      console.warn("Right sidebar not found");
+      return false;
+    }
+
+    // First ensure the cart HTML structure exists
+    buildCartHTML(rightSidebar);
+
+    const orderList = rightSidebar.querySelector(".order-list");
+    const billSection = rightSidebar.querySelector(".bill-section");
 
     if (!orderList || !billSection) {
-      console.warn("Cart container elements not found - selectors may be incorrect");
-      console.log("orderList found:", !!orderList, "billSection found:", !!billSection);
+      console.warn("Cart container elements not found after building");
       return false;
     }
 
     const updateCart = async () => {
-      await renderCartPage(root);
+      await renderCartPage();
     };
 
     const user = getCurrentUser();
@@ -309,7 +345,7 @@ export const renderCartPage = async (root = document) => {
         <p class="bill-row"><span>Delivery</span><span>$${totals.delivery.toFixed(2)}</span></p>
         <p class="bill-row"><span>Tax</span><span>$${totals.tax.toFixed(2)}</span></p>
         <p class="bill-row total"><span>Total</span><span>$${totals.total.toFixed(2)}</span></p>
-        <button class="place-order-btn" type="button">Place Order</button>
+        <button class="place-order-btn" type="button">Proceed to Checkout</button>
       `;
 
       billSection.innerHTML = billHTML;
@@ -319,48 +355,17 @@ export const renderCartPage = async (root = document) => {
       const placeOrderBtn = billSection.querySelector(".place-order-btn");
       if (placeOrderBtn) {
         placeOrderBtn.addEventListener("click", async () => {
-          try {
-            const storedUser = getStoredUser();
-            if (!storedUser) {
-              loginModal.style.display = "flex";
-              return;
-            }
+          // Check if user is authenticated
+          const storedUser = getStoredUser();
+          if (!storedUser) {
+            loginModal.style.display = "flex";
+            return;
+          }
 
-            placeOrderBtn.disabled = true;
-            placeOrderBtn.textContent = "Processing...";
-
-            const order = await checkoutCart(currentPromoDiscount);
-            
-            placeOrderBtn.textContent = "✓ Order Placed";
-            placeOrderBtn.style.backgroundColor = "#4CAF50";
-
-            // Reset promo after checkout
-            currentPromoDiscount = 0;
-            const promoInput = orderList.querySelector(".promo-row input");
-            if (promoInput) {
-              promoInput.value = "";
-              promoInput.style.borderColor = "";
-            }
-
-            console.log(`Order ${order.order_id} placed successfully for $${order.total_price}`);
-            
-            // Refresh cart after 2 seconds
-            setTimeout(async () => {
-              await renderCartPage();
-              placeOrderBtn.textContent = "Place Order";
-              placeOrderBtn.style.backgroundColor = "";
-              placeOrderBtn.disabled = false;
-            }, 2000);
-          } catch (error) {
-            console.error("Checkout error:", error);
-            placeOrderBtn.textContent = "✗ Failed";
-            placeOrderBtn.style.backgroundColor = "#ff6b6b";
-            
-            setTimeout(() => {
-              placeOrderBtn.textContent = "Place Order";
-              placeOrderBtn.style.backgroundColor = "";
-              placeOrderBtn.disabled = false;
-            }, 2000);
+          // Render confirmation page in right sidebar
+          const rightSidebar = document.querySelector("#right-side-bar");
+          if (rightSidebar) {
+            await renderConfirmPage(rightSidebar);
           }
         });
       }
@@ -411,7 +416,14 @@ export const initCartPage = async (root = document) => {
           const handleCartUpdate = async () => {
             console.log("Cart update event received");
             try {
-              await renderCartPage(root);
+              // Make sure sidebar structure exists and is visible
+              const rightSidebar = document.querySelector("#right-side-bar");
+              if (rightSidebar) {
+                buildCartHTML(rightSidebar);  // Ensure structure exists
+                rightSidebar.classList.remove("is-hidden");
+              }
+              
+              await renderCartPage();
             } catch (error) {
               console.error("Error updating cart on event:", error);
             }
