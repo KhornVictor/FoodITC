@@ -1,5 +1,6 @@
 import { rendering } from "./src/function/core/Rendering.js";
 import { initSidebarNavigation } from "./src/function/navigations/SideBar.js";
+import { initBottomBarNavigation } from "./src/function/navigations/BottomBar.js";
 import { checkLoginState } from "./src/function/navigations/Navigation.js";
 import { initCartPage } from "./src/pages/order/CartPage.js";
 
@@ -10,6 +11,7 @@ const initApp = async () => {
     await rendering("./src/app.html", main);
     checkLoginState();
     initSidebarNavigation(main);
+    initBottomBarNavigation(main);
 
     // Initialize cart page when DOM is ready
     Promise.resolve().then(() => {
