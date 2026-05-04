@@ -21,9 +21,6 @@ const getAvatarUrl = (user = null) => {
   if (user?.avatar) {
     return user.avatar;
   }
-
-//   const name = encodeURIComponent(user?.name || "User");
-//   return `https://ui-avatars.com/api/?name=${name}&background=F26A00&color=fff`;
 };
 
 const renderLoggedOutState = (container) => {

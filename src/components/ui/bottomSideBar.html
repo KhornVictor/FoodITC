@@ -1,6 +1,22 @@
-<nav id="bottom-side-bar" class="bottom-sidebar" aria-label="Mobile bottom navigation">
-  <button class="bottom-item" type="button">Home</button>
-  <button class="bottom-item" type="button">Search</button>
-  <button class="bottom-item" type="button">Orders</button>
-  <button class="bottom-item active" type="button">Cart</button>
+<nav
+  id="bottom-side-bar"
+  class="bottom-sidebar"
+  aria-label="Mobile bottom navigation"
+>
+  <button class="bottom-item" type="button" data-route="home">
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+  </button>
+  <button class="bottom-item" type="button" data-route="food">
+    <i class="fa-solid fa-utensils"></i>
+    <span>Search</span>
+  </button>
+  <button class="bottom-item" type="button" data-route="history">
+    <i class="fa-solid fa-clock"></i>
+    <span>Orders</span>
+  </button>
+  <button class="bottom-item active" type="button" data-route="order">
+    <i class="fa-solid fa-shopping-cart"></i>
+    <span>Cart</span>
+  </button>
 </nav>

@@ -9,6 +9,7 @@
   height: 100%;
   min-height: 0;
   margin-top: 8px;
+  padding: 1.2rem;
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
   gap: 14px;
@@ -20,17 +21,6 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding: 18px;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 176, 116, 0.35);
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.95),
-    rgba(255, 239, 223, 0.85)
-  );
-  box-shadow:
-    0 16px 32px rgba(244, 140, 59, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.65);
   overflow: hidden;
 }
 
@@ -42,11 +32,6 @@
   right: -95px;
   top: -95px;
   border-radius: 999px;
-  background: radial-gradient(
-    circle,
-    rgba(242, 106, 0, 0.25),
-    rgba(242, 106, 0, 0)
-  );
 }
 
 .food-hero-copy,
@@ -131,9 +116,6 @@
 .food-grid-wrap {
   min-height: 0;
   border-radius: 18px;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 176, 116, 0.2);
 }
 
 /* Search and Filter Section */
@@ -300,7 +282,7 @@
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 14px;
   padding-right: 6px;
   animation: gridFadeIn 0.35s ease-out;
@@ -507,7 +489,7 @@
   }
 
   .food-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 
   .search-filter-section {
@@ -552,7 +534,7 @@
   }
 
   .food-grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 12px;
   }
 
@@ -567,5 +549,11 @@
   .category-checkbox {
     width: 100%;
     justify-content: space-between;
+  }
+}
+
+@media (max-width: 540px) {
+  .food-grid {
+    grid-template-columns: 1fr;
   }
 }

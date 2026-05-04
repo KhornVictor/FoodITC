@@ -108,5 +108,16 @@
     "avatar": "https://img.freepik.com/free-photo/portrait-beautiful-young-woman_23-2151083927.jpg?semt=ais_hybrid&w=740&q=80",
     "role": "customer",
     "created_at": "2026-03-10T17:50:00"
+  },
+  {
+    "user_id": 11,
+    "name": "Samn ang",
+    "email": "a@example.com",
+    "password": "1",
+    "phone": "+1-202-555-0110",
+    "address": "159 Poplar Court, San Jose, CA",
+    "avatar": "https://img.freepik.com/free-photo/portrait-beautiful-young-woman_23-2151083927.jpg?semt=ais_hybrid&w=740&q=80",
+    "role": "customer",
+    "created_at": "2026-03-10T17:50:00"
   }
 ]

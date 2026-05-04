@@ -1,17 +1,1 @@
-[
-  { "cart_item_id": 1, "cart_id": 1, "item_id": 1, "quantity": 2 },
-  { "cart_item_id": 2, "cart_id": 1, "item_id": 3, "quantity": 1 },
-  { "cart_item_id": 3, "cart_id": 2, "item_id": 5, "quantity": 3 },
-  { "cart_item_id": 4, "cart_id": 2, "item_id": 6, "quantity": 1 },
-  { "cart_item_id": 5, "cart_id": 3, "item_id": 2, "quantity": 1 },
-  { "cart_item_id": 6, "cart_id": 4, "item_id": 4, "quantity": 2 },
-  { "cart_item_id": 7, "cart_id": 4, "item_id": 8, "quantity": 4 },
-  { "cart_item_id": 8, "cart_id": 5, "item_id": 9, "quantity": 2 },
-  { "cart_item_id": 9, "cart_id": 6, "item_id": 7, "quantity": 1 },
-  { "cart_item_id": 10, "cart_id": 6, "item_id": 10, "quantity": 2 },
-  { "cart_item_id": 11, "cart_id": 7, "item_id": 3, "quantity": 1 },
-  { "cart_item_id": 12, "cart_id": 8, "item_id": 5, "quantity": 2 },
-  { "cart_item_id": 13, "cart_id": 8, "item_id": 1, "quantity": 1 },
-  { "cart_item_id": 14, "cart_id": 9, "item_id": 4, "quantity": 3 },
-  { "cart_item_id": 15, "cart_id": 10, "item_id": 2, "quantity": 2 }
-]
+[]
