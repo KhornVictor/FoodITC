@@ -25,6 +25,12 @@
     border-color 200ms ease;
 }
 
+@media (max-width: 768px) {
+  .right-sidebar {
+    display: none;
+  }
+}
+
 .right-sidebar.is-hidden {
   transform: translateX(16px);
   opacity: 0;
