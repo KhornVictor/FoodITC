@@ -1,39 +1,63 @@
-import { getSettings, saveSettings, setLanguage, getLanguage, setNotifications, getNotifications } from "../../services/Setting.js";
+import {
+  getSettings,
+  saveSettings,
+  setLanguage,
+  setNotifications,
+  getNotifications,
+} from "../../services/Setting.js";
+import { getCurrentUser } from "../utils/getme.js";
 
-export const initSettingsPage = () => {
+export const initSettingsPage = async () => {
   const languageSelect = document.getElementById("language-select");
   const notificationButton = document.getElementById("notification-button");
   const saveButton = document.getElementById("save-changes");
+  const profileAvatar = document.getElementById("profile-avatar");
+  const profileSummary = document.getElementById("profile-summary");
 
-  // Load current settings
-  const settings = getSettings();
+  const currentUser = getCurrentUser();
+  if (profileSummary) {
+    profileSummary.textContent = currentUser
+      ? `Signed in as ${currentUser.name}`
+      : "Not signed in. Your preferences will be stored locally.";
+  }
+
+  if (profileAvatar) {
+    profileAvatar.src =
+      currentUser?.avatar ||
+      "https://img.freepik.com/free-icon/user_318-159711.jpg?w=740";
+  }
+
+  const settings = await getSettings();
   languageSelect.value = settings.language;
-  notificationButton.textContent = settings.notifications ? "Disable Notifications" : "Enable Notifications";
+  notificationButton.textContent = settings.notifications
+    ? "Disable Notifications"
+    : "Enable Notifications";
 
-  // Handle language change
-  languageSelect.addEventListener("change", (e) => {
-    setLanguage(e.target.value);
-    // Optionally, you can add logic to change the UI language here
-    alert(`Language changed to ${e.target.value}`);
+  languageSelect.addEventListener("change", async (e) => {
+    const value = e.target.value;
+    await setLanguage(value);
+    alert(`Language changed to ${value}`);
   });
 
-  // Handle notification button
-  notificationButton.addEventListener("click", () => {
-    const current = getNotifications();
-    setNotifications(!current);
-    notificationButton.textContent = !current ? "Disable Notifications" : "Enable Notifications";
-    if (!current) {
-      // Show a test notification
+  notificationButton.addEventListener("click", async () => {
+    const current = await getNotifications();
+    const enabled = !current;
+    const updated = await setNotifications(enabled);
+    notificationButton.textContent = updated
+      ? "Disable Notifications"
+      : "Enable Notifications";
+
+    if (updated) {
       if (Notification.permission === "granted") {
         new Notification("Notifications Enabled", {
           body: "You will now receive notifications.",
-          icon: "/public/images/notification-icon.png" // Assuming an icon exists
+          icon: "/public/images/notification-icon.png",
         });
       } else if (Notification.permission !== "denied") {
-        Notification.requestPermission().then(permission => {
+        Notification.requestPermission().then((permission) => {
           if (permission === "granted") {
             new Notification("Notifications Enabled", {
-              body: "You will now receive notifications."
+              body: "You will now receive notifications.",
             });
           }
         });
@@ -43,8 +67,12 @@ export const initSettingsPage = () => {
     }
   });
 
-  // Handle save changes (though changes are saved immediately)
-  saveButton.addEventListener("click", () => {
+  saveButton.addEventListener("click", async () => {
+    const updatedSettings = {
+      language: languageSelect.value,
+      notifications: await getNotifications(),
+    };
+    await saveSettings(updatedSettings);
     alert("Settings saved!");
   });
 };

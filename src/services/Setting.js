@@ -1,65 +1,97 @@
-const SETTINGS_STORAGE_KEY = "userSettings";
+import { getCurrentUserId } from "../function/utils/getme.js";
 
-/**
- * Get user settings from localStorage
- * @returns {Object} Settings object with language and notification preferences
- */
-export const getSettings = () => {
-  const stored = localStorage.getItem(SETTINGS_STORAGE_KEY);
-  if (stored) {
-    try {
-      return JSON.parse(stored);
-    } catch (error) {
-      console.error("Unable to parse stored settings:", error);
-    }
+const SETTINGS_FILE_URL = "/public/data/setting.json";
+const SETTINGS_STORAGE_PREFIX = "userSettings:";
+const DEFAULT_SETTINGS = {
+  language: "English",
+  notifications: false,
+};
+let cachedDefaultSettings = null;
+
+const getSettingsStorageKey = (userId) => {
+  if (Number.isFinite(Number(userId))) {
+    return `${SETTINGS_STORAGE_PREFIX}${userId}`;
   }
-  // Default settings
-  return {
-    language: "English",
-    notifications: false
-  };
+  return `${SETTINGS_STORAGE_PREFIX}guest`;
 };
 
-/**
- * Save user settings to localStorage
- * @param {Object} settings - Settings object
- */
-export const saveSettings = (settings) => {
-  localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+const getStoredSettings = (userId) => {
+  const key = getSettingsStorageKey(userId);
+  const stored = localStorage.getItem(key);
+  if (!stored) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(stored);
+  } catch (error) {
+    console.error("Unable to parse stored settings:", error);
+    return null;
+  }
 };
 
-/**
- * Set the language preference
- * @param {string} language - The selected language
- */
-export const setLanguage = (language) => {
-  const settings = getSettings();
-  settings.language = language;
-  saveSettings(settings);
+const loadDefaultSettings = async () => {
+  if (cachedDefaultSettings) {
+    return cachedDefaultSettings;
+  }
+
+  try {
+    const response = await fetch(SETTINGS_FILE_URL);
+    if (!response.ok) {
+      throw new Error(`Failed to load default settings: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    const defaults = data?.defaultSettings ?? DEFAULT_SETTINGS;
+    cachedDefaultSettings = {
+      language: defaults.language || DEFAULT_SETTINGS.language,
+      notifications: Boolean(defaults.notifications),
+    };
+    return cachedDefaultSettings;
+  } catch (error) {
+    console.warn("Unable to load setting defaults from file, using fallback:", error);
+    cachedDefaultSettings = DEFAULT_SETTINGS;
+    return DEFAULT_SETTINGS;
+  }
 };
 
-/**
- * Get the current language
- * @returns {string} Current language
- */
-export const getLanguage = () => {
-  return getSettings().language;
+export const getSettings = async () => {
+  const userId = getCurrentUserId();
+  const storedSettings = getStoredSettings(userId);
+  if (storedSettings) {
+    return storedSettings;
+  }
+
+  return await loadDefaultSettings();
 };
 
-/**
- * Set notification preference
- * @param {boolean} enabled - Whether notifications are enabled
- */
-export const setNotifications = (enabled) => {
-  const settings = getSettings();
-  settings.notifications = enabled;
-  saveSettings(settings);
+export const saveSettings = async (settings) => {
+  const userId = getCurrentUserId();
+  const key = getSettingsStorageKey(userId);
+  localStorage.setItem(key, JSON.stringify(settings));
+  return settings;
 };
 
-/**
- * Get notification preference
- * @returns {boolean} Whether notifications are enabled
- */
-export const getNotifications = () => {
-  return getSettings().notifications;
+export const setLanguage = async (language) => {
+  const settings = await getSettings();
+  const next = { ...settings, language };
+  await saveSettings(next);
+  return next;
+};
+
+export const getLanguage = async () => {
+  const settings = await getSettings();
+  return settings.language;
+};
+
+export const setNotifications = async (enabled) => {
+  const settings = await getSettings();
+  const next = { ...settings, notifications: Boolean(enabled) };
+  await saveSettings(next);
+  return next.notifications;
+};
+
+export const getNotifications = async () => {
+  const settings = await getSettings();
+  return Boolean(settings.notifications);
 };
