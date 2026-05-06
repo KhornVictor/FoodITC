@@ -107,8 +107,8 @@
     padding: var(--space-lg);
     border-radius: var(--radius-lg);
     flex-shrink: 0;
-   padding: var(--space-lg);
-    border-radius: var(--radius-lg);
+    padding: 14px;
+    border-radius: 14px;
   }
 
 

@@ -1,24 +1,45 @@
 <div class="setting-content">
-    <h1>Settings</h1>
-    <p>This is the settings page. You can update your preferences here.</p>
-    
-    <div>
-        <label for="language-select">Language:</label>
-        <select id="language-select">
-            <option value="English">English</option>
-            <option value="French">French</option>
-            <option value="Chinese">Chinese</option>
-            <option value="Spanish">Spanish</option>
-            <option value="German">German</option>
-            <option value="Italian">Italian</option>
-            <option value="Japanese">Japanese</option>
-            <option value="Korean">Korean</option>
-            <option value="Russian">Russian</option>
-            <option value="Arabic">Arabic</option>
-        </select>
+  <div class="setting-card">
+    <div class="profile-card">
+      <button class="avatar-button" type="button" aria-label="Change avatar">
+        <img
+          id="profile-avatar"
+          src="https://img.freepik.com/free-icon/user_318-159711.jpg?w=740"
+          alt="Profile avatar"
+        />
+      </button>
+      <div class="profile-meta">
+        <h1>Account Settings</h1>
+        <p id="profile-summary">Update your profile, choose a language, and manage notification preferences.</p>
+      </div>
     </div>
-    
-    <button id="notification-button">Enable Notifications</button>
-    
-    <button id="save-changes">Save Changes</button>
+
+    <form class="setting-form">
+      <div class="field-group">
+        <label for="language-select">Language</label>
+        <select id="language-select">
+          <option value="English">English</option>
+          <option value="French">French</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Spanish">Spanish</option>
+          <option value="German">German</option>
+          <option value="Italian">Italian</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Korean">Korean</option>
+          <option value="Russian">Russian</option>
+          <option value="Arabic">Arabic</option>
+        </select>
+      </div>
+
+      <div class="field-group field-group--inline">
+        <div>
+          <p class="field-label">Notifications</p>
+          <p class="field-description">Turn on alerts for order updates and special offers.</p>
+        </div>
+        <button id="notification-button" type="button">Enable Notifications</button>
+      </div>
+
+      <button id="save-changes" type="submit">Save Changes</button>
+    </form>
+  </div>
 </div>
