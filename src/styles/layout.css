@@ -27,9 +27,9 @@ body {
   height: 100vh;
   display: flex;
   overflow: hidden;
-  border-radius: 18px;
+  border-radius: var(--radius-xl);
   background-color: var(--brand-surface);
-  box-shadow: 0 22px 58px rgba(99, 60, 2, 0.16);
+  box-shadow: var(--shadow-xl);
 }
 
 .component-mount {
@@ -52,22 +52,22 @@ body {
 
 .component-error {
   margin: 0;
-  padding: 12px;
+  padding: var(--space-sm);
   color: #b42318;
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
 }
 
 .mount-left {
   max-width: 300px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: var(--breakpoint-wide)) {
   .food-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: var(--breakpoint-desktop)) {
   .layout-shell {
     flex-direction: column;
     min-height: 0;
@@ -80,7 +80,7 @@ body {
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: var(--breakpoint-tablet)) {
   .layout-page {
     padding: 0;
     justify-content: flex-start;

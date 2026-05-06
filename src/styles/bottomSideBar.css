@@ -1,8 +1,11 @@
+@import url(../../gobal.css);
+
 .bottom-sidebar {
   display: none;
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 1024px) {
   .bottom-sidebar {
     position: fixed;
     bottom: 0;
@@ -12,22 +15,22 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     align-items: center;
-    gap: 6px;
-    padding: 10px 12px;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-sm);
     border-top: 1px solid var(--brand-line);
     background: #ffffff;
-    box-shadow: 0 -8px 18px rgba(17, 24, 39, 0.08);
-    z-index: 40;
+    box-shadow: var(--shadow-md);
+    z-index: var(--z-fixed);
   }
 
   .bottom-item {
     height: 48px;
     border: 0;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     background: transparent;
     color: var(--brand-gray-600);
     font:
-      600 0.85rem "Segoe UI",
+      600 var(--font-size-sm) "Segoe UI",
       Tahoma,
       Geneva,
       Verdana,
@@ -37,20 +40,20 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
-    padding: 4px 0;
-    gap: 2px;
+    transition: all var(--transition-base) ease;
+    padding: var(--space-xs) 0;
+    gap: var(--space-xs);
   }
 
   .bottom-item i {
-    font-size: 1.2rem;
+    font-size: var(--font-size-2xl);
     display: block;
   }
 
   .bottom-item span {
-    font-size: 0.7rem;
+    font-size: var(--font-size-xs);
     display: block;
-    line-height: 1;
+    line-height: var(--line-height-tight);
   }
 
   .bottom-item.active {
@@ -67,19 +70,19 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
   .bottom-sidebar {
     height: 64px;
-    padding: 8px 10px;
-    gap: 4px; 
+    padding: var(--space-xs) var(--space-xs);
+    gap: var(--space-xs); 
   }
 
   .bottom-item {
     height: 44px;
-    font-size: 0.75rem;
+    font-size: var(--font-size-xs);
   }
 
   .bottom-item span {
-    font-size: 0.65rem;
+    font-size: var(--font-size-xs);
   }
 }

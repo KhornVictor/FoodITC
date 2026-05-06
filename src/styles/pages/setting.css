@@ -4,21 +4,21 @@
   align-items: center;
   justify-content: center;
   min-height: 100%;
-  padding: 2rem;
+  padding: var(--space-2xl);
   animation: page-fade-in 420ms ease-out;
 }
 
 .setting-content h1 {
-  font-size: 2rem;
+  font-size: var(--font-size-4xl);
   color: var(--brand-gray-900);
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-lg);
   text-align: center;
 }
 
 .setting-content p {
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   color: var(--brand-gray-600);
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-2xl);
   text-align: center;
   max-width: 400px;
 }
@@ -27,29 +27,29 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-xl);
   width: 100%;
   max-width: 300px;
 }
 
 .setting-content label {
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   color: var(--brand-gray-700);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-xs);
   font-weight: 500;
 }
 
 .setting-content select {
   width: 100%;
-  padding: 0.75rem;
+  padding: var(--space-sm);
   border: 1px solid var(--brand-line);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background-color: var(--brand-surface);
   color: var(--brand-text-dark);
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   font-family: inherit;
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color var(--transition-base) ease, box-shadow var(--transition-base) ease;
 }
 
 .setting-content select:focus {
@@ -63,17 +63,17 @@
 }
 
 .setting-content button {
-  padding: 0.75rem 1.5rem;
+  padding: var(--space-sm) var(--space-xl);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background-color: var(--brand-accent-orange);
   color: white;
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   font-family: inherit;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  margin: 0.5rem 0;
+  transition: background-color var(--transition-base) ease, transform var(--transition-fast) ease;
+  margin: var(--space-xs) 0;
   width: 100%;
   max-width: 300px;
 }
