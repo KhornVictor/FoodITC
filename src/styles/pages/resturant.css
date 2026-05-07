@@ -4,9 +4,7 @@
   flex-direction: column;
   gap: var(--space-2xl);
   min-height: 100%;
-  border-radius: var(--radius-xl);
   overflow: hidden;
-  padding: var(--space-xs) var(--space-lg);
   animation: restaurant-page-in 420ms ease-out;
 }
 
