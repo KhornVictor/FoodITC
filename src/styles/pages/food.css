@@ -286,6 +286,12 @@
   animation: gridFadeIn 0.35s ease-out;
 }
 
+@media (max-width: 1024px) {
+  .food-grid {
+    padding-bottom: 100px;
+  }
+}
+
 .food-card {
   padding: var(--space-sm);
   border: 1px solid rgba(255, 176, 116, 0.24);
@@ -465,7 +471,7 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* @media (prefers-reduced-motion: reduce) {
   .food-grid,
   .food-card,
   .add-btn {
@@ -474,7 +480,7 @@
     transform: none;
     opacity: 1;
   }
-}
+} */
 
 @media (max-width: 1440px) {
   .food-hero {
@@ -532,7 +538,7 @@
   }
 
   .food-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 2fr));
     gap: var(--space-sm);
   }
 
@@ -550,8 +556,8 @@
   }
 }
 
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .food-grid {
-    grid-template-columns: 2fr;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 2fr));
   }
-}
+} */

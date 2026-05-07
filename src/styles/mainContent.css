@@ -6,7 +6,7 @@
   min-height: 0;
   height: 100%;
   max-width: 100%;
-  padding: 50px;
+  /* padding: 50px; */
   background:
     radial-gradient(
       circle at top right,
@@ -22,31 +22,38 @@
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   align-content: start;
-  gap: 24px;
   overflow: hidden;
+}
+
+.sub-main-content{
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  --top-bar-height: 78px;
 }
 
 @media (max-width: 1440px) {
   .main-content {
-    padding: 24px;
+    padding: 0px 24px 0px 24px;
   }
 }
 
 @media (max-width: 1024px) {
   .main-content {
-    padding: var(--space-lg);
+    padding: 0px var(--space-lg) 0px var(--space-lg);
   }
 }
 
 @media (max-width: 768px) {
   .main-content {
-    padding: var(--space-md);
+    padding: 0px var(--space-md) 0px var(--space-md);
   }
 }
 
 @media (max-width: 480px) {
   .main-content {
-    padding: var(--space-xs);
+    padding: 0px var(--space-xs) 0px var(--space-xs);
   }
 }
 
@@ -55,10 +62,12 @@
 
 .content-area {
   min-height: 0;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  padding-top: 124px;
   /* -webkit-overflow-scrolling: touch; */
 }
 
@@ -69,6 +78,10 @@
 }
 
 .top-bar {
+  position: absolute;
+  top: 24px;
+  left: 0px;
+  right: 0px;
   display: grid;
   grid-template-columns: minmax(180px, 1.1fr) minmax(260px, 2fr) auto;
   align-items: center;
@@ -76,14 +89,39 @@
   padding: 10px;
   border-radius: var(--radius-xl);
   border: 1px solid rgba(255, 176, 116, 0.32);
+
   background: linear-gradient(
     115deg,
-    rgba(255, 255, 255, 0.85),
-    rgba(255, 241, 227, 0.78)
+    rgba(255, 255, 255),
+    rgba(255, 241, 227)
   );
+  z-index: 1000;
   box-shadow:
-    0 16px 30px rgba(244, 140, 59, 0.12),
+    0 10px 24px rgba(18, 12, 6, 0.12),
+    0 24px 48px rgba(244, 140, 59, 0.14);
   /* flex-shrink: 0; */
+  transition: transform 220ms ease, opacity 220ms ease;
+}
+
+.top-bar--hidden {
+  transform: translateY(-130%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.top-bar-logo{
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .top-bar-label {
+    display: none;
+  }
+
+  .top-bar-logo {
+    display: block;
+    height: 45px;
+  }
 }
 
 @media (max-width: 768px) {

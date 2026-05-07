@@ -1,7 +1,10 @@
 import { rendering } from "./src/function/core/Rendering.js";
 import { initSidebarNavigation } from "./src/function/navigations/SideBar.js";
 import { initBottomBarNavigation } from "./src/function/navigations/BottomBar.js";
-import { checkLoginState } from "./src/function/navigations/Navigation.js";
+import {
+  checkLoginState,
+  initTopBarScrollBehavior,
+} from "./src/function/navigations/Navigation.js";
 import { initCartPage } from "./src/pages/order/CartPage.js";
 
 const main = document.getElementById("main");
@@ -10,6 +13,7 @@ const initApp = async () => {
   try {
     await rendering("./src/app.html", main);
     checkLoginState();
+    initTopBarScrollBehavior();
     initSidebarNavigation(main);
     initBottomBarNavigation(main);
 

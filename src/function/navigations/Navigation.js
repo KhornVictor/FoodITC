@@ -18,10 +18,21 @@ const getStoredUser = () => {
 };
 
 const getAvatarUrl = (user = null) => {
-  if (user?.avatar) {
-    return user.avatar;
+  const defaultAvatar = "https://static.vecteezy.com/system/resources/previews/013/360/247/non_2x/default-avatar-photo-icon-social-media-profile-sign-symbol-vector.jpg";
+  if (user && user.profile_picture) {
+    const imageUrl = user.profile_picture;
+    const validExtensions = [".png", ".jpg", ".jpeg", ".gif", ".webp"];
+
+    const isValidImage = validExtensions.some((ext) =>
+      imageUrl.toLowerCase().endsWith(ext)
+    );
+
+    if (isValidImage) {
+      return imageUrl;
+    }
   }
-  return "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80";
+
+  return defaultAvatar;
 };
 
 const renderLoggedOutState = (container) => {
@@ -93,4 +104,43 @@ export const topBarLabel = (label) => {
     return;
   }
   labelElement.textContent = label;
+};
+
+export const initTopBarScrollBehavior = () => {
+  const topBar = document.querySelector(".top-bar");
+  const contentArea = document.querySelector(".content-area");
+
+  if (!topBar || !contentArea) {
+    console.warn("Top bar or content area not found");
+    return;
+  }
+
+  let lastScrollTop = contentArea.scrollTop;
+  let ticking = false;
+
+  const updateTopBar = () => {
+    const currentScrollTop = contentArea.scrollTop;
+    const scrollDown = currentScrollTop > lastScrollTop;
+    const isNearTop = currentScrollTop <= 8;
+
+    if (scrollDown && !isNearTop) {
+      topBar.classList.add("top-bar--hidden");
+    } else {
+      topBar.classList.remove("top-bar--hidden");
+    }
+
+    lastScrollTop = Math.max(0, currentScrollTop);
+    ticking = false;
+  };
+
+  contentArea.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateTopBar);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
 };
