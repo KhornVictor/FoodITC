@@ -9,22 +9,7 @@ import { getCurrentUser } from "../utils/getme.js";
 import { updateUser } from "../../services/User.js";
 
 const getAvatarUrl = (user = null) => {
-  const defaultAvatar =
-    "https://static.vecteezy.com/system/resources/previews/013/360/247/non_2x/default-avatar-photo-icon-social-media-profile-sign-symbol-vector.jpg";
-  const imageUrl = user?.profile_picture || user?.avatar;
-  if (imageUrl) {
-    const validExtensions = [".png", ".jpg", ".jpeg", ".gif", ".webp"];
-
-    const isValidImage = validExtensions.some((ext) =>
-      imageUrl.toLowerCase().endsWith(ext)
-    );
-
-    if (isValidImage) {
-      return imageUrl;
-    }
-  }
-
-  return defaultAvatar;
+  return user?.avatar || "https://static.vecteezy.com/system/resources/previews/013/360/247/non_2x/default-avatar-photo-icon-social-media-profile-sign-symbol-vector.jpg";
 };
 
 export const saveProfile = async () => {

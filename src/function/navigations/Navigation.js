@@ -18,21 +18,7 @@ const getStoredUser = () => {
 };
 
 const getAvatarUrl = (user = null) => {
-  const defaultAvatar = "https://static.vecteezy.com/system/resources/previews/013/360/247/non_2x/default-avatar-photo-icon-social-media-profile-sign-symbol-vector.jpg";
-  if (user && user.profile_picture) {
-    const imageUrl = user.profile_picture;
-    const validExtensions = [".png", ".jpg", ".jpeg", ".gif", ".webp"];
-
-    const isValidImage = validExtensions.some((ext) =>
-      imageUrl.toLowerCase().endsWith(ext)
-    );
-
-    if (isValidImage) {
-      return imageUrl;
-    }
-  }
-
-  return defaultAvatar;
+  return user?.avatar || "https://static.vecteezy.com/system/resources/previews/013/360/247/non_2x/default-avatar-photo-icon-social-media-profile-sign-symbol-vector.jpg";
 };
 
 const renderLoggedOutState = (container) => {

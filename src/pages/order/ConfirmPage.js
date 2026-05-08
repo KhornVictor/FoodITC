@@ -6,6 +6,9 @@ import {
 import * as CartPageModule from "./CartPage.js";
 
 const AUTH_STORAGE_KEY = "currentUser";
+const DEFAULT_MAP_COORDS = "11.5738261,104.8988252";
+const DEFAULT_MAP_IFRAME_URL =
+  "https://www.google.com/maps/@11.5738261,104.8988252,7249m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI2MDUwMi4wIKXMDSoASAFQAw%3D%3D&output=embed";
 
 /**
  * Get current promo discount from CartPage
@@ -137,121 +140,146 @@ const validateAddressForm = (root = document) => {
 };
 
 /**
+ * Render map preview in the placeholder
+ */
+const renderMapPreview = (root = document) => {
+  const mapPlaceholder = root.querySelector("#map-placeholder");
+  if (!mapPlaceholder) return;
+
+  const addressInput = root.querySelector("#address");
+  const useCurrent = root.querySelector("#use-current-address");
+  const addressValue = addressInput ? addressInput.value.trim() : "";
+  const useCurrentAddress = useCurrent ? useCurrent.checked : false;
+
+  let mapQuery = "";
+  if (addressValue) {
+    mapQuery = encodeURIComponent(addressValue);
+  } else if (useCurrentAddress) {
+    mapQuery = DEFAULT_MAP_COORDS;
+  }
+
+  let mapSrc = "";
+
+  if (!mapQuery) {
+    mapPlaceholder.innerHTML = `
+    
+      <iframe width="100%" height="200px" allow="geolocation" src="https://api.maptiler.com/maps/streets-v4/?key=DJviJgYI994IPUW8SOvN#-0.2/11.5743994/104.9036486"></iframe>
+    
+    `;
+    return;
+  }
+
+  if (mapQuery === DEFAULT_MAP_COORDS) {
+    mapSrc = DEFAULT_MAP_IFRAME_URL;
+  } else {
+    mapSrc = `https://api.maptiler.com/maps/streets-v4/?key=DJviJgYI994IPUW8SOvN#-0.2/11.5743994/104.9036486`;
+  }
+  mapPlaceholder.innerHTML = `
+    <iframe width="100%" height="200px" allow="geolocation" src="https://api.maptiler.com/maps/streets-v4/?key=DJviJgYI994IPUW8SOvN#-0.2/11.5743994/104.9036486"></iframe>
+  `;
+};
+
+/**
  * Create and insert the confirmation page HTML structure (compact version)
  */
 const createConfirmPageStructure = (root) => {
   const html = `
-    <div style="padding: 16px; background: #fff; height: 100%; overflow-y: auto; display: flex; flex-direction: column; align-items: center;">
-      <div style="width: 100%; max-width: 320px;">
-        <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 600; color: #222; text-align: center;">Order Confirmation</h3>
-        
-        <!-- Order Summary -->
-        <div style="margin-bottom: 16px; padding: 12px; background: #f8fafb; border-radius: 8px;">
-          <p style="margin: 0 0 8px 0; font-size: 12px; font-weight: 600; color: #666;">Order Summary</p>
-          <div class="order-summary-list" style="font-size: 12px;"></div>
-        </div>
+    <div style="height: 100%; overflow-y: auto; display: flex; justify-content: center;">
+  <div style="width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: 12px;">
 
-        <!-- Delivery Address with Map -->
-        <div style="margin-bottom: 16px; padding: 12px; background: #f8fafb; border-radius: 8px;">
-          <p style="margin: 0 0 8px 0; font-size: 12px; font-weight: 600; color: #666;">Delivery Address</p>
-          
-          <!-- Map Placeholder -->
-          <div id="map-placeholder" style="width: 100%; height: 140px; background: #e8e8e8; border-radius: 6px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 11px; border: 1px solid #ddd;">
-            📍 Map View
-          </div>
-          
-          <!-- Address Input -->
-          <input type="text" id="address" placeholder="Enter delivery address" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 11px; box-sizing: border-box; margin-bottom: 8px;" />
-          
-          <!-- Use Current Address Checkbox -->
-          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 11px; color: #222;">
-            <input type="checkbox" id="use-current-address" />
-            <span>Use my current address</span>
-          </label>
-        </div>
+    <!-- HEADER -->
+    <div style="text-align: center; margin-bottom: 4px;">
+      <h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #222;">Order Confirmation</h2>
+      <p style="margin: 4px 0 0; font-size: 12px; color: #777;">Review your order before placing it</p>
+    </div>
 
-        <!-- Payment Method -->
-        <div style="margin-bottom: 16px; padding: 12px; background: #f8fafb; border-radius: 8px;">
-          <p style="margin: 0 0 8px 0; font-size: 12px; font-weight: 600; color: #666;">Payment</p>
-          <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
-            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-              <input type="radio" name="payment-method" value="qr" class="payment-method-radio" checked />
-              <span>QR Code</span>
-            </label>
-            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-              <input type="radio" name="payment-method" value="cash" class="payment-method-radio" />
-              <span>Cash</span>
-            </label>
-            <div style="border-top: 1px solid #ddd; margin-top: 6px; padding-top: 6px;">
-              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                <input type="radio" name="payment-timing" value="arrival" class="payment-timing-radio" checked />
-                <span>Pay on Arrival</span>
-              </label>
-              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                <input type="radio" name="payment-timing" value="now" class="payment-timing-radio" />
-                <span>Pay Now</span>
-              </label>
-            </div>
-          </div>
-          <!-- Real-time Payment Warning -->
-          <div id="payment-alert" style="margin-top: 8px; padding: 8px; background: #ffebee; border: 1px solid #ef5350; border-radius: 4px; color: #c62828; font-size: 11px; display: none; text-align: center;">
-            ⚠️ Cash payment is only available for "Pay on Arrival"
-          </div>
-        </div>
+    <!-- ORDER SUMMARY -->
+    <div style="background: #fff; border-radius: 12px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+      <p style="margin: 0 0 8px; font-size: 12px; font-weight: 600; color: #666;">Order Summary</p>
+      <div class="order-summary-list" style="font-size: 12px; color: #333;"></div>
+    </div>
 
-        <!-- QR Payment Modal -->
-        <div id="qr-payment-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 16px;">
-          <div style="background: #fff; border-radius: 12px; overflow: hidden; max-width: 350px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto;">
-            <!-- Header -->
-            <div style="background: linear-gradient(135deg, #ff9800 0%, #ff6f00 100%); padding: 24px; text-align: center; color: #fff;">
-              <h3 style="margin: 0 0 4px 0; font-size: 18px; font-weight: 700;">NomNom</h3>
-              <p style="margin: 0; font-size: 12px; opacity: 0.9;">Scan QR to Pay</p>
-            </div>
-            
-            <!-- Content -->
-            <div style="padding: 24px; text-align: center;">
-              <!-- QR Code Container -->
-              <div id="qr-code-container" style="background: #f5f5f5; border-radius: 8px; padding: 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; min-height: 220px;">
-                <img src="./public/images/qr-code.png" alt="QR Code" style="max-width: 200px; width: 100%; height: auto;" />
-              </div>
-              
-              <!-- Order Info -->
-              <div style="background: #f9f9f9; border-radius: 8px; padding: 12px; margin-bottom: 16px; text-align: left;">
-                <p id="order-id-display" style="margin: 0 0 8px 0; font-size: 13px; color: #666;"><strong>Order ID:</strong> <span style="color: #222; font-family: monospace;"></span></p>
-                <p style="margin: 0; font-size: 13px; color: #666;"><strong>Amount:</strong> <span id="payment-amount" style="color: #222; font-family: monospace;"></span></p>
-              </div>
-              
-              <!-- Account Info -->
-              <div style="background: #fff3e0; border-radius: 8px; padding: 12px; margin-bottom: 16px; text-align: left; border-left: 4px solid #ff9800;">
-                <p style="margin: 0 0 6px 0; font-size: 12px; font-weight: 600; color: #ff6f00;">Payment Info</p>
-                <p style="margin: 0 0 4px 0; font-size: 11px; color: #666;"><strong>Bank:</strong> ABA Bank</p>
-                <p style="margin: 0 0 4px 0; font-size: 11px; color: #666;"><strong>Account:</strong> SAMNANG HOUR</p>
-              </div>
-              
-              <!-- Instructions -->
-              <p style="margin: 0 0 20px 0; font-size: 11px; color: #999; font-style: italic;">Open your ABA mobile app and scan this QR code to complete payment</p>
-              
-              <!-- Button -->
-              <button id="payment-confirmed-btn" type="button" style="width: 100%; padding: 12px; background: #4CAF50; color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.3s;">✓ Payment Confirmed</button>
-            </div>
-          </div>
-        </div>
+    <!-- DELIVERY -->
+    <div style="display: flex; flex-direction: column; gap: 12px; background: #fff; border-radius: 12px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
 
-        <!-- Price Breakdown -->
-        <div style="margin-bottom: 16px; padding: 12px; background: #f8fafb; border-radius: 8px; font-size: 12px; width: 100%;">
-          <div class="price-breakdown"></div>
-        </div>
+      <p style="margin: 0 0 8px; font-size: 12px; font-weight: 600; color: #666;">Delivery Address</p>
 
-        <!-- Warning -->
-        <div class="payment-warning" style="color: #d32f2f; font-size: 11px; margin-bottom: 8px; min-height: 14px; text-align: center; width: 100%;"></div>
+      <!-- MAP -->
+      <div id="map-placeholder" style="width: 100%; height: 180px; background: #e9ecef; border-radius: 10px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 11px; border: 1px solid #ddd;">
+        Map Preview
+      </div>
 
-        <!-- Buttons -->
-        <div style="display: flex; gap: 8px; width: 100%;">
-          <button id="back-to-cart" type="button" style="flex: 1; padding: 10px; background: #f0f0f0; border: none; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; color: #222;">← Back</button>
-          <button id="place-order-btn" type="button" style="flex: 1; padding: 10px; background: #222; border: none; border-radius: 6px; font-size: 12px; font-weight: 500; cursor: pointer; color: #fff;">Place Order</button>
-        </div>
+      <!-- INPUT -->
+      <input type="text" id="address" placeholder="Enter delivery address"
+        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 12px; margin-bottom: 10px; outline: none;" />
+
+      <!-- CHECKBOX -->
+      <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #333;">
+        <input type="checkbox" id="use-current-address" />
+        Use my current address
+      </label>
+    </div>
+
+    <!-- PAYMENT -->
+    <div style="background: #fff; border-radius: 12px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+
+      <p style="margin: 0 0 10px; font-size: 12px; font-weight: 600; color: #666;">Payment Method</p>
+
+      <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12px;">
+        <input type="radio" name="payment-method" value="qr" checked />
+        QR Code
+      </label>
+
+      <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 12px;">
+        <input type="radio" name="payment-method" value="cash" />
+        Cash
+      </label>
+
+      <div style="border-top: 1px solid #eee; padding-top: 10px;">
+
+        <p style="margin: 0 0 8px; font-size: 12px; font-weight: 600; color: #666;">Payment Timing</p>
+
+        <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12px;">
+          <input type="radio" name="payment-timing" value="arrival" checked />
+          Pay on Arrival
+        </label>
+
+        <label style="display: flex; align-items: center; gap: 8px; font-size: 12px;">
+          <input type="radio" name="payment-timing" value="now" />
+          Pay Now
+        </label>
+      </div>
+
+      <div id="payment-alert" style="margin-top: 10px; padding: 8px; background: #ffe5e5; border: 1px solid #ffb3b3; border-radius: 8px; color: #c62828; font-size: 11px; display: none; text-align: center;">
+        ⚠ Cash payment only available for "Pay on Arrival"
       </div>
     </div>
+
+    <!-- PRICE -->
+    <div style="background: #fff; border-radius: 12px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); font-size: 12px;">
+      <div class="price-breakdown"></div>
+    </div>
+
+    <!-- WARNING -->
+    <div class="payment-warning" style="color: #d32f2f; font-size: 11px; text-align: center;"></div>
+
+    <!-- BUTTONS -->
+    <div style="display: flex; gap: 10px; margin-top: 4px;">
+
+      <button id="back-to-cart"
+        style="flex: 1; padding: 12px; background: #f1f1f1; border: none; border-radius: 10px; font-size: 12px; font-weight: 600; color: #333; cursor: pointer;">
+        ← Back
+      </button>
+
+      <button id="place-order-btn"
+        style="flex: 1; padding: 12px; background: #ff6f00; border: none; border-radius: 10px; font-size: 12px; font-weight: 700; color: #fff; cursor: pointer; box-shadow: 0 4px 10px rgba(255,111,0,0.25);">
+        Place Order
+      </button>
+
+    </div>
+
+  </div>
+</div>
   `;
   
   root.innerHTML = html;
@@ -277,6 +305,20 @@ export const renderConfirmPage = async (root = document) => {
     // Render order summary and price breakdown
     await renderOrderSummary(root);
     await renderPriceBreakdown(root);
+
+    // Initialize map preview
+    renderMapPreview(root);
+
+    const addressInput = root.querySelector("#address");
+    const useCurrentAddress = root.querySelector("#use-current-address");
+
+    if (addressInput) {
+      addressInput.addEventListener("input", () => renderMapPreview(root));
+    }
+
+    if (useCurrentAddress) {
+      useCurrentAddress.addEventListener("change", () => renderMapPreview(root));
+    }
 
     // Add real-time payment validation alerts
     const paymentMethods = root.querySelectorAll(".payment-method-radio");

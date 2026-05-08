@@ -17,8 +17,8 @@
       <h3 class="section-title">Delivery Address</h3>
       <div class="address-form">
         <!-- Map placeholder -->
-        <div class="map-container" id="map-placeholder" style="background: #f0f0f0; border-radius: 8px; height: 200px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 14px;">
-          📍 Map will be here
+        <div class="map-container" id="map-placeholder">
+          <span>Map preview</span>
         </div>
 
         <!-- Address inputs -->
@@ -52,33 +52,16 @@
     <!-- Payment Method Section -->
     <div class="confirm-section">
       <h3 class="section-title">Payment Options</h3>
-      <style>
-        .confirm-bill-radio-row label {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          cursor: pointer;
-          font-size: 14px;
-          color: #222;
-        }
-        .confirm-bill-radio-row input[type='radio'] {
-          accent-color: #222;
-          width: 16px;
-          height: 16px;
-          margin: 0 2px 0 0;
-          vertical-align: middle;
-        }
-      </style>
-      <p class="confirm-bill-row confirm-bill-radio-row" style="display: flex; align-items: center; justify-content: space-between; font-size: 14px; margin-bottom: 8px;">
-        <span style="color: #444;">Method</span>
-        <span style="display: flex; gap: 22px; align-items: center;">
+      <p class="confirm-bill-row confirm-bill-radio-row">
+        <span class="bill-label">Method</span>
+        <span class="bill-options">
           <label><input type="radio" name="payment-method" value="cash" checked />Cash</label>
           <label><input type="radio" name="payment-method" value="qr" />QR Code</label>
         </span>
       </p>
-      <p class="confirm-bill-row confirm-bill-radio-row" style="display: flex; align-items: center; justify-content: space-between; font-size: 14px;">
-        <span style="color: #444;">Pay</span>
-        <span style="display: flex; gap: 22px; align-items: center;">
+      <p class="confirm-bill-row confirm-bill-radio-row">
+        <span class="bill-label">Pay</span>
+        <span class="bill-options">
           <label><input type="radio" name="payment-timing" value="now" checked />Now</label>
           <label><input type="radio" name="payment-timing" value="arrival" />On Arrival</label>
         </span>
@@ -103,54 +86,120 @@
 </section>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+  :root {
+    --ink-900: #151515;
+    --ink-700: #2f2f2f;
+    --ink-500: #616161;
+    --ink-400: #7b7b7b;
+    --surface: #ffffff;
+    --surface-soft: #f7f4f1;
+    --surface-muted: #f3f5f7;
+    --accent: #ff7a1a;
+    --accent-strong: #ff5a00;
+    --accent-soft: rgba(255, 122, 26, 0.16);
+    --border: rgba(20, 20, 20, 0.08);
+    --shadow-soft: 0 12px 30px rgba(20, 20, 20, 0.08);
+    --shadow-card: 0 10px 24px rgba(20, 20, 20, 0.06);
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 10px;
+  }
+
   .confirm-page {
-    padding: 20px;
-    background: #fff;
+    padding: 32px 18px 46px;
+    background:
+      radial-gradient(circle at top right, rgba(255, 122, 26, 0.18), rgba(255, 255, 255, 0) 45%),
+      linear-gradient(180deg, #fff 0%, #f9f7f5 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    font-family: 'Poppins', 'Figtree', sans-serif;
+    color: var(--ink-900);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .confirm-page::before {
+    content: '';
+    position: absolute;
+    top: -140px;
+    right: -140px;
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, rgba(255, 122, 26, 0.22), rgba(255, 122, 26, 0));
+    filter: blur(6px);
+    z-index: 0;
+  }
+
+  .confirm-page::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(20, 20, 20, 0.05) 1px, transparent 1px);
+    background-size: 18px 18px;
+    opacity: 0.2;
+    z-index: 0;
+    pointer-events: none;
   }
 
   .confirm-container {
-    max-width: 600px;
+    max-width: 520px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
   }
 
   .confirm-header {
-    margin-bottom: 24px;
+    margin-bottom: 26px;
     text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: var(--radius-lg);
+    padding: 22px 20px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(6px);
   }
 
   .confirm-header h2 {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0 0 4px 0;
-    color: #222;
+    font-size: 27px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    color: var(--ink-900);
+    letter-spacing: -0.2px;
   }
 
   .confirm-subtitle {
     font-size: 13px;
-    color: #999;
+    color: var(--ink-400);
     margin: 0;
   }
 
   .confirm-section {
-    margin-bottom: 20px;
-    padding: 16px;
-    background: #f8fafb;
-    border-radius: 10px;
+    margin-bottom: 18px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(20, 20, 20, 0.06);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(4px);
   }
 
   .section-title {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
-    margin: 0 0 12px 0;
-    color: #333;
+    margin: 0 0 14px 0;
+    color: var(--ink-500);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
   }
 
   .order-summary-item {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 8px 0;
-    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(20, 20, 20, 0.12);
     font-size: 13px;
   }
 
@@ -163,22 +212,46 @@
   }
 
   .item-details .item-name {
-    font-weight: 500;
-    color: #222;
+    font-weight: 600;
+    color: var(--ink-900);
     margin: 0 0 2px 0;
   }
 
   .item-details .item-qty {
     font-size: 12px;
-    color: #999;
+    color: var(--ink-400);
     margin: 0;
   }
 
   .item-price {
     font-weight: 600;
-    color: #222;
-    min-width: 50px;
+    color: var(--ink-900);
+    min-width: 60px;
     text-align: right;
+  }
+
+  .map-container {
+    height: 200px;
+    border-radius: var(--radius-md);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-400);
+    font-size: 13px;
+    border: 1px dashed rgba(255, 122, 26, 0.4);
+    background:
+      linear-gradient(140deg, rgba(255, 122, 26, 0.12), rgba(255, 255, 255, 0)),
+      linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6));
+  }
+
+  .map-container span {
+    background: var(--surface);
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 122, 26, 0.25);
+    color: var(--ink-500);
+    font-weight: 500;
   }
 
   .form-group {
@@ -188,42 +261,100 @@
   .form-group label {
     display: block;
     font-size: 12px;
-    font-weight: 500;
-    color: #666;
-    margin-bottom: 4px;
+    font-weight: 600;
+    color: var(--ink-500);
+    margin-bottom: 6px;
   }
 
   .form-group input,
   .form-group textarea {
     width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    padding: 10px 12px;
+    border: 1px solid rgba(20, 20, 20, 0.12);
+    border-radius: 10px;
     font-size: 13px;
     font-family: inherit;
+    background: var(--surface-muted);
+    transition: border 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
 
   .form-group input:focus,
   .form-group textarea:focus {
     outline: none;
-    border-color: #222;
-    box-shadow: 0 0 0 2px rgba(34, 34, 34, 0.1);
+    border-color: var(--accent-strong);
+    background: var(--surface);
+    box-shadow: 0 0 0 4px var(--accent-soft);
   }
 
   .checkbox-label {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     cursor: pointer;
     font-size: 13px;
-    color: #222;
+    color: var(--ink-700);
   }
 
   .checkbox-label input[type="checkbox"] {
     width: 16px;
     height: 16px;
     cursor: pointer;
-    accent-color: #222;
+    accent-color: var(--accent-strong);
+  }
+
+  .confirm-bill-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    margin: 0 0 12px 0;
+  }
+
+  .confirm-bill-radio-row label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ink-700);
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: var(--surface-muted);
+    transition: border 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .confirm-bill-radio-row label:hover {
+    border-color: rgba(255, 122, 26, 0.35);
+    background: rgba(255, 122, 26, 0.08);
+  }
+
+  .confirm-bill-radio-row label:has(input:checked) {
+    background: var(--accent-soft);
+    border-color: rgba(255, 122, 26, 0.5);
+    color: var(--ink-900);
+    box-shadow: inset 0 0 0 1px rgba(255, 122, 26, 0.2);
+  }
+
+  .confirm-bill-radio-row input[type='radio'] {
+    accent-color: var(--accent-strong);
+    width: 14px;
+    height: 14px;
+    margin: 0 2px 0 0;
+    vertical-align: middle;
+  }
+
+  .bill-label {
+    color: var(--ink-500);
+    font-weight: 600;
+  }
+
+  .bill-options {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .price-breakdown {
@@ -234,55 +365,87 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 6px;
-    color: #666;
+    color: var(--ink-500);
   }
 
   .price-row.total {
-    border-top: 2px solid #ddd;
-    padding-top: 8px;
-    margin-top: 8px;
+    border-top: 2px solid rgba(20, 20, 20, 0.12);
+    padding-top: 10px;
+    margin-top: 10px;
     font-weight: 600;
-    color: #222;
-    font-size: 14px;
+    color: var(--ink-900);
+    font-size: 15px;
   }
 
   .confirm-actions {
     display: flex;
     gap: 12px;
-    margin-top: 24px;
+    margin-top: 18px;
   }
 
   .btn {
     flex: 1;
     padding: 12px 16px;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
 
   .btn-primary {
-    background: #222;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
     color: #fff;
+    box-shadow: 0 12px 20px rgba(255, 90, 0, 0.25);
   }
 
   .btn-primary:hover {
-    background: #111;
+    transform: translateY(-1px);
+    box-shadow: 0 16px 24px rgba(255, 90, 0, 0.3);
   }
 
   .btn-primary:disabled {
     background: #999;
     cursor: not-allowed;
+    box-shadow: none;
   }
 
   .btn-secondary {
-    background: #f0f0f0;
-    color: #222;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--ink-700);
+    border: 1px solid rgba(20, 20, 20, 0.08);
   }
 
   .btn-secondary:hover {
-    background: #e0e0e0;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(20, 20, 20, 0.08);
+  }
+
+  .payment-warning {
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .confirm-page {
+      padding: 24px 14px 34px;
+    }
+
+    .confirm-header {
+      padding: 18px 16px;
+    }
+
+    .confirm-actions {
+      flex-direction: column;
+    }
+
+    .confirm-bill-row {
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .bill-options {
+      justify-content: flex-start;
+    }
   }
 </style>
