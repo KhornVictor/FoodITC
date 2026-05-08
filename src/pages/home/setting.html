@@ -1,45 +1,210 @@
 <div class="setting-content">
+  <div class="setting-header">
+    <div class="setting-header__title">
+      <h1>Account Settings</h1>
+    </div>
+    <div class="setting-header__actions">
+      <button
+        class="setting-header__btn setting-header__btn--ghost"
+        type="button"
+      >
+        Edit Profile
+      </button>
+      <button class="setting-header__btn" id="setting-signout" type="button">
+        Sign Out
+      </button>
+    </div>
+  </div>
   <div class="setting-card">
     <div class="profile-card">
       <button class="avatar-button" type="button" aria-label="Change avatar">
         <img
           id="profile-avatar"
-          src="https://img.freepik.com/free-icon/user_318-159711.jpg?w=740"
           alt="Profile avatar"
         />
       </button>
       <div class="profile-meta">
-        <h1>Account Settings</h1>
-        <p id="profile-summary">Update your profile, choose a language, and manage notification preferences.</p>
+        <h1 id="profile-name">Guest</h1>
+        <p id="profile-summary">
+          Update your profile, choose a language, and manage notification
+          preferences.
+        </p>
       </div>
     </div>
 
-    <form class="setting-form">
-      <div class="field-group">
-        <label for="language-select">Language</label>
-        <select id="language-select">
-          <option value="English">English</option>
-          <option value="French">French</option>
-          <option value="Chinese">Chinese</option>
-          <option value="Spanish">Spanish</option>
-          <option value="German">German</option>
-          <option value="Italian">Italian</option>
-          <option value="Japanese">Japanese</option>
-          <option value="Korean">Korean</option>
-          <option value="Russian">Russian</option>
-          <option value="Arabic">Arabic</option>
-        </select>
+    <div class="profile-info-section">
+      <div class="profile-info-header">
+        <h2>Profile Information</h2>
       </div>
 
-      <div class="field-group field-group--inline">
-        <div>
-          <p class="field-label">Notifications</p>
-          <p class="field-description">Turn on alerts for order updates and special offers.</p>
+      <form class="profile-info-form" id="profile-form">
+        <div class="profile-info-grid">
+          <!-- Full Name -->
+          <div class="field-display">
+            <span class="field-label">Full name</span>
+            <input
+              id="profile-name-input"
+              type="text"
+              autocomplete="name"
+              placeholder="Enter your name"
+              class="field-input"
+            />
+          </div>
+
+          <!-- Email -->
+          <div class="field-display">
+            <span class="field-label">Email</span>
+            <input
+              id="profile-email-input"
+              type="email"
+              autocomplete="email"
+              placeholder="Enter your email"
+              class="field-input"
+            />
+          </div>
+
+          <!-- Phone -->
+          <div class="field-display">
+            <span class="field-label">Phone</span>
+            <input
+              id="profile-phone-input"
+              type="tel"
+              autocomplete="tel"
+              placeholder="Enter your phone"
+              class="field-input"
+            />
+          </div>
+
+          <!-- Address -->
+          <div class="field-display">
+            <span class="field-label">Address</span>
+            <input
+              id="profile-address-input"
+              type="text"
+              autocomplete="street-address"
+              placeholder="Enter your address"
+              class="field-input"
+            />
+          </div>
+
+          <!-- Role -->
+          <div class="field-display">
+            <span class="field-label">Role</span>
+            <span id="profile-role" class="field-value">-</span>
+          </div>
+
+          <!-- Member Since -->
+          <div class="field-display">
+            <span class="field-label">Member since</span>
+            <span id="profile-created" class="field-value">-</span>
+          </div>
+
+          <!-- Language -->
+          <div class="info-field">
+            <label for="language-select" class="field-label">Language</label>
+            <select id="language-select" class="field-input">
+              <option value="English">English</option>
+              <option value="French">French</option>
+              <option value="Chinese">Chinese</option>
+              <option value="Spanish">Spanish</option>
+              <option value="German">German</option>
+              <option value="Italian">Italian</option>
+              <option value="Japanese">Japanese</option>
+              <option value="Korean">Korean</option>
+              <option value="Russian">Russian</option>
+              <option value="Arabic">Arabic</option>
+            </select>
+          </div>
+
+          <!-- Notifications -->
         </div>
-        <button id="notification-button" type="button">Enable Notifications</button>
+      </form>
+
+      <form class="setting-form" style="display: none">
+        <div class="field-group">
+          <label for="language-select">Language</label>
+          <select id="language-select">
+            <option value="English">English</option>
+            <option value="French">French</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Spanish">Spanish</option>
+            <option value="German">German</option>
+            <option value="Italian">Italian</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Korean">Korean</option>
+            <option value="Russian">Russian</option>
+            <option value="Arabic">Arabic</option>
+          </select>
+        </div>
+
+        <div class="field-group field-group--inline">
+          <div>
+            <h2>Notifications</h2>
+            <p class="field-description">
+              Turn on alerts for order updates and special offers.
+            </p>
+          </div>
+          <button id="notification-button" type="button">
+            Enable Notifications
+          </button>
+        </div>
+      </form>
+
+      <div class="info-field">
+        <div class="notification-group">
+          <h2>Notifications</h2>
+          <p class="field-description">
+            Turn on alerts for order updates and special offers.
+          </p>
+          <button
+            id="notification-button"
+            type="button"
+            class="notification-btn"
+          >
+            Enable Notifications
+          </button>
+        </div>
       </div>
 
-      <button id="save-changes" type="submit">Save Changes</button>
-    </form>
+      <div class="setting-section">
+        <div class="setting-section__header">
+          <h2>Password</h2>
+        </div>
+        <form class="password-form" id="password-form">
+          <div class="field-group">
+            <label for="current-password">Current password</label>
+            <input
+              id="current-password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Enter current password"
+            />
+          </div>
+          <div class="field-group">
+            <label for="new-password">New password</label>
+            <input
+              id="new-password"
+              type="password"
+              autocomplete="new-password"
+              placeholder="Create a new password"
+            />
+          </div>
+          <div class="field-group">
+            <label for="confirm-password">Confirm new password</label>
+            <input
+              id="confirm-password"
+              type="password"
+              autocomplete="new-password"
+              placeholder="Repeat new password"
+            />
+          </div>
+          <button class="password-submit" type="submit">Change Password</button>
+        </form>
+      </div>
+
+      <button class="profile-submit" onclick="saveProfile()" type="button">
+        Save Profile
+      </button>
+    </div>
   </div>
 </div>

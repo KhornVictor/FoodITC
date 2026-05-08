@@ -65,6 +65,23 @@ const renderLoggedInState = (container, user) => {
     </div>
   `;
 
+  const authProfile = container.querySelector(".auth-profile");
+  if (authProfile) {
+    authProfile.addEventListener("click", () => {
+      history.pushState({ page: "settings" }, "", "?page=settings");
+      if (typeof window.renderSidebarRoute === "function") {
+        void window.renderSidebarRoute("settings");
+        return;
+      }
+
+      if (typeof topBarLabel === "function") {
+        topBarLabel("Settings");
+      }
+
+      window.location.href = "index.html?page=settings";
+    });
+  }
+
   const logoutBtn = container.querySelector("#logout-btn");
   if (!logoutBtn) {
     return;

@@ -107,7 +107,6 @@
   border-radius: var(--radius-xl);
   border: 1px solid rgba(234, 223, 206, 0.85);
   background: linear-gradient(180deg, #ffffff 0%, #fffcf6 100%);
-  box-shadow: 0 18px 38px rgba(24, 39, 75, 0.08);
   padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1rem, 2.5vw, 1.5rem)
     clamp(0.75rem, 2vw, 1rem);
   transition:
@@ -118,7 +117,6 @@
 
 .history-order-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 24px 46px rgba(24, 39, 75, 0.14);
 }
 
 .history-order-card__header {
@@ -312,7 +310,6 @@
   flex-direction: column;
   gap: 10px;
   box-sizing: border-box;
-
 }
 
 .history-detail-page {
@@ -370,7 +367,7 @@
   align-items: center;
   justify-content: space-between;
   padding-top: 10px;
-  border-bottom:1px rgb(222, 222, 222) dashed;
+  border-bottom: 1px rgb(222, 222, 222) dashed;
 }
 
 .detail-info-label {
@@ -477,6 +474,7 @@
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

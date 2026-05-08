@@ -150,6 +150,7 @@ export const initSidebarNavigation = (root = document) => {
     }
 
     if (route === "settings") {
+      setActiveByRoute(route);
       await initSettingsPage(contentArea);
     }
 
