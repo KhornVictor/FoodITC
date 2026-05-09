@@ -281,7 +281,7 @@
   overflow-x: hidden;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--space-lg);
-  padding-right: var(--space-xs);
+  /* padding-right: var(--space-xs); */
   animation: gridFadeIn 0.35s ease-out;
 }
 
@@ -427,7 +427,7 @@
     var(--brand-accent-orange-deep) 100%
   );
   color: #ffffff;
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--space-sm) var(--space-sm);
   font: inherit;
   cursor: pointer;
   transition: all var(--transition-base) ease;
