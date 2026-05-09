@@ -25,7 +25,7 @@
     border-color var(--transition-base) ease;
 }
 
-@media (max-width: var(--breakpoint-tablet)) {
+@media (max-width: 1024px) {
   .right-sidebar {
     display: none;
   }

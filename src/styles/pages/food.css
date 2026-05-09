@@ -153,7 +153,6 @@
 .category-list {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-xs);
 }
 
 .category-checkbox {

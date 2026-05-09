@@ -9,6 +9,37 @@ const AUTH_STORAGE_KEY = "currentUser";
 const DEFAULT_MAP_COORDS = "11.5738261,104.8988252";
 const DEFAULT_MAP_IFRAME_URL =
   "https://www.google.com/maps/@11.5738261,104.8988252,7249m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI2MDUwMi4wIKXMDSoASAFQAw%3D%3D&output=embed";
+const RESPONSIVE_BREAKPOINT = 1024;
+
+const toggleFullscreenMode = (enabled) => {
+  const contentArea = document.querySelector("#content-area");
+  const topBar = document.querySelector(".top-bar");
+
+  if (contentArea) {
+    contentArea.classList.toggle("is-fullscreen", enabled);
+  }
+
+  if (topBar) {
+    topBar.classList.toggle("top-bar--hidden", enabled);
+  }
+};
+
+const getConfirmMount = (root = document) => {
+  const isResponsive = window.matchMedia(
+    `(max-width: ${RESPONSIVE_BREAKPOINT}px)`,
+  ).matches;
+
+  if (isResponsive) {
+    const contentArea =
+      document.querySelector("#content-area") ||
+      root.querySelector?.("#content-area") ||
+      root;
+    return { mount: contentArea, isResponsive };
+  }
+
+  const rightSidebar = document.querySelector("#right-side-bar");
+  return { mount: rightSidebar, isResponsive };
+};
 
 /**
  * Get current promo discount from CartPage
@@ -205,7 +236,7 @@ const createConfirmPageStructure = (root) => {
       <p style="margin: 0 0 8px; font-size: 12px; font-weight: 600; color: #666;">Delivery Address</p>
 
       <!-- MAP -->
-      <div id="map-placeholder" style="width: 100%; height: 180px; background: #e9ecef; border-radius: 10px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 11px; border: 1px solid #ddd;">
+      <div id="map-placeholder" style="width: 100%; height: 180px; background: #e9ecef; border-radius: 10px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 11px; border: 1px solid #ddd; overflow: hidden;">
         Map Preview
       </div>
 
@@ -299,35 +330,43 @@ const generateQRCodeSVG = (text) => {
  */
 export const renderConfirmPage = async (root = document) => {
   try {
+    const { mount, isResponsive } = getConfirmMount(root);
+    toggleFullscreenMode(isResponsive);
+
+    if (!mount) {
+      console.warn("Confirm mount not found");
+      return false;
+    }
+
     // First, create the HTML structure in the root element
-    createConfirmPageStructure(root);
+    createConfirmPageStructure(mount);
 
     // Render order summary and price breakdown
-    await renderOrderSummary(root);
-    await renderPriceBreakdown(root);
+    await renderOrderSummary(mount);
+    await renderPriceBreakdown(mount);
 
     // Initialize map preview
-    renderMapPreview(root);
+    renderMapPreview(mount);
 
-    const addressInput = root.querySelector("#address");
-    const useCurrentAddress = root.querySelector("#use-current-address");
+    const addressInput = mount.querySelector("#address");
+    const useCurrentAddress = mount.querySelector("#use-current-address");
 
     if (addressInput) {
-      addressInput.addEventListener("input", () => renderMapPreview(root));
+      addressInput.addEventListener("input", () => renderMapPreview(mount));
     }
 
     if (useCurrentAddress) {
-      useCurrentAddress.addEventListener("change", () => renderMapPreview(root));
+      useCurrentAddress.addEventListener("change", () => renderMapPreview(mount));
     }
 
     // Add real-time payment validation alerts
-    const paymentMethods = root.querySelectorAll(".payment-method-radio");
-    const paymentTimings = root.querySelectorAll(".payment-timing-radio");
-    const paymentAlert = root.querySelector("#payment-alert");
+    const paymentMethods = mount.querySelectorAll(".payment-method-radio");
+    const paymentTimings = mount.querySelectorAll(".payment-timing-radio");
+    const paymentAlert = mount.querySelector("#payment-alert");
 
     const updatePaymentAlert = () => {
-      const method = root.querySelector('input[name="payment-method"]:checked').value;
-      const timing = root.querySelector('input[name="payment-timing"]:checked').value;
+      const method = mount.querySelector('input[name="payment-method"]:checked').value;
+      const timing = mount.querySelector('input[name="payment-timing"]:checked').value;
       
       if (method === "cash" && timing === "now") {
         paymentAlert.style.display = "block";
@@ -345,18 +384,14 @@ export const renderConfirmPage = async (root = document) => {
     });
 
     // Handle "Back to Cart" button
-    const backBtn = root.querySelector("#back-to-cart");
+    const backBtn = mount.querySelector("#back-to-cart");
     if (backBtn) {
       backBtn.onclick = async () => {
         console.log("Back button clicked");
         try {
           // Import and call the cart page renderer
           const { renderCartPage } = await import("./CartPage.js");
-          // Ensure we're rendering to the actual right sidebar
-          const rightSidebar = document.querySelector("#right-side-bar");
-          if (rightSidebar) {
-            await renderCartPage(rightSidebar);
-          }
+          await renderCartPage(mount);
         } catch (error) {
           console.error("Error going back to cart:", error);
         }
@@ -364,14 +399,14 @@ export const renderConfirmPage = async (root = document) => {
     }
 
     // Handle "Place My Order" button
-    const placeOrderBtn = root.querySelector("#place-order-btn");
+    const placeOrderBtn = mount.querySelector("#place-order-btn");
     if (placeOrderBtn) {
       placeOrderBtn.onclick = async (e) => {
         e.preventDefault();
         e.stopPropagation();
         // Validate address form
-        const validation = validateAddressForm(root);
-        const warningMsg = root.querySelector(".payment-warning");
+        const validation = validateAddressForm(mount);
+        const warningMsg = mount.querySelector(".payment-warning");
 
         if (!validation.valid) {
           warningMsg.textContent = validation.message;
@@ -379,13 +414,13 @@ export const renderConfirmPage = async (root = document) => {
         }
 
         // Check payment method conflict (cash + now)
-        const method = root.querySelector('input[name="payment-method"]:checked').value;
-        const timing = root.querySelector('input[name="payment-timing"]:checked').value;
+        const method = mount.querySelector('input[name="payment-method"]:checked').value;
+        const timing = mount.querySelector('input[name="payment-timing"]:checked').value;
 
         warningMsg.textContent = "";
 
         // Collect delivery data
-        const address = root.querySelector("#address").value.trim();
+        const address = mount.querySelector("#address").value.trim();
 
         // Check if user is authenticated
         const storedUser = getStoredUser();
@@ -423,10 +458,10 @@ export const renderConfirmPage = async (root = document) => {
           // Check if QR payment is needed
           if (method === "qr" && timing === "now") {
             // Show QR payment modal
-            const qrModal = root.querySelector("#qr-payment-modal");
-            const orderIdDisplay = root.querySelector("#order-id-display");
-            const paymentAmount = root.querySelector("#payment-amount");
-            const confirmBtn = root.querySelector("#payment-confirmed-btn");
+          const qrModal = mount.querySelector("#qr-payment-modal");
+          const orderIdDisplay = mount.querySelector("#order-id-display");
+          const paymentAmount = mount.querySelector("#payment-amount");
+          const confirmBtn = mount.querySelector("#payment-confirmed-btn");
 
             if (qrModal && orderIdDisplay && confirmBtn) {
               // Update order details in modal
@@ -513,6 +548,9 @@ export const initConfirmPage = async (root = document) => {
   console.log("initConfirmPage called");
 
   try {
+    const { isResponsive } = getConfirmMount(root);
+    toggleFullscreenMode(isResponsive);
+
     let attempts = 0;
     const maxAttempts = 50;
 

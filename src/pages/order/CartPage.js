@@ -10,6 +10,41 @@ import {
 import { renderConfirmPage } from "./ConfirmPage.js";
 
 const AUTH_STORAGE_KEY = "currentUser";
+const RESPONSIVE_BREAKPOINT = 1024;
+const isOrderRoute = () => {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("page") === "order";
+};
+
+const toggleFullscreenMode = (enabled) => {
+  const contentArea = document.querySelector("#content-area");
+  const topBar = document.querySelector(".top-bar");
+
+  if (contentArea) {
+    contentArea.classList.toggle("is-fullscreen", enabled);
+  }
+
+  if (topBar) {
+    topBar.classList.toggle("top-bar--hidden", enabled);
+  }
+};
+
+const getCartMount = (root = document) => {
+  const isResponsive = window.matchMedia(
+    `(max-width: ${RESPONSIVE_BREAKPOINT}px)`,
+  ).matches;
+
+  if (isResponsive) {
+    const contentArea =
+      document.querySelector("#content-area") ||
+      root.querySelector?.("#content-area") ||
+      root;
+    return { mount: contentArea, isResponsive };
+  }
+
+  const rightSidebar = document.querySelector("#right-side-bar");
+  return { mount: rightSidebar, isResponsive };
+};
 
 const getStoredUser = () => {
   const storedUser =
@@ -226,18 +261,22 @@ const buildCartHTML = (root) => {
  */
 export const renderCartPage = async (root = document) => {
   try {
-    // Always use the right sidebar for cart display
-    const rightSidebar = document.querySelector("#right-side-bar");
-    if (!rightSidebar) {
-      console.warn("Right sidebar not found");
+    const { mount, isResponsive } = getCartMount(root);
+    if (isResponsive && !isOrderRoute()) {
+      return false;
+    }
+    toggleFullscreenMode(isResponsive);
+
+    if (!mount) {
+      console.warn("Cart mount not found");
       return false;
     }
 
     // First ensure the cart HTML structure exists
-    buildCartHTML(rightSidebar);
+    buildCartHTML(mount);
 
-    const orderList = rightSidebar.querySelector(".order-list");
-    const billSection = rightSidebar.querySelector(".bill-section");
+    const orderList = mount.querySelector(".order-list");
+    const billSection = mount.querySelector(".bill-section");
 
     if (!orderList || !billSection) {
       console.warn("Cart container elements not found after building");
@@ -273,16 +312,16 @@ export const renderCartPage = async (root = document) => {
 
     // Add cart items or empty message
     if (cartItems.length === 0) {
-      if (rightSidebar) {
-        rightSidebar.classList.add("is-hidden");
+      if (!isResponsive && mount) {
+        mount.classList.add("is-hidden");
       }
       const emptyMessage = document.createElement("p");
       emptyMessage.className = "component-error";
       emptyMessage.textContent = "Your cart is empty. Add items from the menu!";
       fragment.appendChild(emptyMessage);
     } else {
-      if (rightSidebar) {
-        rightSidebar.classList.remove("is-hidden");
+      if (!isResponsive && mount) {
+        mount.classList.remove("is-hidden");
       }
       cartItems.forEach((item) => {
         fragment.appendChild(createCartItemElement(item, updateCart));
@@ -375,10 +414,11 @@ export const renderCartPage = async (root = document) => {
             return;
           }
 
-          // Render confirmation page in right sidebar
-          const rightSidebar = document.querySelector("#right-side-bar");
-          if (rightSidebar) {
-            await renderConfirmPage(rightSidebar);
+          const { mount: confirmMount, isResponsive: confirmResponsive } =
+            getCartMount(root);
+          toggleFullscreenMode(confirmResponsive);
+          if (confirmMount) {
+            await renderConfirmPage(confirmMount);
           }
         });
       }
@@ -412,6 +452,9 @@ export const initCartPage = async (root = document) => {
   console.log("initCartPage called");
 
   try {
+    const { isResponsive } = getCartMount(root);
+    toggleFullscreenMode(isResponsive);
+
     // Wait for cart elements to be present
     let attempts = 0;
     const maxAttempts = 50; // 5 seconds max (50 * 100ms)
@@ -429,11 +472,18 @@ export const initCartPage = async (root = document) => {
           const handleCartUpdate = async () => {
             console.log("Cart update event received");
             try {
-              // Make sure sidebar structure exists and is visible
-              const rightSidebar = document.querySelector("#right-side-bar");
-              if (rightSidebar) {
-                buildCartHTML(rightSidebar); // Ensure structure exists
-                rightSidebar.classList.remove("is-hidden");
+              const { mount, isResponsive: updatedResponsive } =
+                getCartMount(root);
+              if (updatedResponsive && !isOrderRoute()) {
+                return;
+              }
+
+              toggleFullscreenMode(updatedResponsive);
+              if (mount) {
+                buildCartHTML(mount); // Ensure structure exists
+                if (!updatedResponsive) {
+                  mount.classList.remove("is-hidden");
+                }
               }
 
               await renderCartPage();
