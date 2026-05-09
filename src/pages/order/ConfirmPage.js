@@ -311,6 +311,44 @@ const createConfirmPageStructure = (root) => {
 
   </div>
 </div>
+
+    <!-- QR Payment Modal -->
+    <div id="qr-payment-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 16px;">
+      <div style="background: #fff; border-radius: 12px; overflow: hidden; max-width: 350px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto;">
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #ff9800 0%, #ff6f00 100%); padding: 24px; text-align: center; color: #fff;">
+          <h3 style="margin: 0 0 4px 0; font-size: 18px; font-weight: 700;">NomNom</h3>
+          <p style="margin: 0; font-size: 12px; opacity: 0.9;">Scan QR to Pay</p>
+        </div>
+        
+        <!-- Content -->
+        <div style="padding: 24px; text-align: center;">
+          <!-- QR Code Container -->
+          <div id="qr-code-container" style="background: #f5f5f5; border-radius: 8px; padding: 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; min-height: 220px;">
+            <img src="./public/images/qr-code.png" alt="QR Code" style="max-width: 200px; width: 100%; height: auto;" />
+          </div>
+          
+          <!-- Order Info -->
+          <div style="background: #f9f9f9; border-radius: 8px; padding: 12px; margin-bottom: 16px; text-align: left;">
+            <p id="order-id-display" style="margin: 0 0 8px 0; font-size: 13px; color: #666;"><strong>Order ID:</strong> <span style="color: #222; font-family: monospace;"></span></p>
+            <p style="margin: 0; font-size: 13px; color: #666;"><strong>Amount:</strong> <span id="payment-amount" style="color: #222; font-family: monospace;"></span></p>
+          </div>
+          
+          <!-- Account Info -->
+          <div style="background: #fff3e0; border-radius: 8px; padding: 12px; margin-bottom: 16px; text-align: left; border-left: 4px solid #ff9800;">
+            <p style="margin: 0 0 6px 0; font-size: 12px; font-weight: 600; color: #ff6f00;">Payment Info</p>
+            <p style="margin: 0 0 4px 0; font-size: 11px; color: #666;"><strong>Bank:</strong> ABA Bank</p>
+            <p style="margin: 0 0 4px 0; font-size: 11px; color: #666;"><strong>Account:</strong> SAMNANG HOUR</p>
+          </div>
+          
+          <!-- Instructions -->
+          <p style="margin: 0 0 20px 0; font-size: 11px; color: #999; font-style: italic;">Open your ABA mobile app and scan this QR code to complete payment</p>
+          
+          <!-- Button -->
+          <button id="payment-confirmed-btn" type="button" style="width: 100%; padding: 12px; background: #4CAF50; color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.3s;">✓ Payment Confirmed</button>
+        </div>
+      </div>
+    </div>
   `;
   
   root.innerHTML = html;
