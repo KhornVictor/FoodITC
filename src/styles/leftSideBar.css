@@ -16,15 +16,21 @@
   position: relative;
   overflow: visible;
   transition:
-    width 260ms ease,
-    padding 260ms ease,
-    box-shadow 260ms ease;
+    width var(--transition-slow) ease,
+    padding var(--transition-slow) ease,
+    box-shadow var(--transition-slow) ease;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .left-sidebar {
+    display: none;
+  }
+}
+
+@media (max-width: var(--breakpoint-tablet)) {
   .left-sidebar {
     width: 70px;
-    padding: 12px 4px;
+    padding: var(--space-sm) var(--space-xs);
   }
 
   .logo {
@@ -33,7 +39,7 @@
     scale: 0.9;
   }
 
-  .menu-item p {
+  .menu-item p { 
     display: none;
   }
 
@@ -42,7 +48,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: var(--breakpoint-mobile)) {
   .left-sidebar {
     display: none;
   }
@@ -75,22 +81,22 @@
 }
 
 .brand-name {
-  margin: 0 0 24px;
-  font-size: 1.35rem;
+  margin: 0 0 var(--space-lg);
+  font-size: var(--font-size-2xl);
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--brand-accent-orange-deep);
-  text-shadow: 0 6px 18px rgba(255, 131, 45, 0.25);
+  text-shadow: var(--shadow-md);
 }
 
 .menu-list {
   display: grid;
-  gap: 10px;
-  padding: 18px 16px;
+  gap: var(--space-sm);
+  padding: var(--space-lg) 1rem;
   margin: 0;
   color: var(--brand-gray-600);
   background: rgba(255, 255, 255, 0.75);
-  /* border-radius: 22px; */
+  /* border-radius: var(--radius-xl); */
   /* border: 1px solid rgba(255, 163, 84, 0.25); */
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
@@ -99,14 +105,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space-sm);
   position: relative;
 }
 
 .sidebar-toggle {
   width: 42px;
   height: 42px;
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   border: 1px solid rgba(242, 106, 0, 0.18);
   color: var(--brand-accent-orange-deep);
   display: grid;
@@ -116,14 +122,13 @@
   right: 0px;
   top: 50%;
   transform: translateY(-50%);
-  /* box-shadow:
-    0 12px 22px rgba(244, 130, 53, 0.18),
+  /* box-shadow: var(--shadow-md);
     inset 0 1px 0 rgba(255, 255, 255, 0.7); */
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease,
-    border-color 0.2s ease;
+    transform var(--transition-base) ease,
+    box-shadow var(--transition-base) ease,
+    background var(--transition-base) ease,
+    border-color var(--transition-base) ease;
 }
 
 .sidebar-toggle:hover {
@@ -144,57 +149,57 @@
   object-fit: contain;
   scale: 1.1;
   transition:
-    transform 260ms ease,
-    width 260ms ease,
-    height 260ms ease;
+    transform var(--transition-slow) ease,
+    width var(--transition-slow) ease,
+    height var(--transition-slow) ease;
   flex-shrink: 0;
 }
 
 .menu-item {
   position: relative;
-  padding: 12px 14px;
-  border-radius: 16px;
+  padding: var(--space-sm) 0.875rem;
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-sm);
   cursor: pointer;
   /* background: rgba(255, 255, 255, 0.85); */
   border: 1px solid transparent;
-  /* box-shadow: 0 10px 25px rgba(244, 130, 53, 0.08); */
+  /* box-shadow: var(--shadow-md); */
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease,
-    background-color 0.25s ease;
+    transform var(--transition-base) ease,
+    box-shadow var(--transition-base) ease,
+    border-color var(--transition-base) ease,
+    background-color var(--transition-base) ease;
   backdrop-filter: blur(12px);
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease,
-    background-color 0.25s ease,
-    padding 0.25s ease;
+    transform var(--transition-base) ease,
+    box-shadow var(--transition-base) ease,
+    border-color var(--transition-base) ease,
+    background-color var(--transition-base) ease,
+    padding var(--transition-base) ease;
 }
 
 .menu-item i {
-  font-size: 1.1rem;
+  font-size: var(--font-size-lg);
   color: var(--brand-accent-orange-deep);
   width: 34px;
   height: 34px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   display: grid;
   place-items: center;
   background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 6px 14px rgba(244, 130, 53, 0.14);
+  box-shadow: var(--shadow-md);
 }
 
 .menu-item p {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   font-weight: 500;
   white-space: nowrap;
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
+    opacity var(--transition-base) ease,
+    transform var(--transition-base) ease;
 }
 
 .menu-item:hover {
@@ -239,30 +244,30 @@
 }
 
 .sidebar-footer {
-  margin-top: 48px;
-  padding: 18px 20px;
+  margin-top: var(--space-3xl);
+  padding: var(--space-lg) 1.25rem;
   display: grid;
-  gap: 8px;
-  font-size: 0.9rem;
+  gap: var(--space-xs);
+  font-size: var(--font-size-lg);
   color: var(--brand-gray-500);
   background: rgba(255, 255, 255, 0.8);
-  /* border-radius: 20px; */
+  /* border-radius: var(--radius-xl); */
   border: 1px solid rgba(255, 163, 84, 0.25);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
   transition:
-    padding 260ms ease,
-    opacity 200ms ease;
+    padding var(--transition-slow) ease,
+    opacity var(--transition-base) ease;
 }
 
 .sidebar-logout-icon {
   display: none;
   border: 0;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   width: 38px;
   height: 38px;
   background: rgba(255, 255, 255, 0.92);
   color: var(--brand-accent-orange-deep);
-  box-shadow: 0 6px 14px rgba(244, 130, 53, 0.14);
+  box-shadow: var(--shadow-md);
   place-items: center;
   cursor: pointer;
 }
@@ -298,7 +303,7 @@
 
 .left-sidebar.is-collapsed .menu-item {
   justify-content: center;
-  padding: 10px;
+  padding: var(--space-sm);
 }
 
 .left-sidebar.is-collapsed .menu-item p {
@@ -309,7 +314,7 @@
 }
 
 .left-sidebar.is-collapsed .sidebar-footer {
-  padding: 12px;
+  padding: var(--space-sm);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -321,7 +326,7 @@
 
 .left-sidebar.is-collapsed .sidebar-help {
   display: block;
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   color: var(--brand-gray-500);
 }
 
@@ -329,11 +334,11 @@
   display: inline-grid;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: var(--breakpoint-desktop)) {
   .left-sidebar {
     width: 100%;
-    padding: 20px;
-    border-radius: 20px;
+    padding: var(--space-xl);
+    border-radius: var(--radius-xl);
     border-bottom: 1px solid var(--brand-line);
   }
 

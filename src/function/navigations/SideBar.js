@@ -7,6 +7,7 @@ import { initOrderHistory } from "../pages/history.js";
 import { initCartPage } from "../../pages/order/CartPage.js";
 import { initConfirmPage } from "../../pages/order/ConfirmPage.js";
 import { initSettingsPage } from "../pages/setting.js";
+import { adsImageRotation } from "../pages/ads.js";
 
 export const initSidebarNavigation = (root = document) => {
   const logoutBtn = root.querySelector("#logout-btn");
@@ -118,6 +119,7 @@ export const initSidebarNavigation = (root = document) => {
       await initResturantBox(contentArea);
       await initCategoryCards(contentArea);
       await get10FoodCards(contentArea);
+      adsImageRotation();
     }
 
     if (route === "food") {
@@ -150,6 +152,7 @@ export const initSidebarNavigation = (root = document) => {
     }
 
     if (route === "settings") {
+      setActiveByRoute(route);
       await initSettingsPage(contentArea);
     }
 

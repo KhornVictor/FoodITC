@@ -7,64 +7,64 @@
   justify-content: center;
   background: rgba(17, 24, 39, 0.55);
   backdrop-filter: blur(6px);
-  z-index: 9999;
-  padding: 16px;
+  z-index: var(--z-modal);
+  padding: var(--space-lg);
 }
 
 .login-modal__panel {
   width: min(90vw, 380px);
   background: var(--brand-surface);
-  border-radius: 18px;
-  padding: 24px 24px 20px;
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
   box-shadow:
     0 18px 48px rgba(17, 24, 39, 0.18),
     0 8px 16px rgba(17, 24, 39, 0.08);
   text-align: center;
   position: relative;
-  animation: loginModalPop 0.25s ease-out;
+  animation: loginModalPop var(--transition-base) ease-out;
 }
 
 .login-modal__badge {
   width: 52px;
   height: 52px;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   display: grid;
   place-items: center;
-  margin: 0 auto 12px;
+  margin: 0 auto var(--space-sm);
   color: var(--brand-surface);
   background: linear-gradient(135deg, var(--brand-accent-orange), var(--brand-accent-orange-deep));
-  box-shadow: 0 10px 24px rgba(242, 106, 0, 0.28);
-  font-size: 20px;
+  box-shadow: var(--shadow-lg);
+  font-size: var(--font-size-2xl);
 }
 
 .login-modal__title {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--brand-text-dark);
 }
 
 .login-modal__desc {
-  margin: 8px 0 18px;
-  font-size: 0.92rem;
+  margin: var(--space-xs) 0 var(--space-lg);
+  font-size: var(--font-size-sm);
   color: var(--brand-text-mid);
 }
 
 .login-modal__actions {
   display: flex;
-  gap: 10px;
+  gap: var(--space-xs);
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .login-modal__button {
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   border: 1px solid transparent;
-  font-size: 0.9rem;
+  font-size: var(--font-size-lg);
   font-weight: 600;
-  padding: 10px 18px;
+  padding: var(--space-xs) var(--space-lg);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: transform var(--transition-base) ease, box-shadow var(--transition-base) ease, background var(--transition-base) ease;
 }
 
 .login-modal__button:active {

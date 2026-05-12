@@ -5,6 +5,8 @@ export const getCurrentUser = () => {
     localStorage.getItem(AUTH_STORAGE_KEY) ||
     sessionStorage.getItem(AUTH_STORAGE_KEY);
 
+  console.log(storedUser);
+
   if (!storedUser) {
     return null;
   }

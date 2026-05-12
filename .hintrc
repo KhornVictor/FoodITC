@@ -11,8 +11,16 @@
         "ignore": [
           "scrollbar-width",
           "scrollbar-width: none",
-          "backdrop-filter"
+          "backdrop-filter",
+          "-webkit-overflow-scrolling",
+          "-webkit-user-drag"
         ]
+      }
+    ],
+    "axe/parsing": [
+      "default",
+      {
+        "duplicate-id-active": "off"
       }
     ]
   }
