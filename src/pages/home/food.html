@@ -21,15 +21,17 @@
     </div>
   </header>
 
-  <div class="status-list">
-    <span class="status-pill active">All</span>
-    <span class="status-pill">Dine In</span>
-    <span class="status-pill">Wait List</span>
-    <span class="status-pill">Take Away</span>
-    <span class="status-pill">Served</span>
-  </div>
-
+  
   <div class="food-grid-wrap">
+    <div class="restaurant-toolbar">
+      <h2>Popular Right Now</h2>
+      <div class="restaurant-filters" aria-label="Restaurant filter tags">
+        <button type="button" class="filter-chip active">All</button>
+        <button type="button" class="filter-chip">Fast Food</button>
+        <button type="button" class="filter-chip">Cafe</button>
+        <button type="button" class="filter-chip">Pizza</button>
+      </div>
+    </div>
     <div class="food-grid" id="food-grid"></div>
   </div>
 </div>
