@@ -1,23 +1,37 @@
 <div class="food-content">
-  <section class="food-hero">
-    <div class="food-hero-copy">
-      <p class="food-kicker">Today's Specials</p>
-      <h3 class="section-title">Foodies Menu</h3>
-      <p class="food-subtitle">
-        Freshly prepared dishes with quick delivery and warm service.
-      </p>
+  <header class="restaurant-hero">
+    <p class="restaurant-kicker">Food Menu</p>
+    <h1>Foods</h1>
+    <p class="restaurant-subtitle">
+      Choose your favorite meals from our diverse menu. Fast delivery, trusted kitchens, and
+    </p>
+    <div class="restaurant-stats">
+      <article class="stat-card">
+        <span class="stat-value">120+</span>
+        <span class="stat-label">Foods</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-value">4.8</span>
+        <span class="stat-label">Average Rating</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-value">25 min</span>
+        <span class="stat-label">Typical Delivery</span>
+      </article>
     </div>
-  </section>
+  </header>
 
-  <div class="status-list">
-    <span class="status-pill active">All</span>
-    <span class="status-pill">Dine In</span>
-    <span class="status-pill">Wait List</span>
-    <span class="status-pill">Take Away</span>
-    <span class="status-pill">Served</span>
-  </div>
-
+  
   <div class="food-grid-wrap">
+    <div class="restaurant-toolbar">
+      <h2>Popular Right Now</h2>
+      <div class="restaurant-filters" aria-label="Restaurant filter tags">
+        <button type="button" class="filter-chip active">All</button>
+        <button type="button" class="filter-chip">Fast Food</button>
+        <button type="button" class="filter-chip">Cafe</button>
+        <button type="button" class="filter-chip">Pizza</button>
+      </div>
+    </div>
     <div class="food-grid" id="food-grid"></div>
   </div>
 </div>

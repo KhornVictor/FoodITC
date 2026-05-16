@@ -7,7 +7,7 @@
   height: 100%;
   max-width: 100%;
   padding: 0px 50px;
-  background:
+  /* background:
     radial-gradient(
       circle at top right,
       rgba(255, 230, 205, 0.5),
@@ -18,7 +18,8 @@
       rgba(159, 223, 214, 0.45),
       transparent 40%
     ),
-    var(--brand-gray-100);
+    var(--brand-gray-100); */
+  background-color: aliceblue;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   align-content: start;
@@ -107,9 +108,9 @@
 
   background: linear-gradient(115deg, rgba(255, 255, 255), rgba(255, 241, 227));
   z-index: 1000;
-  box-shadow:
+  /* box-shadow:
     0 10px 24px rgba(18, 12, 6, 0.12),
-    0 24px 48px rgba(244, 140, 59, 0.14);
+    0 24px 48px rgba(244, 140, 59, 0.14); */
   /* flex-shrink: 0; */
   transition:
     transform 220ms ease,
