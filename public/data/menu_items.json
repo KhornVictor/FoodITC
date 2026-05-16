@@ -401,5 +401,62 @@
     "discount": 0.1,
     "order_count": 250,
     "rating": 4.4
+  },
+  {
+    "item_id": 32,
+    "restaurant_id": 2,
+    "category_id": 6,
+    "name": "Sach Ko Ang",
+    "description": "Sach ko ang, or barbecued beef skewers, are popular as a late afternoon snack to tide you over until dinner. They usually come with a buttered baguette (a remnant of French colonialism) and a sweet, green papaya pickle.",
+    "price": 2.5,
+    "image_url": "https://www.chefspencil.com/wp-content/uploads/Sach-Ko-Ang.jpg.webp",
+    "discount": 0,
+    "order_count": 250,
+    "rating": 4.4
+  },
+  {
+    "item_id": 33,
+    "restaurant_id": 2,
+    "category_id": 6,
+    "name": "Bobor (Rice Porridge)",
+    "description": "A traditional Indonesian rice porridge, often served with sweet or savory toppings.",
+    "price": 2.5,
+    "image_url": "https://www.chefspencil.com/wp-content/uploads/Bobor.jpg.webp",
+    "order_count": 250,
+    "rating": 4.4
+  },
+  {
+    "item_id": 34,
+    "restaurant_id": 2,
+    "category_id": 6,
+    "name": "BLort Chaa Nom K’chai (Fried Rice Noodles and Chive Cake))",
+    "description": "Lort is the Khmer word for a type of short, thick rice noodle that is most commonly fried with bean sprouts and chives then dressed with oyster sauce.",
+    "price": 2.5,
+    "image_url": "https://www.chefspencil.com/wp-content/uploads/Lort-Cha.jpg.webp",
+    "order_count": 250,
+    "rating": 4.4
+  },
+  {
+    "item_id": 35,
+    "restaurant_id": 2,
+    "category_id": 6,
+    "name": "Jek Jieng",
+    "description": "Jek jieng is one of the best ways to enjoy Cambodia’s delicious bananas and you can find them sold on the street by roving vendors in the morning or afternoon. They are flattened, dipped in a rice flour batter and then deep fried. If you prefer the batter crispy, look for a stall where the vendor is letting them dry in the air.",
+    "price": 2.5,
+    "image_url": "https://www.chefspencil.com/wp-content/uploads/Khmer-Deep-Fry-Banana.jpg.webp",
+    "order_count": 250,
+    "rating": 4.4
+  },
+  {
+    "item_id": 36,
+    "restaurant_id": 2,
+    "category_id": 6,
+    "name": "Kangkep Baob",
+    "description": "Frogs have been eaten in Asia for centuries, and it could be argued that this is where the French got the idea. In Cambodia, not content with simply grilling them, someone decided, quite rightly, that it would be a good idea to stuff them with curried pork first.",
+    "price": 2.5,
+    "image_url": "https://www.chefspencil.com/wp-content/uploads/Kangkep-Baob.jpg.webp",
+    "order_count": 250,
+    "rating": 4.4
   }
+  
 ]
