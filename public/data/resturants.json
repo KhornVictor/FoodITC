@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
   {
     "restaurant_id": 1,
@@ -99,3 +100,106 @@
     "created_at": "2026-03-10T19:25:00"
   }
 ]
+=======
+[
+  {
+    "restaurant_id": 1,
+    "name": "Hel Corner",
+    "description": "Cozy family restaurant serving grilled specialties and homemade desserts.",
+    "address": "12 Ocean View Road, Miami, FL",
+    "phone": "+1-305-555-0101",
+    "image_url": "https://scontent.fpnh2-3.fna.fbcdn.net/v/t39.30808-6/476452372_122158261736318469_3247449178238027984_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=4ztQMKdY48EQ7kNvwHO8AVH&_nc_oc=AdprxKHOGmeS-BTuFCWkRE83nd8ervAfnQW0TWISQLSJD_XDktBizWYWnTccw-H6dUY&_nc_zt=23&_nc_ht=scontent.fpnh2-3.fna&_nc_gid=r-BuKc58CsI0HnH2G5zbyg&_nc_ss=7b289&oh=00_Af7hZPAo2UdSrs9lXzLpPodnRtneSEhO7hTV-f98tJkgtA&oe=6A0E18D6",
+    "created_at": "2026-03-01T09:00:00"
+  },
+  {
+    "restaurant_id": 2,
+    "name": "Pasta Corner",
+    "description": "Authentic Italian cuisine featuring fresh pasta and wood-fired pizzas.",
+    "address": "45 Roma Street, New York, NY",
+    "phone": "+1-212-555-0102",
+    "image_url": "https://images.deliveryhero.io/image/fd-kh/kh-logos/ci4sr-logo.jpg",
+    "created_at": "2026-03-02T10:15:00"
+  },
+  {
+    "restaurant_id": 3,
+    "name": "Brown Coffee",
+    "description": "Traditional Japanese sushi bar with premium sashimi and ramen.",
+    "address": "78 Cherry Blossom Ave, San Francisco, CA",
+    "phone": "+1-415-555-0103",
+    "image_url": "https://ampp.aeonmallcambodia.com/wp-content/uploads/sites/2/2023/12/488259228_1065456875618485_7714181082279003253_n.jpg",
+    "created_at": "2026-03-03T11:30:00"
+  },
+  {
+    "restaurant_id": 4,
+    "name": "KFC",
+    "description": "Indian fusion restaurant offering rich curries and tandoori dishes.",
+    "address": "23 Curry Lane, Chicago, IL",
+    "phone": "+1-312-555-0104",
+    "image_url": "https://upload.wikimedia.org/wikipedia/sco/thumb/b/bf/KFC_logo.svg/250px-KFC_logo.svg.png",
+    "created_at": "2026-03-04T12:45:00"
+  },
+  {
+    "restaurant_id": 5,
+    "name": "Starbucks",
+    "description": "Mexican restaurant known for tacos, burritos, and margaritas.",
+    "address": "90 Fiesta Street, Austin, TX",
+    "phone": "+1-512-555-0105",
+    "image_url": "https://upload.wikimedia.org/wikipedia/sco/thumb/d/d3/Starbucks_Corporation_Logo_2011.svg/500px-Starbucks_Corporation_Logo_2011.svg.png",
+    "created_at": "2026-03-05T14:00:00"
+  },
+  {
+    "restaurant_id": 6,
+    "name": "Burger King",
+    "description": "Vegan and vegetarian dishes made with locally sourced ingredients.",
+    "address": "34 Fresh Ave, Portland, OR",
+    "phone": "+1-503-555-0106",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Burger_King_logo_%281999%E2%80%932020%29.svg/3840px-Burger_King_logo_%281999%E2%80%932020%29.svg.png",
+    "created_at": "2026-03-06T15:20:00"
+  },
+  {
+    "restaurant_id": 7,
+    "name": "Domino's Pizza",
+    "description": "Seafood restaurant offering fresh catch and waterfront dining.",
+    "address": "56 Harbor Road, Seattle, WA",
+    "phone": "+1-206-555-0107",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Domino%27s_pizza_logo.svg/960px-Domino%27s_pizza_logo.svg.png",
+    "created_at": "2026-03-07T16:35:00"
+  },
+  {
+    "restaurant_id": 8,
+    "name": "Pizza Hut",
+    "description": "Modern fast-casual spot serving gourmet burgers and fries.",
+    "address": "101 Main Street, Denver, CO",
+    "phone": "+1-303-555-0108",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Pizza_Hut_international_logo_2014.svg/500px-Pizza_Hut_international_logo_2014.svg.png",
+    "created_at": "2026-03-08T17:50:00"
+  },
+  {
+    "restaurant_id": 9,
+    "name": "DQ",
+    "description": "French café with artisan pastries, coffee, and brunch specials.",
+    "address": "67 Paris Blvd, Boston, MA",
+    "phone": "+1-617-555-0109",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Dairy_Queen_logo.svg/1280px-Dairy_Queen_logo.svg.png",
+    "created_at": "2026-03-09T18:10:00"
+  },
+  {
+    "restaurant_id": 10,
+    "name": "McDonald's",
+    "description": "Chinese restaurant specializing in stir-fry and dim sum.",
+    "address": "88 Lotus Street, Las Vegas, NV",
+    "phone": "+1-702-555-0110",
+    "image_url": "https://1000logos.net/wp-content/uploads/2017/03/McDonalds-logo.png",
+    "created_at": "2026-03-10T19:25:00"
+  },
+  {
+    "restaurant_id": 11,
+    "name": "Hotpot & BBQ ពូឈីវមិងឆយ",
+    "description": "Fast food restaurant.",
+    "address": "បឹងត្របែក ផ្លូវ 432 កែង​ ផ្លូវ 101 ផ្ទះលេខ 14BC E0, Phnom Penh, Cambodia,",
+    "phone": "+885-11-53-5001",
+    "image_url": "https://tse2.mm.bing.net/th/id/OIP.CVzRxwRQ78cW7Ao0lsz_YgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
+    "created_at": "2026-03-10T19:25:00"
+  }
+]
+>>>>>>> c311e3cb802fa55d5500735d3ab30a2052ca434c
