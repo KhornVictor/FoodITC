@@ -9,14 +9,42 @@ export const createDetailedCard = async (resturant) => {
 
   const hero = document.createElement("div");
   hero.className = "detail-hero";
+  hero.style.backgroundImage = `url('${resturant.background_url || FALLBACK_IMAGE}')`;
+  hero.style.backgroundSize = "cover";
+  hero.style.backgroundPosition = "center";
+  hero.style.position = "relative";
+
+  // Add a dark overlay
+  const darkOverlay = document.createElement("div");
+  darkOverlay.style.position = "absolute";
+  darkOverlay.style.top = 0;
+  darkOverlay.style.left = 0;
+  darkOverlay.style.width = "100%";
+  darkOverlay.style.height = "100%";
+  darkOverlay.style.background = "rgba(0,0,0,0.45)";
+  darkOverlay.style.zIndex = 1;
+  darkOverlay.style.pointerEvents = "none";
 
   const heroCopy = document.createElement("div");
   heroCopy.className = "detail-hero-copy";
+  heroCopy.style.position = "relative";
+  heroCopy.style.zIndex = 2;
 
   const heroImage = document.createElement("img");
   heroImage.className = "detail-hero-img";
   heroImage.src = resturant.image_url || FALLBACK_IMAGE;
   heroImage.alt = resturant.name || "Restaurant";
+  // Make the image float on top of the hero section
+  heroImage.style.position = "absolute";
+  heroImage.style.top = "50%";
+  heroImage.style.left = "50%";
+  heroImage.style.transform = "translate(-50%, -50%)";
+  heroImage.style.zIndex = 3;
+  heroImage.style.width = "160px";
+  heroImage.style.height = "160px";
+  heroImage.style.objectFit = "cover";
+  heroImage.style.borderRadius = "50%";
+  heroImage.style.boxShadow = "0 4px 24px rgba(0,0,0,0.25)";
 
   const heroMedia = document.createElement("div");
   heroMedia.className = "detail-hero-media";
@@ -46,8 +74,8 @@ export const createDetailedCard = async (resturant) => {
   `;
 
   heroCopy.append(title, summary, meta);
-  heroMedia.append(heroImage, heroOverlay);
-  hero.append(heroCopy, heroMedia);
+  heroMedia.append(heroOverlay, heroImage);
+  hero.append(darkOverlay, heroCopy, heroMedia);
 
   const itemsContainer = document.createElement("div");
   itemsContainer.className = "food-grid detail-food-grid";
