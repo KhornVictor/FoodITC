@@ -1,4 +1,7 @@
+
 import { addToCart } from "../../services/Cart.js";
+import { fetchMenuItems } from "../../services/food.js";  
+// Reusable function to fetch menu item
 
 export const createFoodCard = (food) => {
   const card = document.createElement("div");
@@ -98,13 +101,7 @@ export const renderCards = async (root = document, filterLabel = "All") => {
   }
 
   try {
-    const response = await fetch("./public/data/menu_items.json");
-
-    if (!response.ok) {
-      throw new Error(`Failed to load menu items: ${response.statusText}`);
-    }
-
-    const items = await response.json();
+    const items = await fetchMenuItems();
     const fragment = document.createDocumentFragment();
 
     items
@@ -161,11 +158,7 @@ export const get10FoodCards = async (root = document) => {
   };
 
   try {
-    const response = await fetch("./public/data/menu_items.json");
-    if (!response.ok) {
-      throw new Error(`Failed to load menu items: ${response.statusText}`);
-    }
-    const items = await response.json();
+    const items = await fetchMenuItems();
     const fragment = document.createDocumentFragment();
 
     items
