@@ -253,10 +253,10 @@ input:focus {
 @media (max-width: 900px) {
   .auth-page {
     grid-template-columns: 1fr;
-  }
+  } 
 
   .hero-panel {
-    gap: var(--space-xl);
+    display: none;
   }
 }
 

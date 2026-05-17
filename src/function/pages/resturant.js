@@ -1,12 +1,22 @@
-import { fetchResturants, countResturants, AverageRating, timeEstimate } from "../../services/Resturant.js";
+import {
+  fetchResturants,
+  countResturants,
+  AverageRating,
+  timeEstimate,
+} from "../../services/Resturant.js";
 import { createFoodCard } from "./food.js";
 
-const FALLBACK_IMAGE = "https://img.freepik.com/free-photo/close-up-delicious-pizza-with-tomatoes-cheese_23-2148888637.jpg?semt=ais_hybrid&w=740&q=80";
+const FALLBACK_IMAGE =
+  "https://img.freepik.com/free-photo/close-up-delicious-pizza-with-tomatoes-cheese_23-2148888637.jpg?semt=ais_hybrid&w=740&q=80";
 
 export const createDetailedCard = async (resturant) => {
-    // Prepare rating and time estimate (use provided or fallback)
-    const rating = typeof resturant.rating !== "undefined" ? resturant.rating : "N/A";
-    const timeEstimate = typeof resturant.timeEstimate !== "undefined" ? resturant.timeEstimate : "N/A";
+  // Prepare rating and time estimate (use provided or fallback)
+  const rating =
+    typeof resturant.rating !== "undefined" ? resturant.rating : "N/A";
+  const timeEstimate =
+    typeof resturant.timeEstimate !== "undefined"
+      ? resturant.timeEstimate
+      : "N/A";
   const container = document.createElement("div");
   container.className = "detail-view";
 
@@ -92,7 +102,8 @@ export const createDetailedCard = async (resturant) => {
     );
 
     if (restaurantMenu.length === 0) {
-      itemsContainer.innerHTML = "<p>No menu items available for this restaurant.</p>";
+      itemsContainer.innerHTML =
+        "<p>No menu items available for this restaurant.</p>";
     } else {
       restaurantMenu.forEach((menuItem) => {
         itemsContainer.appendChild(createFoodCard(menuItem));
@@ -218,9 +229,30 @@ export const renderResturantBox = async (root = document) => {
   const itemsToRender = isDetailedView ? resturants : resturants.slice(0, 10);
 
   itemsToRender.forEach((resturant) => {
-    shopItems.appendChild(
-      createResturantCard(resturant, isDetailedView ? "detailed" : "compact"),
+    const card = createResturantCard(
+      resturant,
+      isDetailedView ? "detailed" : "compact",
     );
+    // Only add click handler for compact cards (list view)
+    if (!isDetailedView) {
+      card.style.cursor = "pointer";
+      card.addEventListener("click", () => {
+        const route = "restaurant";
+        const resturantId = resturant.restaurant_id;
+        history.pushState(
+          { page: route, resturantId },
+          "",
+          `?page=${encodeURIComponent(route)}&resturantId=${encodeURIComponent(resturantId)}`,
+        );
+        if (typeof window.renderSidebarRoute === "function") {
+          void window.renderSidebarRoute(route);
+        } else {
+          // fallback: reload to trigger detail
+          window.location.reload();
+        }
+      });
+    }
+    shopItems.appendChild(card);
   });
 };
 

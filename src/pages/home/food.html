@@ -25,62 +25,72 @@
   <div class="food-grid-wrap">
     <div class="restaurant-toolbar">
       <h2>Popular Right Now</h2>
-      <div class="restaurant-filters" aria-label="Restaurant filters">
-        <!-- Category -->
-        <div class="filter-group">
-          <label for="category">Category</label>
-          <select id="category" class="filter-select">
-            <option value="all">All</option>
-            <option value="fast-food">Fast Food</option>
-            <option value="cafe">Cafe</option>
-            <option value="pizza">Pizza</option>
-            <option value="asian">Asian</option>
-          </select>
-        </div>
+      <div class="filter-dropdown">
+        <button class="filter-toggle" type="button">
+          <i class="fa-solid fa-bars"></i>
+        </button>
 
-        <!-- Price Range -->
-        <div class="filter-group">
-          <label for="priceRange">
-            Price Range: <span id="priceValue">$50</span>
-          </label>
-          <input
-            type="range"
-            id="priceRange"
-            class="filter-range"
-            min="0"
-            max="100"
-            value="50"
-            oninput="
-              document.getElementById('priceValue').innerText = '$' + this.value
-            "
-          />
-        </div>
+        <div class="filter-menu">
+          <!-- Category -->
+          <div class="filter-group">
+            <label for="category">Category</label>
 
-        <!-- Available -->
-        <div class="filter-group checkbox-group">
-          <label>
-            <input type="checkbox" id="isAvailable" />
-            Available Now
-          </label>
-        </div>
+            <select id="category" class="filter-select">
+              <option value="all">All</option>
+              <option value="fast-food">Fast Food</option>
+              <option value="cafe">Cafe</option>
+              <option value="pizza">Pizza</option>
+            </select>
+          </div>
 
-        <!-- Discount -->
-        <div class="filter-group checkbox-group">
-          <label>
-            <input type="checkbox" id="isDiscount" />
-            Discount Offers
-          </label>
-        </div>
+          <!-- Price -->
+          <div class="filter-group">
+            <label for="priceRange">
+              Max Price:
+              <strong id="priceValue">$50</strong>
+            </label>
 
-        <!-- Rating -->
-        <div class="filter-group">
-          <label for="rating">Minimum Rating</label>
-          <select id="rating" class="filter-select">
-            <option value="0">All Ratings</option>
-            <option value="5">5 Stars</option>
-            <option value="4">4+ Stars</option>
-            <option value="3">3+ Stars</option>
-          </select>
+            <input
+              type="range"
+              id="priceRange"
+              class="filter-range"
+              min="0"
+              max="100"
+              value="50"
+              oninput="
+                document.getElementById('priceValue').innerText =
+                  '$' + this.value
+              "
+            />
+          </div>
+
+          <!-- Available -->
+          <div class="filter-group checkbox-group">
+            <label>
+              <input type="checkbox" id="isAvailable" />
+              Available Now
+            </label>
+          </div>
+
+          <!-- Discount -->
+          <div class="filter-group checkbox-group">
+            <label>
+              <input type="checkbox" id="isDiscount" />
+              Discount Offers
+            </label>
+          </div>
+
+          <!-- Rating -->
+          <div class="filter-group">
+            <label for="rating">Minimum Rating</label>
+
+            <select id="rating" class="filter-select">
+              <option value="0">All Ratings</option>
+              <option value="5">5 Stars</option>
+              <option value="4">4+ Stars</option>
+              <option value="3">3+ Stars</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>

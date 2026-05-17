@@ -224,6 +224,7 @@ input:focus {
   }
 
   .hero-panel {
+    display: none;
     gap: 22px;
   }
 }

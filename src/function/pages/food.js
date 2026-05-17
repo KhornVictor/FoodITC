@@ -1,3 +1,32 @@
+import { fetchCategories } from "../../services/Category.js";
+// Helper to get filter values from the filter menu
+function getFilterValues(root = document) {
+  const category = root.querySelector("#category")?.value || "all";
+  const maxPrice = Number(root.querySelector("#priceRange")?.value || 100);
+  const isAvailable = root.querySelector("#isAvailable")?.checked || false;
+  const isDiscount = root.querySelector("#isDiscount")?.checked || false;
+  const minRating = Number(root.querySelector("#rating")?.value || 0);
+  return { category, maxPrice, isAvailable, isDiscount, minRating };
+}
+
+// Enhanced filter logic
+function filterMenuItem(item, filters) {
+  // Category (by id)
+  if (filters.category !== "all") {
+    if (String(item.category_id) !== filters.category) {
+      return false;
+    }
+  }
+  // Price
+  if (item.price > filters.maxPrice) return false;
+  // Availability
+  if (filters.isAvailable && !item.is_available) return false;
+  // Discount
+  if (filters.isDiscount && !(item.discount && item.discount > 0)) return false;
+  // Rating
+  if (item.rating < filters.minRating) return false;
+  return true;
+}
 import { addToCart } from "../../services/Cart.js";
 import {
   fetchMenuItems,
@@ -188,8 +217,11 @@ export const renderCards = async (root = document, filterLabel = "All") => {
     const items = await fetchMenuItems();
     const fragment = document.createDocumentFragment();
 
+    // Get filter values from filter menu
+    const filters = getFilterValues(root);
+
     items
-      .filter((item) => shouldRenderItem(item, filterLabel))
+      .filter((item) => filterMenuItem(item, filters))
       .forEach((item) => {
         fragment.appendChild(createFoodCard(item));
       });
@@ -211,6 +243,45 @@ export const renderCards = async (root = document, filterLabel = "All") => {
 };
 
 export const initFoodPage = async (root = document) => {
+  // Populate category dropdown dynamically
+  const categorySelect = root.querySelector("#category");
+  if (categorySelect) {
+    // Remove all except 'All'
+    categorySelect.innerHTML = '<option value="all">All</option>';
+    const categories = await fetchCategories();
+    categories.forEach((cat) => {
+      const option = document.createElement("option");
+      option.value = cat.category_id;
+      option.textContent = cat.name;
+      categorySelect.appendChild(option);
+    });
+  }
+  // Filter menu toggle
+  const filterToggle = root.querySelector(".filter-toggle");
+  const filterMenu = root.querySelector(".filter-menu");
+  if (filterToggle && filterMenu) {
+    filterToggle.addEventListener("click", () => {
+      filterMenu.classList.toggle("open");
+    });
+  }
+
+  // Filter controls
+  const filterControls = [
+    "#category",
+    "#priceRange",
+    "#isAvailable",
+    "#isDiscount",
+    "#rating",
+  ];
+  filterControls.forEach((selector) => {
+    const el = root.querySelector(selector);
+    if (el) {
+      el.addEventListener("change", () => renderCards(root));
+      if (el.type === "range") {
+        el.addEventListener("input", () => renderCards(root));
+      }
+    }
+  });
   const statusPills = root.querySelectorAll(".status-list .status-pill");
 
   await renderCards(root, "All");
