@@ -182,11 +182,13 @@ export const initFoodPage = async (root = document) => {
   });
 };
 
-export const get10FoodCards = async (root = document) => {
+export const get10FoodCards = async (root = document, filterLabel = "All") => {
   const foodGrid = root.querySelector("#food-container #food-grid");
   if (!foodGrid) {
     return;
   }
+
+  console.log("in get 10 food cards with filter:", filterLabel);
 
   const getOrderingCount = (item) => {
     const value = item.ordering_count ?? item.ording_count ?? 0;
@@ -196,14 +198,18 @@ export const get10FoodCards = async (root = document) => {
   try {
     const items = await fetchMenuItems();
     const fragment = document.createDocumentFragment();
+    let renderItems = items;
 
-    items
-      .slice()
-      .sort((a, b) => getOrderingCount(b) - getOrderingCount(a))
-      .slice(0, 12)
-      .forEach((item) => {
+    if (filterLabel === "All") {
+      renderItems = items.slice(0, 10);
+    } else {
+      renderItems = items
+        .filter(item => item.category_id === filterLabel)
+    }
+
+    renderItems.forEach((item) => {
         fragment.appendChild(createFoodCard(item));
-      });
+    });
 
     foodGrid.innerHTML = "";
     foodGrid.appendChild(fragment);

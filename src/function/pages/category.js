@@ -1,4 +1,5 @@
 import { fetchCategories } from "../../services/Category.js";
+import { get10FoodCards } from "./food.js";
 
 const FALLBACK_IMAGE =
   "https://1000logos.net/wp-content/uploads/2017/03/McDonalds-logo.png";
@@ -6,6 +7,7 @@ const FALLBACK_IMAGE =
 const createCategoryCard = (category) => {
   const item = document.createElement("div");
   item.className = "category-item";
+  item.dataset.categoryId = category.category_id;
 
   const image = document.createElement("img");
   image.src = category.image_url || FALLBACK_IMAGE;
@@ -19,6 +21,14 @@ const createCategoryCard = (category) => {
   name.textContent = category.name || "Unknown";
 
   item.append(image, name);
+
+  // Add click event to filter food cards by category
+  item.addEventListener("click", async () => {
+    const foodRoot = document.querySelector("#food-container") || document;
+    await get10FoodCards(foodRoot, category.category_id);
+    console.log(`Filtered food items by category: ${category.name}`);
+  });
+
   return item;
 };
 
