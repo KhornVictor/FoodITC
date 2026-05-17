@@ -97,7 +97,7 @@ export const renderCards = async (root = document, filterLabel = "All") => {
   const foodGrid = root.querySelector("#food-grid");
   const countElement = root.querySelector("#food-count");
   if (countElement) {
-    try {
+    try { 
       const totalCount = await countFood();
       countElement.textContent = `${totalCount}`;
     } catch (error) {
