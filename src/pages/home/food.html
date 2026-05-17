@@ -3,7 +3,8 @@
     <p class="restaurant-kicker">Food Menu</p>
     <h1>Foods</h1>
     <p class="restaurant-subtitle">
-      Choose your favorite meals from our diverse menu. Fast delivery, trusted kitchens, and
+      Choose your favorite meals from our diverse menu. Fast delivery, trusted
+      kitchens, and
     </p>
     <div class="restaurant-stats">
       <article class="stat-card">
@@ -21,15 +22,66 @@
     </div>
   </header>
 
-  
   <div class="food-grid-wrap">
     <div class="restaurant-toolbar">
       <h2>Popular Right Now</h2>
-      <div class="restaurant-filters" aria-label="Restaurant filter tags">
-        <button type="button" class="filter-chip active">All</button>
-        <button type="button" class="filter-chip">Fast Food</button>
-        <button type="button" class="filter-chip">Cafe</button>
-        <button type="button" class="filter-chip">Pizza</button>
+      <div class="restaurant-filters" aria-label="Restaurant filters">
+        <!-- Category -->
+        <div class="filter-group">
+          <label for="category">Category</label>
+          <select id="category" class="filter-select">
+            <option value="all">All</option>
+            <option value="fast-food">Fast Food</option>
+            <option value="cafe">Cafe</option>
+            <option value="pizza">Pizza</option>
+            <option value="asian">Asian</option>
+          </select>
+        </div>
+
+        <!-- Price Range -->
+        <div class="filter-group">
+          <label for="priceRange">
+            Price Range: <span id="priceValue">$50</span>
+          </label>
+          <input
+            type="range"
+            id="priceRange"
+            class="filter-range"
+            min="0"
+            max="100"
+            value="50"
+            oninput="
+              document.getElementById('priceValue').innerText = '$' + this.value
+            "
+          />
+        </div>
+
+        <!-- Available -->
+        <div class="filter-group checkbox-group">
+          <label>
+            <input type="checkbox" id="isAvailable" />
+            Available Now
+          </label>
+        </div>
+
+        <!-- Discount -->
+        <div class="filter-group checkbox-group">
+          <label>
+            <input type="checkbox" id="isDiscount" />
+            Discount Offers
+          </label>
+        </div>
+
+        <!-- Rating -->
+        <div class="filter-group">
+          <label for="rating">Minimum Rating</label>
+          <select id="rating" class="filter-select">
+            <option value="0">All Ratings</option>
+            <option value="5">5 Stars</option>
+            <option value="4">4+ Stars</option>
+            <option value="3">3+ Stars</option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="food-grid" id="food-grid"></div>

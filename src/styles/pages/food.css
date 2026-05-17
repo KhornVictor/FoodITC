@@ -18,7 +18,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: var(--space-lg); 
+  gap: var(--space-lg);
   overflow: hidden;
 }
 
@@ -433,6 +433,12 @@
   transition: all var(--transition-base) ease;
   font-weight: 600;
   flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
 }
 
 .add-btn:hover:not(:disabled) {
@@ -448,6 +454,35 @@
   background: #ccc;
   cursor: not-allowed;
   opacity: 0.6;
+}
+
+@media (max-width: 1024px) {
+  .add-btn {
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 1em;
+    padding: var(--space-xs) var(--space-sm);
+  }
+}
+
+@media (max-width: 768px) {
+  .add-btn {
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 0.95em;
+    padding: var(--space-xxs) var(--space-xs);
+    border-radius: var(--radius-full);
+    box-shadow: 0 2px 8px rgba(242, 106, 0, 0.1);
+  }
+}
+
+@media (max-width: 480px) {
+  .add-btn {
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 0.9em;
+    padding: 0 6px;
+  }
 }
 
 @keyframes gridFadeIn {
@@ -560,3 +595,278 @@
     grid-template-columns: repeat(auto-fit, minmax(180px, 2fr));
   }
 } */
+
+/* =========================================
+   FILTER PANEL
+========================================= */
+
+.restaurant-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-md);
+
+  padding: var(--space-lg);
+
+  border-radius: var(--radius-xl);
+
+  /* background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 248, 239, 0.9)
+  );
+
+  border: 1px solid rgba(255, 176, 116, 0.24); */
+
+  /* box-shadow: var(--shadow-md); */
+}
+
+/* =========================================
+   FILTER GROUP
+========================================= */
+
+.restaurant-filters .filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-width: 160px;
+}
+
+.restaurant-filters label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--brand-gray-600);
+}
+
+/* =========================================
+   SELECT DROPDOWN
+========================================= */
+
+.filter-select {
+  height: 44px;
+
+  padding: 0 var(--space-md);
+
+  border-radius: var(--radius-md);
+
+  border: 1px solid rgba(255, 176, 116, 0.3);
+
+  background: rgba(255, 255, 255, 0.92);
+
+  color: var(--brand-gray-700);
+
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+
+  outline: none;
+
+  transition:
+    border-color var(--transition-base) ease,
+    box-shadow var(--transition-base) ease,
+    transform var(--transition-base) ease;
+}
+
+.filter-select:hover {
+  border-color: var(--brand-accent-orange);
+}
+
+.filter-select:focus {
+  border-color: var(--brand-accent-orange-deep);
+
+  box-shadow: 0 0 0 4px rgba(242, 106, 0, 0.12);
+}
+
+/* =========================================
+   RANGE SLIDER
+========================================= */
+
+.filter-range {
+  width: 100%;
+  height: 6px;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    to right,
+    var(--brand-accent-orange),
+    var(--brand-accent-orange-deep)
+  );
+
+  cursor: pointer;
+}
+
+/* Chrome */
+.filter-range::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  border: 4px solid var(--brand-accent-orange);
+
+  box-shadow: 0 4px 12px rgba(242, 106, 0, 0.3);
+
+  transition:
+    transform var(--transition-base) ease,
+    box-shadow var(--transition-base) ease;
+}
+
+.filter-range::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+
+  box-shadow: 0 6px 16px rgba(242, 106, 0, 0.45);
+}
+
+/* Firefox */
+.filter-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  border: 4px solid var(--brand-accent-orange);
+
+  box-shadow: 0 4px 12px rgba(242, 106, 0, 0.3);
+
+  cursor: pointer;
+}
+
+/* =========================================
+   CHECKBOX STYLE
+========================================= */
+
+.checkbox-group {
+  justify-content: center;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+
+  height: 44px;
+
+  padding: 0 var(--space-md);
+
+  border-radius: var(--radius-full);
+
+  background: rgba(255, 255, 255, 0.9);
+
+  border: 1px solid rgba(255, 176, 116, 0.3);
+
+  cursor: pointer;
+
+  transition:
+    transform var(--transition-base) ease,
+    box-shadow var(--transition-base) ease,
+    border-color var(--transition-base) ease;
+}
+
+.checkbox-group label:hover {
+  border-color: var(--brand-accent-orange);
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 8px 18px rgba(242, 106, 0, 0.12);
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+
+  accent-color: var(--brand-accent-orange);
+
+  cursor: pointer;
+}
+
+/* =========================================
+   PRICE TEXT
+========================================= */
+
+#priceValue {
+  color: var(--brand-accent-orange-deep);
+  font-weight: 700;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 1024px) {
+  .restaurant-filters {
+    gap: var(--space-sm);
+    padding: var(--space-md);
+  }
+  .restaurant-filters .filter-group {
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .restaurant-filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-xs);
+    padding: var(--space-sm);
+    border-radius: var(--radius-lg);
+  }
+
+  .restaurant-filters .filter-group {
+    width: 100%;
+    min-width: unset;
+    margin-bottom: var(--space-xs);
+  }
+
+  .restaurant-filters label {
+    font-size: var(--font-size-xxs);
+    padding-left: 2px;
+  }
+
+  .filter-select {
+    width: 100%;
+    min-width: unset;
+    font-size: var(--font-size-xs);
+    padding: 0 var(--space-xs);
+    height: 38px;
+  }
+
+  .checkbox-group label {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 var(--space-xs);
+    font-size: var(--font-size-xs);
+    height: 38px;
+  }
+}
+
+@media (max-width: 480px) {
+  .restaurant-filters {
+    padding: var(--space-xs);
+    gap: 4px;
+  }
+  .restaurant-filters .filter-group {
+    margin-bottom: 4px;
+  }
+  .filter-select {
+    font-size: 13px;
+    height: 32px;
+    padding: 0 6px;
+  }
+  .checkbox-group label {
+    font-size: 13px;
+    height: 32px;
+    padding: 0 6px;
+  }
+}

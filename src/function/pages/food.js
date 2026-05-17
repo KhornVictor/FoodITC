@@ -3,7 +3,7 @@ import {
   fetchMenuItems,
   countFood,
   averageRating,
-  isAvailableCount
+  isAvailableCount,
 } from "../../services/food.js";
 // Reusable function to fetch menu item
 
@@ -24,12 +24,53 @@ export const createFoodCard = (food) => {
   description.className = "food-description";
   description.textContent = food.description;
 
+  // Discount label
+  let discountLabel = null;
+  if (food.discount && food.discount > 0) {
+    discountLabel = document.createElement("span");
+    discountLabel.className = "food-discount";
+    discountLabel.textContent = `-${Math.round(food.discount * 100)}% OFF`;
+    discountLabel.style.background = "#ff5252";
+    discountLabel.style.color = "#fff";
+    discountLabel.style.fontWeight = "bold";
+    discountLabel.style.fontSize = "0.85em";
+    discountLabel.style.padding = "2px 6px";
+    discountLabel.style.borderRadius = "6px";
+    discountLabel.style.position = "absolute";
+    discountLabel.style.top = "10px";
+    discountLabel.style.right = "10px";
+    discountLabel.style.zIndex = "2";
+  }
+
   const meta = document.createElement("div");
   meta.className = "food-meta";
 
-  const price = document.createElement("span");
-  price.className = "food-price";
-  price.textContent = `$${Number(food.price).toFixed(2)}`;
+  let price;
+  if (food.discount && food.discount > 0) {
+    // Original price with strikethrough
+    const originalPrice = document.createElement("span");
+    originalPrice.className = "food-original-price";
+    originalPrice.textContent = `$${Number(food.price).toFixed(2)}`;
+    originalPrice.style.textDecoration = "line-through";
+    originalPrice.style.color = "#888";
+    originalPrice.style.marginRight = "8px";
+
+    // Discounted price
+    const discountedPrice = document.createElement("span");
+    discountedPrice.className = "food-discounted-price";
+    const newPrice = food.price * (1 - food.discount);
+    discountedPrice.textContent = `$${newPrice.toFixed(2)}`;
+    discountedPrice.style.color = "#ff5252";
+    discountedPrice.style.fontWeight = "bold";
+
+    price = document.createElement("span");
+    price.className = "food-price-group";
+    price.append(originalPrice, discountedPrice);
+  } else {
+    price = document.createElement("span");
+    price.className = "food-price";
+    price.textContent = `$${Number(food.price).toFixed(2)}`;
+  }
 
   const addButton = document.createElement("button");
   addButton.className = "add-btn";
@@ -70,6 +111,13 @@ export const createFoodCard = (food) => {
   });
 
   meta.append(price, addButton);
+
+  // Make card position relative for discount label
+  card.style.position = "relative";
+  if (discountLabel) {
+    card.appendChild(discountLabel);
+  }
+
   card.append(image, name, description, meta);
 
   return card;
@@ -203,12 +251,11 @@ export const get10FoodCards = async (root = document, filterLabel = "All") => {
     if (filterLabel === "All") {
       renderItems = items.slice(0, 10);
     } else {
-      renderItems = items
-        .filter(item => item.category_id === filterLabel)
+      renderItems = items.filter((item) => item.category_id === filterLabel);
     }
 
     renderItems.forEach((item) => {
-        fragment.appendChild(createFoodCard(item));
+      fragment.appendChild(createFoodCard(item));
     });
 
     foodGrid.innerHTML = "";

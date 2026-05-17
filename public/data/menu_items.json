@@ -8,7 +8,7 @@
     "price": 14.99,
     "image_url": "https://media.istockphoto.com/id/928823336/photo/grilled-chicken-breast-fried-chicken-fillet-and-fresh-vegetable-salad-of-tomatoes-cucumbers.jpg?s=612x612&w=0&k=20&c=x6KbcglhT_oxKEzCoSM5E8abP3rlEZAt7jQhlAPZtoY=",
     "is_available": true,
-    "discount": 0.15,
+    "discount": null,
     "order_count": 327,
     "rating": 4.5
   },
@@ -21,7 +21,7 @@
     "price": 19.5,
     "image_url": "https://www.tasteofhome.com/wp-content/uploads/2017/09/exps39535_CW163683D03_31_2b-.jpg",
     "is_available": true,
-    "discount": 0.1,
+    "discount": null,
     "order_count": 482,
     "rating": 4.7
   },
@@ -34,7 +34,7 @@
     "price": 12.0,
     "image_url": "https://uk.ooni.com/cdn/shop/articles/20220211142645-margherita-9920_e41233d5-dcec-461c-b07e-03245f031dfe.jpg?crop=center&height=800&v=1737105431&width=800",
     "is_available": true,
-    "discount": 0.05,
+    "discount": null,
     "order_count": 113,
     "rating": 4.3
   },
@@ -47,7 +47,7 @@
     "price": 13.75,
     "image_url": "https://www.modernhoney.com/wp-content/uploads/2018/08/Fettuccine-Alfredo-Recipe-1.jpg",
     "is_available": true,
-    "discount": 0.1,
+    "discount": null,
     "order_count": 587,
     "rating": 4.4
   },
@@ -60,7 +60,7 @@
     "price": 9.99,
     "image_url": "https://timskitchen.com.hk/wp-content/uploads/2025/02/smoked-salmon-sushi-roll-recipe-1739410610.jpg",
     "is_available": true,
-    "discount": 0.2,
+    "discount": null,
     "order_count": 91,
     "rating": 4.6
   },
@@ -73,7 +73,7 @@
     "price": 11.5,
     "image_url": "https://www.spoonforkbacon.com/wp-content/uploads/2024/04/spicy-ramen-noodles-recipe-card.jpg",
     "is_available": false,
-    "discount": 0.15,
+    "discount": null,
     "order_count": 401,
     "rating": 4.2
   },
@@ -86,7 +86,7 @@
     "price": 15.25,
     "image_url": "https://majasrecipes.com/wp-content/uploads/2024/12/butter-chicken-recipe-5.jpg",
     "is_available": false,
-    "discount": 0.1,
+    "discount": null,
     "order_count": 523,
     "rating": 4.5
   },
@@ -99,7 +99,7 @@
     "price": 3.5,
     "image_url": "https://hostthetoast.com/wp-content/uploads/2018/08/Homemade-Garlic-Naan-3.jpg",
     "is_available": false,
-    "discount": 0.05,
+    "discount": null,
     "order_count": 76,
     "rating": 4.3
   },
@@ -112,7 +112,7 @@
     "price": 10.75,
     "image_url": "https://www.onceuponachef.com/images/2023/08/Beef-Tacos.jpg",
     "is_available": true,
-    "discount": 0.1,
+    "discount": null,
     "order_count": 299,
     "rating": 4.4
   },
@@ -125,7 +125,7 @@
     "price": 11.25,
     "image_url": "https://www.julieseatsandtreats.com/wp-content/uploads/2024/10/Chicken-Quesadilla-Square.jpg",
     "is_available": true,
-    "discount": 0.15,
+    "discount": null,
     "order_count": 561,
     "rating": 4.6
   },
@@ -138,7 +138,7 @@
     "price": 8.5,
     "image_url": "https://grantourismotravels.com/wp-content/uploads/2017/05/Authentic-Fish-Amok-Recipe-Steamed-Fish-Curry-Cambodia-Copyright-2022-Terence-Carter-Grantourismo-T.jpg",
     "is_available": true,
-    "discount": 0.1,
+    "discount": null,
     "order_count": 174,
     "rating": 4.8
   },
@@ -151,7 +151,7 @@
     "price": 9.0,
     "image_url": "https://www.simplyrecipes.com/thmb/zb1rbkgxDQT3SfEPZiKncciphp8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-Lok-Lak-Mustard-LEAD-05-a0d8c2c5cd064e9c8c31af93a81b51f0.jpg",
     "is_available": true,
-    "discount": 0.05,
+    "discount": null,
     "order_count": 497,
     "rating": 4.7
   },
@@ -164,7 +164,7 @@
     "price": 8.25,
     "image_url": "https://xa6zemg4r8.cloudimg.io/_images_/g/62180f05ef54ddc19095525f.jpg",
     "is_available": true,
-    "discount": 0.1,
+    "discount": null,
     "order_count": 88,
     "rating": 4.5
   },
@@ -177,7 +177,7 @@
     "price": 6.5,
     "image_url": "https://grantourismotravels.com/wp-content/uploads/2020/02/Nom-Banh-Chok-Cambodian-Fermented-Rice-Noodles-Copyright-2022-Terence-Carter-Grantourismo-F.jpg",
     "is_available": false,
-    "discount": 0.05,
+    "discount": null,
     "order_count": 573,
     "rating": 4.3
   },
@@ -664,7 +664,7 @@
   },
   {
     "item_id": 52,
-    "restaurant_id": 12,
+    "restaurant_id": 12,  
     "category_id": 2,
     "name": "Hot Americano",
     "description": "Hot Americano is a hot black coffee, strong level of coffee, and the aroma of cofffe",
