@@ -40,7 +40,7 @@
     "name": "Starbucks",
     "description": "Mexican restaurant known for tacos, burritos, and margaritas.",
     "address": "90 Fiesta Street, Austin, TX",
-    "phone": "+1-512-555-0105",
+    "phone": "+1-512-555-0105", 
     "image_url": "https://upload.wikimedia.org/wikipedia/sco/thumb/d/d3/Starbucks_Corporation_Logo_2011.svg/500px-Starbucks_Corporation_Logo_2011.svg.png",
     "created_at": "2026-03-05T14:00:00"
   },
