@@ -39,3 +39,14 @@ export const isAvailableCount = async () => {
     return 0;
   }
 }
+
+export const countDiscounted = async () => {
+  try {
+    const items = await fetchMenuItems();
+    return items.filter(item => item.discount).length;
+  }
+  catch (error) {
+    console.error("Error counting discounted food items:", error);
+    return 0;
+  }
+}

@@ -220,6 +220,12 @@
   color: var(--brand-gray-600);
 }
 
+@media (max-width: 480px) {
+  .bill-section {
+    padding-bottom: 94px;
+  }
+}
+
 .bill-row {
   margin: 0;
   display: flex;

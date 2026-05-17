@@ -791,6 +791,13 @@
 
   box-shadow: 0 10px 22px rgba(242, 106, 0, 0.12);
 }
+@media (max-width: 480px) {
+  .filter-toggle {
+    padding: 12px 16px;
+    font-size: var(--font-size-xs);
+  }
+  
+}
 
 /* Dropdown Menu */
 
@@ -955,8 +962,8 @@
 @media (max-width: 768px) {
   .filter-menu {
     width: min(92vw, 320px);
-    right: auto;
-    left: 0;
+    right: 0  ;
+    left: auto;
   }
 }
 
@@ -966,5 +973,5 @@
 }
 
 .food-unavailable * {
-  opacity: 0.5;
+  opacity: 0.7;
 }

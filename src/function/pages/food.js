@@ -33,6 +33,7 @@ import {
   countFood,
   averageRating,
   isAvailableCount,
+  countDiscounted,
 } from "../../services/food.js";
 // Reusable function to fetch menu item
 
@@ -156,28 +157,6 @@ export const createFoodCard = (food) => {
   return card;
 };
 
-const normalizeFilter = (filterLabel = "All") => {
-  return filterLabel.trim().toLowerCase();
-};
-
-const shouldRenderItem = (item, filterLabel) => {
-  const filter = normalizeFilter(filterLabel);
-
-  if (filter === "all") {
-    return true;
-  }
-
-  if (filter === "wait list") {
-    return !item.is_available;
-  }
-
-  if (filter === "served" || filter === "dine in" || filter === "take away") {
-    return item.is_available;
-  }
-
-  return true;
-};
-
 export const renderCards = async (root = document, filterLabel = "All") => {
   const foodGrid = root.querySelector("#food-grid");
   const countElement = root.querySelector("#food-count");
@@ -194,7 +173,7 @@ export const renderCards = async (root = document, filterLabel = "All") => {
   const ratingElement = root.querySelector("#average-food-rating");
   if (ratingElement) {
     try {
-      const averageRatingValue = await averageRating();
+      const averageRatingValue = await countDiscounted();
       ratingElement.textContent = averageRatingValue;
     } catch (error) {
       ratingElement.textContent = "N/A";
