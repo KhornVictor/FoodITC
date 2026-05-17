@@ -793,7 +793,7 @@
     "rating": 4.4
   },
   {
-    "item_id": 62,
+    "item_id": 62,  
     "restaurant_id": 12,
     "category_id": 2,
     "name": "Lychee Tea",
