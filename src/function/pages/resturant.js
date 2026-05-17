@@ -1,9 +1,12 @@
-import { fetchResturants } from "../../services/Resturant.js";
+import { fetchResturants, countResturants, AverageRating, timeEstimate } from "../../services/Resturant.js";
 import { createFoodCard } from "./food.js";
 
 const FALLBACK_IMAGE = "https://img.freepik.com/free-photo/close-up-delicious-pizza-with-tomatoes-cheese_23-2148888637.jpg?semt=ais_hybrid&w=740&q=80";
 
 export const createDetailedCard = async (resturant) => {
+    // Prepare rating and time estimate (use provided or fallback)
+    const rating = typeof resturant.rating !== "undefined" ? resturant.rating : "N/A";
+    const timeEstimate = typeof resturant.timeEstimate !== "undefined" ? resturant.timeEstimate : "N/A";
   const container = document.createElement("div");
   container.className = "detail-view";
 
@@ -65,12 +68,10 @@ export const createDetailedCard = async (resturant) => {
   const meta = document.createElement("div");
   meta.className = "detail-meta";
   meta.innerHTML = `
-    <span><i class="fa-solid fa-location-dot"></i>${
-      resturant.address || "No address"
-    }</span>
-    <span><i class="fa-solid fa-phone"></i>${
-      resturant.phone || "No phone"
-    }</span>
+    <span><i class="fa-solid fa-location-dot"></i> ${resturant.address || "No address"}</span>
+    <span><i class="fa-solid fa-phone"></i> ${resturant.phone || "No phone"}</span>
+    <span><i class="fa-solid fa-star"></i> Rating: ${rating}</span>
+    <span><i class="fa-solid fa-clock"></i> Delivery: ${timeEstimate} mins</span>
   `;
 
   heroCopy.append(title, summary, meta);
@@ -158,6 +159,43 @@ const createResturantCard = (resturant, variant = "compact") => {
         void window.renderSidebarRoute(route);
       }
     });
+  }
+
+  const resturantCountEl = document.getElementById("restaurant-count");
+  if (resturantCountEl) {
+    const updateCount = async () => {
+      const count = await countResturants();
+      resturantCountEl.textContent = `${count}`;
+    };
+    updateCount();
+  }
+
+  const averageRatingEl = document.getElementById("average-rating");
+  if (averageRatingEl) {
+    const updateRating = async () => {
+      const resturants = await fetchResturants();
+      if (resturants.length === 0) {
+        averageRatingEl.textContent = "N/A";
+        return;
+      }
+      const totalRating = await AverageRating();
+      averageRatingEl.textContent = totalRating;
+    };
+    updateRating();
+  }
+
+  const timeEstimateEl = document.getElementById("typical-delivery");
+  if (timeEstimateEl) {
+    const updateTimeEstimate = async () => {
+      const resturants = await fetchResturants();
+      if (resturants.length === 0) {
+        timeEstimateEl.textContent = "N/A";
+        return;
+      }
+      const totalTime = await timeEstimate();
+      timeEstimateEl.textContent = `${totalTime} mins`;
+    };
+    updateTimeEstimate();
   }
 
   return item;

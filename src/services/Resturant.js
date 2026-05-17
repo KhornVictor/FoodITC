@@ -20,3 +20,22 @@ export const fetchResturants = async () => {
       return [];
     });
 };
+
+export const countResturants = async () => {
+  const resturants = await fetchResturants();
+  return resturants.length;
+}
+
+export const AverageRating = async () => {
+  const resturants = await fetchResturants();
+  if (resturants.length === 0) return "N/A";
+  const totalRating = resturants.reduce((sum, r) => sum + (r.rating || 0), 0);
+  return (totalRating / resturants.length).toFixed(1);
+};
+
+export const timeEstimate = async () => {
+  const resturants = await fetchResturants();
+  if (resturants.length === 0) return "N/A";
+  const totalTime = resturants.reduce((sum, r) => sum + (r.timeEstimate || 0), 0);
+  return Math.round(totalTime / resturants.length);
+};
