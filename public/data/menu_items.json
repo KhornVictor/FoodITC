@@ -85,7 +85,7 @@
     "description": "Tender chicken in creamy tomato-based curry sauce.",
     "price": 15.25,
     "image_url": "https://majasrecipes.com/wp-content/uploads/2024/12/butter-chicken-recipe-5.jpg",
-    "is_available": true,
+    "is_available": false,
     "discount": 0.1,
     "order_count": 523,
     "rating": 4.5
@@ -98,7 +98,7 @@
     "description": "Traditional Indian flatbread topped with garlic and butter.",
     "price": 3.5,
     "image_url": "https://hostthetoast.com/wp-content/uploads/2018/08/Homemade-Garlic-Naan-3.jpg",
-    "is_available": true,
+    "is_available": false,
     "discount": 0.05,
     "order_count": 76,
     "rating": 4.3
@@ -176,7 +176,7 @@
     "description": "Traditional Cambodian breakfast noodle dish with fish gravy and fresh herbs.",
     "price": 6.5,
     "image_url": "https://grantourismotravels.com/wp-content/uploads/2020/02/Nom-Banh-Chok-Cambodian-Fermented-Rice-Noodles-Copyright-2022-Terence-Carter-Grantourismo-F.jpg",
-    "is_available": true,
+    "is_available": false,
     "discount": 0.05,
     "order_count": 573,
     "rating": 4.3
@@ -595,7 +595,7 @@
     "is_available": true,
     "discount": 0.1,
     "order_count": 486,
-    "rating":4.6
+    "rating": 4.6
   },
   {
     "item_id": 47,
@@ -647,7 +647,7 @@
     "is_available": true,
     "discount": 0.15,
     "order_count": 65,
-    "rating":4.4
+    "rating": 4.4
   },
   {
     "item_id": 51,
@@ -738,7 +738,7 @@
     "is_available": true,
     "discount": 0.3,
     "order_count": 312,
-    "rating": 4.4 
+    "rating": 4.4
   },
   {
     "item_id": 58,
@@ -793,7 +793,7 @@
     "rating": 4.4
   },
   {
-    "item_id": 62,  
+    "item_id": 62,
     "restaurant_id": 12,
     "category_id": 2,
     "name": "Lychee Tea",
@@ -808,7 +808,7 @@
   {
     "item_id": 63,
     "restaurant_id": 12,
-    "category_id": 2, 
+    "category_id": 2,
     "name": "Fresh Passion Juice",
     "description": "Fresh Passion Juice has a sweet and sour taste and the aroma of fresh passion fruit",
     "price": 2.43,

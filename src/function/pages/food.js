@@ -1,6 +1,9 @@
-
 import { addToCart } from "../../services/Cart.js";
-import { fetchMenuItems, countFood } from "../../services/food.js";  
+import {
+  fetchMenuItems,
+  countFood,
+  averageRating,
+} from "../../services/food.js";
 // Reusable function to fetch menu item
 
 export const createFoodCard = (food) => {
@@ -97,12 +100,23 @@ export const renderCards = async (root = document, filterLabel = "All") => {
   const foodGrid = root.querySelector("#food-grid");
   const countElement = root.querySelector("#food-count");
   if (countElement) {
-    try { 
+    try {
       const totalCount = await countFood();
       countElement.textContent = `${totalCount}`;
     } catch (error) {
       countElement.textContent = "(0)";
       console.error("Error fetching food count:", error);
+    }
+  }
+
+  const ratingElement = root.querySelector("#average-food-rating");
+  if (ratingElement) {
+    try {
+      const averageRatingValue = await averageRating();
+      ratingElement.textContent = averageRatingValue;
+    } catch (error) {
+      ratingElement.textContent = "N/A";
+      console.error("Error fetching average rating:", error);
     }
   }
 

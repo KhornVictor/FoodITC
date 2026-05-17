@@ -16,3 +16,21 @@ export const countFood = async () => {
     return 0;
   }
 }
+
+export const averageRating = async () => {
+    try {
+        const items = await fetchMenuItems();
+        const itemRatings = items.filter(item => item.rating !== undefined).map(item => item.rating);
+        if (itemRatings.length === 0) return "No ratings";
+        const average = itemRatings.reduce((sum, rating) => sum + rating, 0) / itemRatings.length;
+        return average.toFixed(1);
+    } catch (error) {        
+        console.error("Error calculating average rating:", error);
+        return "N/A";
+    }
+}
+
+export const isAvailableCount = () => {
+    const items = fetchMenuItems();
+    return items.filter(item => item.is_available).length;
+}
