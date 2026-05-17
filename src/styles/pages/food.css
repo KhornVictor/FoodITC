@@ -343,10 +343,6 @@
   animation-delay: 0.24s;
 }
 
-.food-card.unavailable {
-  opacity: 0.6;
-}
-
 .food-card:hover {
   transform: translateY(-3px) scale(1.01);
   box-shadow: 0 14px 26px rgba(99, 60, 2, 0.14);
@@ -962,4 +958,13 @@
     right: auto;
     left: 0;
   }
+}
+
+.food-unavailable {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.food-unavailable * {
+  opacity: 0.5;
 }

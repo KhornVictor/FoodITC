@@ -40,6 +40,10 @@ export const createFoodCard = (food) => {
   const card = document.createElement("div");
   card.className = "food-card";
 
+  if (!food.is_available) {
+    card.classList.add("food-unavailable");
+  }
+
   const image = document.createElement("img");
   image.className = "food-image";
   image.src = food.image_url;
