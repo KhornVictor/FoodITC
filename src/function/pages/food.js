@@ -1,6 +1,6 @@
 
 import { addToCart } from "../../services/Cart.js";
-import { fetchMenuItems } from "../../services/food.js";  
+import { fetchMenuItems, countFood } from "../../services/food.js";  
 // Reusable function to fetch menu item
 
 export const createFoodCard = (food) => {
@@ -95,6 +95,16 @@ const shouldRenderItem = (item, filterLabel) => {
 
 export const renderCards = async (root = document, filterLabel = "All") => {
   const foodGrid = root.querySelector("#food-grid");
+  const countElement = root.querySelector("#food-count");
+  if (countElement) {
+    try {
+      const totalCount = await countFood();
+      countElement.textContent = `${totalCount}`;
+    } catch (error) {
+      countElement.textContent = "(0)";
+      console.error("Error fetching food count:", error);
+    }
+  }
 
   if (!foodGrid) {
     return;

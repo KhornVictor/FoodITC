@@ -5,3 +5,14 @@ export const fetchMenuItems = async () => {
   }
   return await response.json();
 };
+
+
+export const countFood = async () => {
+  try {
+    const items = await fetchMenuItems();
+    return items.length;
+  } catch (error) {
+    console.error("Error counting food items:", error);
+    return 0;
+  }
+}
