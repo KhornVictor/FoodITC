@@ -532,7 +532,7 @@
   }
 
   .food-grid-wrap {
-    padding: var(--space-xs);
+    /* padding: var(--space-xs); */
     border-radius: var(--radius-lg);
   }
 

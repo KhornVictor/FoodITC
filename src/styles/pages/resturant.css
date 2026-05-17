@@ -46,12 +46,25 @@
   line-height: var(--line-height-relaxed);
 }
 
+@media (max-width: 480px) {
+  .restaurant-subtitle {
+    font-size:  14px;
+  }
+}
+
 .restaurant-stats {
   margin-top: var(--space-xs);
   display: grid;
   gap: var(--space-lg);
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
+
+@media (max-width: 480px) {
+  .restaurant-stats {
+    display: none;
+  }
+}
+
 
 .stat-card {
   background: #ffffff;
