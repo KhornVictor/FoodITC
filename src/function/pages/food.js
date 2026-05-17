@@ -3,6 +3,7 @@ import {
   fetchMenuItems,
   countFood,
   averageRating,
+  isAvailableCount
 } from "../../services/food.js";
 // Reusable function to fetch menu item
 
@@ -117,6 +118,17 @@ export const renderCards = async (root = document, filterLabel = "All") => {
     } catch (error) {
       ratingElement.textContent = "N/A";
       console.error("Error fetching average rating:", error);
+    }
+  }
+
+  const isAvailableElement = root.querySelector("#available-food-count");
+  if (isAvailableElement) {
+    try {
+      const availableCount = await isAvailableCount();
+      isAvailableElement.textContent = `${availableCount}`;
+    } catch (error) {
+      isAvailableElement.textContent = "N/A";
+      console.error("Error fetching available food count:", error);
     }
   }
 

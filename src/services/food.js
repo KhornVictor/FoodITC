@@ -30,7 +30,12 @@ export const averageRating = async () => {
     }
 }
 
-export const isAvailableCount = () => {
-    const items = fetchMenuItems();
+export const isAvailableCount = async () => {
+  try {
+    const items = await fetchMenuItems();
     return items.filter(item => item.is_available).length;
+  } catch (error) {
+    console.error("Error counting available food items:", error);
+    return 0;
+  }
 }
