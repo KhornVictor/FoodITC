@@ -79,13 +79,14 @@ const renderLoggedOutState = (container) => {
 
 const renderLoggedInState = (container, user) => {
   console.log("Rendering logged-in state for user:", user);
+  console.log(user.avatar);
   container.innerHTML = `
     <div class="auth-inline">
       <div class="notification-bell" title="Notifications">
         <i class="fas fa-bell"></i>
       </div>
       <div class="auth-profile" title="${user?.name || "User"}">
-        <img src="${getAvatarUrl(user)}" alt="profile" />
+        <img src="${user.avatar}" alt="profile" />
       </div>
     </div>
     <details class="auth-menu">
