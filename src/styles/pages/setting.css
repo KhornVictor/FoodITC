@@ -234,13 +234,13 @@
     border-color var(--transition-base) ease;
 }
 
-.field-display:hover {
+/* .field-display:hover {
   transform: translateY(-2px);
   box-shadow:
     0 16px 28px rgba(255, 138, 0, 0.12),
     inset 0 0 0 1px rgba(255, 255, 255, 0.8);
   border-left-color: var(--brand-accent-orange-deep);
-}
+} */
 
 .field-label {
   font-size: 0.75rem;
@@ -446,14 +446,14 @@
 .setting-content input {
   width: 100%;
   min-height: 52px;
-  padding: 0.9rem 1rem;
-  border: 2px solid rgba(255, 138, 0, 0.2);
   border-radius: 16px;
+  /* padding: 0.9rem 1rem; */
+  /* border: 2px solid rgba(255, 138, 0, 0.2);
   background: linear-gradient(
     135deg,
     var(--brand-surface),
     rgba(255, 245, 235, 0.5)
-  );
+  ); */
   color: var(--brand-text-dark);
   font-size: var(--font-size-base);
   font-family: inherit;
@@ -463,18 +463,30 @@
 .setting-content input:focus {
   outline: none;
   border-color: var(--brand-accent-orange);
-  background: linear-gradient(
+  /* background: linear-gradient(
     135deg,
     var(--brand-surface),
     rgba(255, 226, 191, 0.3)
-  );
-  box-shadow:
+  ); */
+  /* box-shadow:
     0 0 0 4px rgba(255, 138, 0, 0.15),
-    inset 0 0 0 1px rgba(255, 138, 0, 0.1);
+    inset 0 0 0 1px rgba(255, 138, 0, 0.1); */
 }
 
 .setting-content input::placeholder {
   color: var(--brand-gray-400);
+}
+
+.password-form input {
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  border-color: var(--brand-accent-orange);
+  outline: none;
+  /* background: linear-gradient(
+    135deg,
+    var(--brand-surface),
+    rgba(255, 226, 191, 0.3)
+  ); */
 }
 
 .password-submit {
