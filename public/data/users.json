@@ -1,14 +1,14 @@
 [
   {
     "user_id": 1,
-    "name": "John Smith",
-    "email": "john.smith@example.com",
+    "name": "Khorn Victor",
+    "email": "v@gmail.com",
     "password": "123456",
-    "phone": "+1-202-555-0101",
-    "address": "123 Maple Street, New York, NY",
-    "avatar": "https://img.freepik.com/free-photo/dark-blonde-bearded-man-crosses-his-hands-chest-posing-black-shirt_8353-1116.jpg?semt=ais_hybrid&w=740&q=80",
+    "phone": "0123456789",
+    "address": "Toul Kouk, Phnom Penh",
+    "avatar": "assets/images/victor.png",
     "role": "customer",
-    "created_at": "2026-03-01T10:15:00"
+    "created_at": "2026-03-10T17:50:00"
   },
   {
     "user_id": 2,
@@ -108,5 +108,27 @@
     "avatar": "https://img.freepik.com/free-photo/portrait-beautiful-young-woman_23-2151083927.jpg?semt=ais_hybrid&w=740&q=80",
     "role": "customer",
     "created_at": "2026-03-10T17:50:00"
+  },
+  {
+    "user_id": 11,
+    "name": "Samn ang",
+    "email": "a@example.com",
+    "password": "1",
+    "phone": "+1-202-555-0110",
+    "address": "159 Poplar Court, San Jose, CA",
+    "avatar": "https://img.freepik.com/free-photo/portrait-beautiful-young-woman_23-2151083927.jpg?semt=ais_hybrid&w=740&q=80",
+    "role": "customer",
+    "created_at": "2026-03-10T17:50:00"
+  },
+  {
+    "user_id": 12,
+    "name": "John Smith",
+    "email": "john.smith@example.com",
+    "password": "123456",
+    "phone": "+1-202-555-0101",
+    "address": "123 Maple Street, New York, NY",
+    "avatar": "https://img.freepik.com/free-photo/dark-blonde-bearded-man-crosses-his-hands-chest-posing-black-shirt_8353-1116.jpg?semt=ais_hybrid&w=740&q=80",
+    "role": "customer",
+    "created_at": "2026-03-01T10:15:00"
   }
 ]

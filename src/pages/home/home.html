@@ -1,31 +1,28 @@
 <div class="home-content">
   <div class="ads-container">
-    <!-- <iframe
-      title="ads"
-      class="ads"
-      src="https://www.youtube.com/embed/_W18UKsbsMk?autoplay=1&mute=1&loop=1_W18UKsbsMk"
-      allow="
-        accelerometer;
-        autoplay;
-        clipboard-write;
-        encrypted-media;
-        gyroscope;
-        web-share;
-      "
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen
-    ></iframe> -->
-
-    <img
-      class="ads"
-      src="https://img.freepik.com/free-psd/delicious-burger-food-menu-social-media-banner-instagram-post-template_120329-4851.jpg?semt=ais_hybrid&w=740&q=80  "
-      alt="Ads"
-    />
+    <div class="ads-slider" id="ads-slider">
+      <button class="ads-arrow ads-arrow-left" type="button" aria-label="Previous ad"></button>
+      <button class="ads-arrow ads-arrow-right" type="button" aria-label="Next ad"></button>
+      <img
+        class="ads-slide"
+        id="ads-image-current"
+        src="https://img.freepik.com/free-psd/delicious-burger-food-menu-social-media-banner-instagram-post-template_120329-4851.jpg?semt=ais_hybrid&w=740&q=80"
+        alt="Ads"
+      />
+      <img
+        class="ads-slide"
+        id="ads-image-next"
+        src="https://img.freepik.com/free-psd/fast-food-template-design_23-2150759668.jpg?semt=ais_hybrid&w=740&q=80"
+        alt="Ads"
+      />
+      <div class="ads-dots" id="ads-dots" aria-label="Ads pagination"></div>
+    </div>
   </div>
 
   <div class="shop-section">
     <h1>Resturant</h1>
-    <div class="shop-items"></div>
+    <div class="shop-items" id="shop-items">
+    </div>
   </div>
 
   <div class="category-list">

@@ -1,16 +1,88 @@
-<div class="order-list">
+<section class="order-list">
   <div class="title-container">
-    <i class="fa-solid fa-cart-shopping"></i>
-    <h3 class="table-title">Cart</h3>
+    <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+    <h3 class="table-title">My Cart</h3>
   </div>
-  <p>2x Pasta with Roast Beef</p>
-  <p>2x Shrimp Rice Bowl</p>
-  <p>2x Apple Stuffed Pancake</p>
-  <p>1x Vegetable Shrimp</p>
-</div>
-<div class="bill-section">
-  <p class="bill-row"><span>Subtotal</span><span>$67.00</span></p>
+
+  <p class="cart-subtitle">4 items ready for checkout</p>
+
+  <article class="cart-item">
+    <img
+      src="https://images.unsplash.com/photo-1628294896516-44f1f43d7f0b?auto=format&fit=crop&w=320&q=80"
+      alt="Pasta with roast beef"
+      loading="lazy"
+    />
+    <div class="cart-item-body">
+      <h4>Pasta with Roast Beef</h4>
+      <p class="cart-item-note">Extra parmesan, medium spice</p>
+      <div class="cart-item-footer">
+        <div class="qty-chip">
+          <button type="button" aria-label="Decrease pasta quantity">-</button>
+          <span>2</span>
+          <button type="button" aria-label="Increase pasta quantity">+</button>
+        </div>
+        <strong>$22.00</strong>
+      </div>
+    </div>
+  </article>
+
+  <article class="cart-item">
+    <img
+      src="https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=320&q=80"
+      alt="Shrimp rice bowl"
+      loading="lazy"
+    />
+    <div class="cart-item-body">
+      <h4>Shrimp Rice Bowl</h4>
+      <p class="cart-item-note">No onions, extra sauce</p>
+      <div class="cart-item-footer">
+        <div class="qty-chip">
+          <button type="button" aria-label="Decrease shrimp bowl quantity">
+            -
+          </button>
+          <span>1</span>
+          <button type="button" aria-label="Increase shrimp bowl quantity">
+            +
+          </button>
+        </div>
+        <strong>$16.00</strong>
+      </div>
+    </div>
+  </article>
+
+  <article class="cart-item">
+    <img
+      src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=320&q=80"
+      alt="Apple stuffed pancake"
+      loading="lazy"
+    />
+    <div class="cart-item-body">
+      <h4>Apple Stuffed Pancake</h4>
+      <p class="cart-item-note">Whipped cream topping</p>
+      <div class="cart-item-footer">
+        <div class="qty-chip">
+          <button type="button" aria-label="Decrease pancake quantity">
+            -
+          </button>
+          <span>1</span>
+          <button type="button" aria-label="Increase pancake quantity">
+            +
+          </button>
+        </div>
+        <strong>$10.00</strong>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section class="bill-section">
+  <!-- <div class="promo-row">
+    <input type="text" placeholder="Promo code" aria-label="Promo code" />
+    <button type="button">Apply</button>
+  </div> -->
+  <p class="bill-row"><span>Subtotal</span><span>$48.00</span></p>
+  <p class="bill-row"><span>Delivery</span><span>$3.00</span></p>
   <p class="bill-row"><span>Tax</span><span>$4.00</span></p>
-  <p class="bill-row total"><span>Total</span><span>$72.00</span></p>
+  <p class="bill-row total"><span>Total</span><span>$55.00</span></p>
   <button class="place-order-btn" type="button">Place Order</button>
-</div>
+</section>

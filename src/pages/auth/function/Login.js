@@ -1,4 +1,4 @@
-import { checkLoginState } from "../../../function/Navigation.js";
+import { checkLoginState } from "../../../function/navigations/Navigation.js";
 import { authenticateUser } from "../../../services/User.js";
 
 const loginForm = document.getElementById("login-form");

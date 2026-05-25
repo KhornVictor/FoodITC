@@ -1,0 +1,222 @@
+[
+  {
+    "notification_id": 1,
+    "user_id": 0,
+    "order_id": 0,
+    "title": "Order Confirmed",
+    "message": "Your order has been confirmed and is being prepared.",
+    "type": "ORDER",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 10:00:00",
+    "read_at": null
+  },
+  {
+    "notification_id": 2,
+    "user_id": 1,
+    "order_id": 1,
+    "title": "Order Confirmed",
+    "message": "Your order has been confirmed.",
+    "type": "ORDER",
+    "status": "READ",
+    "created_at": "2026-05-08 10:05:00",
+    "read_at": "2026-05-08 10:10:00"
+  },
+  {
+    "notification_id": 3,
+    "user_id": 2,
+    "order_id": 2,
+    "title": "Food Being Prepared",
+    "message": "The restaurant is preparing your food.",
+    "type": "ORDER",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 10:10:00",
+    "read_at": null
+  },
+  {
+    "notification_id": 4,
+    "user_id": 3,
+    "order_id": 3,
+    "title": "Driver Assigned",
+    "message": "A delivery driver has been assigned.",
+    "type": "DELIVERY",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 10:15:00",
+    "read_at": null
+  },
+  {
+    "notification_id": 5,
+    "user_id": 4,
+    "order_id": 4,
+    "title": "Order Delivered",
+    "message": "Your order has been delivered successfully.",
+    "type": "DELIVERY",
+    "status": "READ",
+    "created_at": "2026-05-08 10:20:00",
+    "read_at": "2026-05-08 10:25:00"
+  },
+  {
+    "notification_id": 6,
+    "user_id": 5,
+    "order_id": 5,
+    "title": "Order Cancelled",
+    "message": "Your order was cancelled due to an issue.",
+    "type": "ORDER",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 10:30:00",
+    "read_at": null
+  },
+  {
+    "notification_id": 7,
+    "user_id": 6,
+    "order_id": 6,
+    "title": "Promotion",
+    "message": "Get 20% off your next order!",
+    "type": "PROMOTION",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 10:35:00",
+    "read_at": null
+  },
+  {
+    "notification_id": 8,
+    "user_id": 7,
+    "order_id": 7,
+    "title": "Order Confirmed",
+    "message": "Your order is confirmed.",
+    "type": "ORDER",
+    "status": "READ",
+    "created_at": "2026-05-08 10:40:00",
+    "read_at": "2026-05-08 10:42:00"
+  },
+  {
+    "notification_id": 9,
+    "user_id": 8,
+    "order_id": 8,
+    "title": "Out for Delivery",
+    "message": "Your food is on the way!",
+    "type": "DELIVERY",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 10:45:00",
+    "read_at": null
+  },
+  {
+    "notification_id": 10,
+    "user_id": 9,
+    "order_id": 9,
+    "title": "Order Received",
+    "message": "We have received your order.",
+    "type": "ORDER",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 10:50:00",
+    "read_at": null
+  },
+  {
+    "notification_id": 11,
+    "user_id": 10,
+    "order_id": 10,
+    "title": "Payment Successful",
+    "message": "Your payment has been processed.",
+    "type": "ORDER",
+    "status": "READ",
+    "created_at": "2026-05-08 10:55:00",
+    "read_at": "2026-05-08 10:56:00"
+  },
+  {
+    "notification_id": 12,
+    "user_id": 11,
+    "order_id": 11,
+    "title": "Delay Notice",
+    "message": "Your order is slightly delayed.",
+    "type": "DELIVERY",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 11:00:00",
+    "read_at": null
+  },
+  {
+    "notification_id": 13,
+    "user_id": 12,
+    "order_id": 12,
+    "title": "Order Delivered",
+    "message": "Enjoy your meal!",
+    "type": "DELIVERY",
+    "status": "READ",
+    "created_at": "2026-05-08 11:05:00",
+    "read_at": "2026-05-08 11:06:00"
+  },
+  {
+    "notification_id": 14,
+    "user_id": 13,
+    "order_id": 13,
+    "title": "New Restaurant",
+    "message": "A new restaurant is available near you.",
+    "type": "SYSTEM",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 11:10:00",
+    "read_at": null
+  },
+  {
+    "notification_id": 15,
+    "user_id": 14,
+    "order_id": 14,
+    "title": "Order Confirmed",
+    "message": "Your order is being prepared.",
+    "type": "ORDER",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 11:15:00",
+    "read_at": null
+  },
+  {
+    "notification_id": 16,
+    "user_id": 15,
+    "order_id": 15,
+    "title": "Discount Code",
+    "message": "Use SAVE10 for discount.",
+    "type": "PROMOTION",
+    "status": "READ",
+    "created_at": "2026-05-08 11:20:00",
+    "read_at": "2026-05-08 11:21:00"
+  },
+  {
+    "notification_id": 17,
+    "user_id": 16,
+    "order_id": 16,
+    "title": "Out for Delivery",
+    "message": "Your order is with the driver.",
+    "type": "DELIVERY",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 11:25:00",
+    "read_at": null
+  },
+  {
+    "notification_id": 18,
+    "user_id": 17,
+    "order_id": 17,
+    "title": "Order Cancelled",
+    "message": "Item is unavailable.",
+    "type": "ORDER",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 11:30:00",
+    "read_at": null
+  },
+  {
+    "notification_id": 19,
+    "user_id": 18,
+    "order_id": 18,
+    "title": "Order Confirmed",
+    "message": "We are processing your order.",
+    "type": "ORDER",
+    "status": "READ",
+    "created_at": "2026-05-08 11:35:00",
+    "read_at": "2026-05-08 11:36:00"
+  },
+  {
+    "notification_id": 20,
+    "user_id": 19,
+    "order_id": 19,
+    "title": "Thank You",
+    "message": "Thanks for ordering with us!",
+    "type": "SYSTEM",
+    "status": "UNREAD",
+    "created_at": "2026-05-08 11:40:00",
+    "read_at": null
+  }
+]

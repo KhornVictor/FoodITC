@@ -1,6 +1,11 @@
 <aside id="left-side-bar" class="left-sidebar">
   <nav id="left-sidebar-menu-list" class="menu-list">
-    <img src="/public/images/logo.png" alt="Nom Nom logo" class="logo" />
+    <div class="sidebar-header">
+      <img src="/public/images/logo.png" alt="Nom Nom logo" class="logo" />
+      <button type="button" class="sidebar-toggle" aria-label="Toggle sidebar">
+        <i class="fa-solid fa-angles-left"></i>
+      </button>
+    </div>
     <div id="home-btn" class="menu-item active" data-route="home"><i class="fa-solid fa-house"></i><p>Home</p></div>
     <div id="food-btn" class="menu-item" data-route="food"><i class="fa-solid fa-utensils"></i><p>Food</p></div>
     <div id="restaurant-btn" class="menu-item" data-route="restaurant"><i class="fa-solid fa-utensil-spoon"></i><p>Restaurant</p></div>
@@ -8,7 +13,10 @@
     <div id="settings-btn" class="menu-item" data-route="settings"><i class="fa-solid fa-gear"></i><p>Settings</p></div>
   </nav>
   <div id="sidebar-footer" class="sidebar-footer">
-    <div>Help Center</div>
-    <div onclick="window.location.href='src/pages/auth/login.html'">Logout</div>
+    <div class="sidebar-help">Help Center</div>
+    <div id="logout-btn">Logout</div>
+    <button type="button" class="sidebar-logout-icon" aria-label="Logout">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </button>
   </div>
 </aside>

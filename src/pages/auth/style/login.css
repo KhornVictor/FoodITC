@@ -35,14 +35,14 @@ body {
   width: 1000px;
   display: grid;
   grid-template-columns: 1fr 1.1fr;
-  border-radius: 28px;
+  border-radius: var(--radius-2xl);
   overflow: hidden;
-  box-shadow: 0 22px 60px rgba(134, 77, 0, 0.15);
+  box-shadow: var(--shadow-xl);
   background: var(--card);
 }
 
 .hero-panel {
-  padding: 38px;
+  padding: var(--space-2xl);
   background: linear-gradient(150deg, #fff0d8 0%, #ffe7c3 45%, #ffd99f 100%);
   display: flex;
   flex-direction: column;
@@ -72,24 +72,24 @@ body {
 }
 
 .hero-tags {
-  margin: 26px 0 0;
+  margin: var(--space-xl) 0 0;
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 10px;
+  gap: var(--space-xs);
 }
 
 .hero-tags li {
   width: fit-content;
-  padding: 8px 14px;
-  border-radius: 999px;
+  padding: var(--space-xs) var(--space-lg);
+  border-radius: var(--radius-full);
   background: rgba(47, 159, 154, 0.14);
   color: #1e5f5d;
   font-weight: 700;
 }
 
 .form-panel {
-  padding: 34px;
+  padding: var(--space-2xl);
   background: linear-gradient(180deg, #fff9f2 0%, #fffdf9 100%);
   display: grid;
   place-items: center;
@@ -97,16 +97,16 @@ body {
 
 .auth-card {
   width: min(520px, 100%);
-  padding: 30px;
+  padding: var(--space-2xl);
   border: 1px solid var(--line);
-  border-radius: 22px;
+  border-radius: var(--radius-xl);
   background: var(--card);
-  box-shadow: 0 16px 34px rgba(98, 74, 37, 0.09);
+  box-shadow: var(--shadow-lg);
 }
 
 .pill {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: var(--font-size-xs);
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -114,42 +114,42 @@ body {
 }
 
 .auth-card h2 {
-  margin: 8px 0 8px;
+  margin: var(--space-xs) 0 var(--space-xs);
   font-family: "Baloo 2", cursive;
-  font-size: 2rem;
-  line-height: 1.05;
+  font-size: var(--font-size-4xl);
+  line-height: var(--line-height-normal);
 }
 
 .subtext {
-  margin: 0 0 20px;
+  margin: 0 0 var(--space-xl);
   color: var(--text-mid);
 }
 
 .auth-form {
   display: grid;
-  gap: 15px;
+  gap: var(--space-lg);
 }
 
 .input-group {
   display: grid;
-  gap: 7px;
+  gap: var(--space-xs);
 }
 
 label {
   font-weight: 700;
-  font-size: 0.96rem;
+  font-size: var(--font-size-lg);
 }
 
 input {
   height: 46px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: 1px solid #d8d0c4;
-  padding: 0 14px;
+  padding: 0 var(--space-lg);
   font: inherit;
   background: #fffdfa;
   transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    border-color var(--transition-base) ease,
+    box-shadow var(--transition-base) ease;
 }
 
 input:focus {
@@ -162,7 +162,7 @@ input:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-xs);
 }
 
 .text-link {
@@ -184,7 +184,7 @@ input:focus {
 .checkbox-wrap {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-xs);
   color: var(--text-mid);
   font-weight: 600;
 }
@@ -196,10 +196,10 @@ input:focus {
 }
 
 .btn-primary {
-  margin-top: 4px;
+  margin-top: var(--space-xs);
   height: 50px;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: linear-gradient(
     100deg,
     var(--orange) 0%,
@@ -207,19 +207,19 @@ input:focus {
   );
   color: #ffffff;
   font:
-    800 1.05rem "Nunito",
+    800 var(--font-size-lg) "Nunito",
     sans-serif;
   letter-spacing: 0.02em;
   cursor: pointer;
-  box-shadow: 0 12px 20px rgba(242, 106, 0, 0.3);
+  box-shadow: var(--shadow-lg);
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transform var(--transition-base) ease,
+    box-shadow var(--transition-base) ease;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 15px 26px rgba(242, 106, 0, 0.35);
+  box-shadow: var(--shadow-xl);
 }
 
 .btn-primary:disabled {
@@ -253,10 +253,10 @@ input:focus {
 @media (max-width: 900px) {
   .auth-page {
     grid-template-columns: 1fr;
-  }
+  } 
 
   .hero-panel {
-    gap: 20px;
+    display: none;
   }
 }
 
@@ -270,14 +270,14 @@ input:focus {
 
   .hero-panel,
   .form-panel {
-    padding: 22px;
+    padding: var(--space-xl);
   }
 
   .auth-card {
-    padding: 22px;
+    padding: var(--space-xl);
   }
 
   .auth-card h2 {
-    font-size: 1.7rem;
+    font-size: var(--font-size-3xl);
   }
 }

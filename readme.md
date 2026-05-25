@@ -1,4 +1,6 @@
-# 🍽️ Online Food Ordering Website (Frontend)
+# 🍽️ Nom Nom Ordering Website (Frontend)
+
+<img src="./public/images/logo.png"/>
 
 ## 👥 Team Members — Team 04
 
@@ -33,7 +35,7 @@ This system focuses only on the **client-side design and user experience (UI/UX)
 
 * Customers who want to browse food menus
 * Users who want to order food online
-* Anyone accessing the system via web browser
+* Anyone accessing the system via web browser   
 
 ---
 
@@ -116,3 +118,8 @@ Backend services such as database, authentication, and payment systems are not i
 ## 📄 License
 
 This project is developed for educational purposes.
+
+<img src="./public/images/NomNom.png"/>
+https://fooditc.netlify.app/
+
+Hehe
